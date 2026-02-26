@@ -18,7 +18,7 @@ This project uses agents-flight-deck for spec-driven development. All features g
 ### Context System
 
 - `agents-context/concepts/` — Project-specific domain knowledge and general guidance (not code)
-- `agents-context/standards/` — Coding style, architecture, and testing conventions
+- `agents-context/standards/` — Coding style, architecture, and testing conventions (stack-filtered via `config.default.yml` / `config.local.yml` during install)
 - `agents-context/guides/` — Workflow guides
 
 **When implementing task groups**, always read the context files listed in each group's "Read before starting" section. After completing a group, update or create concept files as directed in "Update after completing".

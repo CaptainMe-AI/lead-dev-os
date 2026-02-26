@@ -5,9 +5,10 @@
 #   ./scripts/install.sh [OPTIONS]
 #
 # Options:
-#   --commands-only   Only update commands, skip context/standards/templates
-#   --verbose         Show detailed output
-#   --help            Show this help message
+#   --commands-only       Only update commands, skip context/standards/templates
+#   --profile <name>      Use this profile (skip interactive prompt)
+#   --verbose             Show detailed output
+#   --help                Show this help message
 #
 # Run this script from inside the target project directory.
 
@@ -23,6 +24,7 @@ source "$SCRIPT_DIR/common-functions.sh"
 
 # Flags
 COMMANDS_ONLY=false
+PROFILE_OVERRIDE=""
 
 # Parse arguments
 while [[ $# -gt 0 ]]; do
@@ -30,6 +32,10 @@ while [[ $# -gt 0 ]]; do
     --commands-only)
       COMMANDS_ONLY=true
       shift
+      ;;
+    --profile)
+      PROFILE_OVERRIDE="$2"
+      shift 2
       ;;
     --verbose)
       VERBOSE=true
@@ -81,8 +87,49 @@ CONTEXT_DEST="$TARGET_DIR/agents-context"
 print_status "Installing agents-context..."
 
 ensure_gitkeep "$CONTEXT_DEST/concepts"
-ensure_gitkeep "$CONTEXT_DEST/standards"
+ensure_dir "$CONTEXT_DEST/standards"
 ensure_dir "$CONTEXT_DEST/guides"
+
+# --- Install stack-filtered standards ---
+CONFIG_FILE="$(get_config_file)"
+print_verbose "Using config: $CONFIG_FILE"
+
+# Select profile: use --profile flag if provided, otherwise prompt interactively
+if [ -n "$PROFILE_OVERRIDE" ]; then
+  SELECTED_PROFILE="$PROFILE_OVERRIDE"
+else
+  SELECTED_PROFILE="$(prompt_for_profile "$CONFIG_FILE")"
+fi
+print_status "Using profile: $SELECTED_PROFILE"
+
+# Always copy shared standards
+for std_file in "$APP_DIR"/agents-context/standards/shared/*.md; do
+  if [ -f "$std_file" ]; then
+    copy_if_not_exists "$std_file" "$CONTEXT_DEST/standards/$(basename "$std_file")" || true
+    print_verbose "  Installed shared standard: $(basename "$std_file")"
+  fi
+done
+
+# Copy enabled stack standards (flattened into standards/)
+ENABLED_STACKS="$(get_enabled_stacks "$CONFIG_FILE" "$SELECTED_PROFILE")"
+if [ -n "$ENABLED_STACKS" ]; then
+  while IFS= read -r stack; do
+    local_stack_dir="$APP_DIR/agents-context/standards/$stack"
+    if [ -d "$local_stack_dir" ]; then
+      for std_file in "$local_stack_dir"/*.md; do
+        if [ -f "$std_file" ]; then
+          copy_if_not_exists "$std_file" "$CONTEXT_DEST/standards/$(basename "$std_file")" || true
+          print_verbose "  Installed $stack standard: $(basename "$std_file")"
+        fi
+      done
+    else
+      print_warning "Stack directory not found: $local_stack_dir"
+    fi
+  done <<< "$ENABLED_STACKS"
+  print_success "Standards installed for stacks: $(echo "$ENABLED_STACKS" | tr '\n' ' ')"
+else
+  print_status "No stacks enabled — only shared standards installed"
+fi
 
 # Copy guides (always overwrite — these are framework docs)
 for guide_file in "$APP_DIR"/agents-context/guides/*.md; do
