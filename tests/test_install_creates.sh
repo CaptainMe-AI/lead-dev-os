@@ -78,8 +78,8 @@ test_full_install() {
   # Run installer
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
-  # --- Commands (flattened into .claude/commands/agents-flight-deck/) ---
-  local cmd_dir="$TARGET/.claude/commands/agents-flight-deck"
+  # --- Commands (flattened into .claude/commands/lead-dev-os/) ---
+  local cmd_dir="$TARGET/.claude/commands/lead-dev-os"
   assert_dir_exists "commands directory exists" "$cmd_dir"
 
   # Strategic commands
@@ -113,23 +113,23 @@ test_full_install() {
   assert_file_exists "workflow.md installed" "$TARGET/agents-context/guides/workflow.md"
   assert_file_not_empty "workflow.md has content" "$TARGET/agents-context/guides/workflow.md"
 
-  # --- agents-flight-deck/ (templates + specs) ---
-  assert_dir_exists "agents-flight-deck/ exists" "$TARGET/agents-flight-deck"
-  assert_dir_exists "agents-flight-deck/templates/ exists" "$TARGET/agents-flight-deck/templates"
-  assert_dir_exists "agents-flight-deck/specs/ exists" "$TARGET/agents-flight-deck/specs"
+  # --- lead-dev-os/ (templates + specs) ---
+  assert_dir_exists "lead-dev-os/ exists" "$TARGET/lead-dev-os"
+  assert_dir_exists "lead-dev-os/templates/ exists" "$TARGET/lead-dev-os/templates"
+  assert_dir_exists "lead-dev-os/specs/ exists" "$TARGET/lead-dev-os/specs"
 
   # Templates
-  assert_file_exists "spec-template.md installed" "$TARGET/agents-flight-deck/templates/spec-template.md"
-  assert_file_exists "tasks-template.md installed" "$TARGET/agents-flight-deck/templates/tasks-template.md"
-  assert_file_exists "requirements-template.md installed" "$TARGET/agents-flight-deck/templates/requirements-template.md"
-  assert_file_not_empty "spec-template.md has content" "$TARGET/agents-flight-deck/templates/spec-template.md"
+  assert_file_exists "spec-template.md installed" "$TARGET/lead-dev-os/templates/spec-template.md"
+  assert_file_exists "tasks-template.md installed" "$TARGET/lead-dev-os/templates/tasks-template.md"
+  assert_file_exists "requirements-template.md installed" "$TARGET/lead-dev-os/templates/requirements-template.md"
+  assert_file_not_empty "spec-template.md has content" "$TARGET/lead-dev-os/templates/spec-template.md"
 
   # Specs .gitkeep
-  assert_file_exists "specs/.gitkeep exists" "$TARGET/agents-flight-deck/specs/.gitkeep"
+  assert_file_exists "specs/.gitkeep exists" "$TARGET/lead-dev-os/specs/.gitkeep"
 
   # --- CLAUDE.md ---
   assert_file_exists "CLAUDE.md created" "$TARGET/CLAUDE.md"
-  assert_file_contains "CLAUDE.md has framework section" "$TARGET/CLAUDE.md" "## agents-flight-deck Framework"
+  assert_file_contains "CLAUDE.md has framework section" "$TARGET/CLAUDE.md" "## lead-dev-os Framework"
 
   teardown
 }
@@ -141,8 +141,8 @@ test_commands_only_flag() {
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --commands-only) > /dev/null 2>&1
 
   # Commands should exist
-  assert_file_exists "commands installed" "$TARGET/.claude/commands/agents-flight-deck/plan-product.md"
-  assert_file_exists "commands installed" "$TARGET/.claude/commands/agents-flight-deck/step1-shape-spec.md"
+  assert_file_exists "commands installed" "$TARGET/.claude/commands/lead-dev-os/plan-product.md"
+  assert_file_exists "commands installed" "$TARGET/.claude/commands/lead-dev-os/step1-shape-spec.md"
 
   # Context, templates, CLAUDE.md should NOT exist
   if [ ! -d "$TARGET/agents-context" ]; then
@@ -153,11 +153,11 @@ test_commands_only_flag() {
     FAIL=$((FAIL + 1))
   fi
 
-  if [ ! -d "$TARGET/agents-flight-deck" ]; then
-    echo "  PASS: agents-flight-deck/ not created with --commands-only"
+  if [ ! -d "$TARGET/lead-dev-os" ]; then
+    echo "  PASS: lead-dev-os/ not created with --commands-only"
     PASS=$((PASS + 1))
   else
-    echo "  FAIL: agents-flight-deck/ should not exist with --commands-only"
+    echo "  FAIL: lead-dev-os/ should not exist with --commands-only"
     FAIL=$((FAIL + 1))
   fi
 
@@ -182,7 +182,7 @@ test_claude_md_appended_to_existing() {
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   assert_file_contains "preserves existing content" "$TARGET/CLAUDE.md" "My Project"
-  assert_file_contains "appends framework section" "$TARGET/CLAUDE.md" "## agents-flight-deck Framework"
+  assert_file_contains "appends framework section" "$TARGET/CLAUDE.md" "## lead-dev-os Framework"
 
   teardown
 }
@@ -196,7 +196,7 @@ test_no_git_directory_still_works() {
 
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
-  assert_file_exists "commands still installed" "$TARGET/.claude/commands/agents-flight-deck/plan-product.md"
+  assert_file_exists "commands still installed" "$TARGET/.claude/commands/lead-dev-os/plan-product.md"
   assert_dir_exists "agents-context still created" "$TARGET/agents-context"
 
   teardown

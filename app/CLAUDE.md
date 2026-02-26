@@ -1,6 +1,6 @@
-## agents-flight-deck Framework
+## lead-dev-os Framework
 
-This project uses agents-flight-deck for spec-driven development. All features go through a structured workflow before implementation.
+This project uses lead-dev-os for spec-driven development. All features go through a structured workflow before implementation.
 
 ### Commands
 
@@ -10,9 +10,9 @@ This project uses agents-flight-deck for spec-driven development. All features g
 - `/define-standards` — Establish coding & architecture standards → `agents-context/standards/`
 
 **Tactical (run per feature):**
-1. `/step1-shape-spec` — Interactive Q&A → `agents-flight-deck/specs/YYYY-MM-DD-name/planning/requirements.md`
-2. `/step2-define-spec` — Formalize into spec → `agents-flight-deck/specs/YYYY-MM-DD-name/spec.md`
-3. `/step3-scope-tasks` — Break into context-aware task groups → `agents-flight-deck/specs/YYYY-MM-DD-name/tasks.md`
+1. `/step1-shape-spec` — Interactive Q&A → `lead-dev-os/specs/YYYY-MM-DD-name/planning/requirements.md`
+2. `/step2-define-spec` — Formalize into spec → `lead-dev-os/specs/YYYY-MM-DD-name/spec.md`
+3. `/step3-scope-tasks` — Break into context-aware task groups → `lead-dev-os/specs/YYYY-MM-DD-name/tasks.md`
 4. `/step4-implement-tasks` — Context-aware implementation of task groups
 
 ### Context System

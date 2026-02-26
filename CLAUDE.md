@@ -1,10 +1,10 @@
 # CLAUDE.md
 
-Dev instructions for the agents-flight-deck repository itself.
+Dev instructions for the lead-dev-os repository itself.
 
 ## Project
 
-agents-flight-deck is a spec & context-driven framework for Claude Code development on large projects. It provides structured commands for product planning, spec writing, task scoping, and context-aware implementation.
+lead-dev-os is a spec & context-driven framework for Claude Code development on large projects. It provides structured commands for product planning, spec writing, task scoping, and context-aware implementation.
 
 ## License
 
@@ -13,7 +13,7 @@ MIT License
 ## Repository Structure
 
 ```
-agents-flight-deck/
+lead-dev-os/
 ├── app/                               # Everything installed into target projects
 │   ├── commands/                      # Slash commands (Claude Code skills)
 │   │   ├── strategic/                 # High-level planning commands
@@ -33,7 +33,7 @@ agents-flight-deck/
 │   ├── specs/                         # Generated specs output directory
 │   └── CLAUDE.md                      # Framework instructions injected into target project
 ├── scripts/                           # Installation & setup scripts
-│   ├── install.sh                     # Install agents-flight-deck into a target project
+│   ├── install.sh                     # Install lead-dev-os into a target project
 │   └── common-functions.sh            # Shared shell utilities
 ├── tests/                             # Tests for the framework itself
 ├── CLAUDE.md                          # This file — dev instructions for this repo
@@ -45,9 +45,9 @@ agents-flight-deck/
 ## Key Conventions
 
 - `app/` contains everything that gets copied into target projects via `scripts/install.sh`
-- Commands in `app/commands/` are flattened into `.claude/commands/agents-flight-deck/` when installed
+- Commands in `app/commands/` are flattened into `.claude/commands/lead-dev-os/` when installed
 - `app/agents-context/` is installed as top-level `agents-context/` in the target project
-- Templates and specs go into `agents-flight-deck/` directory in the target project
+- Templates and specs go into `lead-dev-os/` directory in the target project
 - `app/CLAUDE.md` gets appended to the target project's CLAUDE.md
 
 ## Workflow (4 steps)

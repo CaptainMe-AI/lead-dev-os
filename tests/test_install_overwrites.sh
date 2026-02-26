@@ -2,14 +2,14 @@
 # Integration test: verify install.sh overwrite/preserve behavior on re-run
 #
 # What gets OVERWRITTEN on re-install:
-#   - Commands (.claude/commands/agents-flight-deck/*.md)
-#   - Templates (agents-flight-deck/templates/*.md)
+#   - Commands (.claude/commands/lead-dev-os/*.md)
+#   - Templates (lead-dev-os/templates/*.md)
 #   - Guides (agents-context/guides/*.md)
 #
 # What gets PRESERVED on re-install:
 #   - agents-context/concepts/ user content
 #   - agents-context/standards/ user content
-#   - agents-flight-deck/specs/ user content
+#   - lead-dev-os/specs/ user content
 #   - CLAUDE.md (not duplicated)
 #
 # Usage: ./tests/test_install_overwrites.sh
@@ -85,16 +85,16 @@ test_commands_overwritten() {
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
 
   # Modify a command file
-  echo "user modified this" > "$TARGET/.claude/commands/agents-flight-deck/plan-product.md"
+  echo "user modified this" > "$TARGET/.claude/commands/lead-dev-os/plan-product.md"
 
   # Re-install with --force
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
 
   # Should be overwritten with original content
-  assert_file_contains "command overwritten with original" "$TARGET/.claude/commands/agents-flight-deck/plan-product.md" "Plan Product"
+  assert_file_contains "command overwritten with original" "$TARGET/.claude/commands/lead-dev-os/plan-product.md" "Plan Product"
 
   local content
-  content="$(cat "$TARGET/.claude/commands/agents-flight-deck/plan-product.md")"
+  content="$(cat "$TARGET/.claude/commands/lead-dev-os/plan-product.md")"
   if echo "$content" | grep -q "user modified this"; then
     echo "  FAIL: command should not contain user modifications after re-install"
     FAIL=$((FAIL + 1))
@@ -113,12 +113,12 @@ test_templates_overwritten() {
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
 
   # Modify a template
-  echo "custom template" > "$TARGET/agents-flight-deck/templates/spec-template.md"
+  echo "custom template" > "$TARGET/lead-dev-os/templates/spec-template.md"
 
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
 
   # Should be overwritten
-  assert_file_contains "template overwritten" "$TARGET/agents-flight-deck/templates/spec-template.md" "Spec:"
+  assert_file_contains "template overwritten" "$TARGET/lead-dev-os/templates/spec-template.md" "Spec:"
 
   teardown
 }
@@ -181,15 +181,15 @@ test_specs_preserved() {
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   # Create a spec folder as the tactical commands would
-  mkdir -p "$TARGET/agents-flight-deck/specs/2026-02-25-user-auth/planning"
-  echo "# User Auth Spec" > "$TARGET/agents-flight-deck/specs/2026-02-25-user-auth/spec.md"
-  echo "raw idea" > "$TARGET/agents-flight-deck/specs/2026-02-25-user-auth/planning/initialization.md"
+  mkdir -p "$TARGET/lead-dev-os/specs/2026-02-25-user-auth/planning"
+  echo "# User Auth Spec" > "$TARGET/lead-dev-os/specs/2026-02-25-user-auth/spec.md"
+  echo "raw idea" > "$TARGET/lead-dev-os/specs/2026-02-25-user-auth/planning/initialization.md"
 
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
-  assert_file_exists "spec.md preserved" "$TARGET/agents-flight-deck/specs/2026-02-25-user-auth/spec.md"
-  assert_file_exists "initialization.md preserved" "$TARGET/agents-flight-deck/specs/2026-02-25-user-auth/planning/initialization.md"
-  assert_eq "spec content intact" "# User Auth Spec" "$(cat "$TARGET/agents-flight-deck/specs/2026-02-25-user-auth/spec.md")"
+  assert_file_exists "spec.md preserved" "$TARGET/lead-dev-os/specs/2026-02-25-user-auth/spec.md"
+  assert_file_exists "initialization.md preserved" "$TARGET/lead-dev-os/specs/2026-02-25-user-auth/planning/initialization.md"
+  assert_eq "spec content intact" "# User Auth Spec" "$(cat "$TARGET/lead-dev-os/specs/2026-02-25-user-auth/spec.md")"
 
   teardown
 }
@@ -201,12 +201,12 @@ test_claude_md_not_duplicated() {
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   local count_before
-  count_before="$(count_occurrences "$TARGET/CLAUDE.md" "## agents-flight-deck Framework")"
+  count_before="$(count_occurrences "$TARGET/CLAUDE.md" "## lead-dev-os Framework")"
 
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   local count_after
-  count_after="$(count_occurrences "$TARGET/CLAUDE.md" "## agents-flight-deck Framework")"
+  count_after="$(count_occurrences "$TARGET/CLAUDE.md" "## lead-dev-os Framework")"
 
   assert_eq "framework section appears exactly once" "$count_before" "$count_after"
   assert_eq "count is 1" "1" "$count_after"
@@ -223,21 +223,21 @@ test_commands_only_preserves_everything() {
   # Add user content everywhere
   echo "# My Concept" > "$TARGET/agents-context/concepts/my-concept.md"
   echo "custom guide" > "$TARGET/agents-context/guides/workflow.md"
-  echo "custom template" > "$TARGET/agents-flight-deck/templates/spec-template.md"
+  echo "custom template" > "$TARGET/lead-dev-os/templates/spec-template.md"
 
   # Modify a command
-  echo "old command" > "$TARGET/.claude/commands/agents-flight-deck/plan-product.md"
+  echo "old command" > "$TARGET/.claude/commands/lead-dev-os/plan-product.md"
 
   # Re-install commands only with --force
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --commands-only) > /dev/null 2>&1
 
   # Command should be updated
-  assert_file_contains "command updated" "$TARGET/.claude/commands/agents-flight-deck/plan-product.md" "Plan Product"
+  assert_file_contains "command updated" "$TARGET/.claude/commands/lead-dev-os/plan-product.md" "Plan Product"
 
   # Everything else should be untouched
   assert_eq "concept preserved" "# My Concept" "$(cat "$TARGET/agents-context/concepts/my-concept.md")"
   assert_eq "guide NOT overwritten" "custom guide" "$(cat "$TARGET/agents-context/guides/workflow.md")"
-  assert_eq "template NOT overwritten" "custom template" "$(cat "$TARGET/agents-flight-deck/templates/spec-template.md")"
+  assert_eq "template NOT overwritten" "custom template" "$(cat "$TARGET/lead-dev-os/templates/spec-template.md")"
 
   teardown
 }
@@ -249,16 +249,16 @@ test_no_overwrite_without_force() {
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
 
   # Modify files in each overwrite category
-  echo "my custom command" > "$TARGET/.claude/commands/agents-flight-deck/plan-product.md"
+  echo "my custom command" > "$TARGET/.claude/commands/lead-dev-os/plan-product.md"
   echo "my custom guide" > "$TARGET/agents-context/guides/workflow.md"
-  echo "my custom template" > "$TARGET/agents-flight-deck/templates/spec-template.md"
+  echo "my custom template" > "$TARGET/lead-dev-os/templates/spec-template.md"
 
   # Re-install without --force, piping "n" to decline all prompts
   yes n | (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1 || true
 
-  assert_eq "command preserved" "my custom command" "$(cat "$TARGET/.claude/commands/agents-flight-deck/plan-product.md")"
+  assert_eq "command preserved" "my custom command" "$(cat "$TARGET/.claude/commands/lead-dev-os/plan-product.md")"
   assert_eq "guide preserved" "my custom guide" "$(cat "$TARGET/agents-context/guides/workflow.md")"
-  assert_eq "template preserved" "my custom template" "$(cat "$TARGET/agents-flight-deck/templates/spec-template.md")"
+  assert_eq "template preserved" "my custom template" "$(cat "$TARGET/lead-dev-os/templates/spec-template.md")"
 
   teardown
 }
@@ -270,16 +270,16 @@ test_force_flag_overwrites() {
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
 
   # Modify files
-  echo "my custom command" > "$TARGET/.claude/commands/agents-flight-deck/plan-product.md"
+  echo "my custom command" > "$TARGET/.claude/commands/lead-dev-os/plan-product.md"
   echo "my custom guide" > "$TARGET/agents-context/guides/workflow.md"
-  echo "my custom template" > "$TARGET/agents-flight-deck/templates/spec-template.md"
+  echo "my custom template" > "$TARGET/lead-dev-os/templates/spec-template.md"
 
   # Re-install with --force
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
 
-  assert_file_contains "command overwritten" "$TARGET/.claude/commands/agents-flight-deck/plan-product.md" "Plan Product"
+  assert_file_contains "command overwritten" "$TARGET/.claude/commands/lead-dev-os/plan-product.md" "Plan Product"
   assert_file_contains "guide overwritten" "$TARGET/agents-context/guides/workflow.md" "Workflow Guide"
-  assert_file_contains "template overwritten" "$TARGET/agents-flight-deck/templates/spec-template.md" "Spec:"
+  assert_file_contains "template overwritten" "$TARGET/lead-dev-os/templates/spec-template.md" "Spec:"
 
   teardown
 }
