@@ -76,7 +76,7 @@ test_full_install() {
   setup
 
   # Run installer
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT") > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   # --- Commands (flattened into .claude/commands/agents-flight-deck/) ---
   local cmd_dir="$TARGET/.claude/commands/agents-flight-deck"
@@ -110,7 +110,6 @@ test_full_install() {
   assert_dir_exists "agents-context/standards/ exists" "$TARGET/agents-context/standards"
   assert_dir_exists "agents-context/guides/ exists" "$TARGET/agents-context/guides"
   assert_file_exists "concepts/.gitkeep exists" "$TARGET/agents-context/concepts/.gitkeep"
-  assert_file_exists "standards/.gitkeep exists" "$TARGET/agents-context/standards/.gitkeep"
   assert_file_exists "workflow.md installed" "$TARGET/agents-context/guides/workflow.md"
   assert_file_not_empty "workflow.md has content" "$TARGET/agents-context/guides/workflow.md"
 
@@ -180,7 +179,7 @@ test_claude_md_appended_to_existing() {
   echo "# My Project" > "$TARGET/CLAUDE.md"
   echo "Existing content here." >> "$TARGET/CLAUDE.md"
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT") > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   assert_file_contains "preserves existing content" "$TARGET/CLAUDE.md" "My Project"
   assert_file_contains "appends framework section" "$TARGET/CLAUDE.md" "## agents-flight-deck Framework"
@@ -195,7 +194,7 @@ test_no_git_directory_still_works() {
   # Remove the fake .git
   rm -rf "$TARGET/.git"
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT") > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   assert_file_exists "commands still installed" "$TARGET/.claude/commands/agents-flight-deck/plan-product.md"
   assert_dir_exists "agents-context still created" "$TARGET/agents-context"

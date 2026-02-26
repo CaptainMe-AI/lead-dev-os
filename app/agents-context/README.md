@@ -31,7 +31,7 @@ This directory contains modular knowledge files that document your project's con
 
 ## Development Standards
 
-Concept files link to relevant standards in `agents-context/standards/`. These standards define conventions that must be followed:
+Standards are organized by tech stack group and filtered during installation. Only standards for enabled stacks (configured in `config.local.yml`) are installed into the target project.
 
 | Category | Standards |
 |----------|-----------|
@@ -39,7 +39,7 @@ Concept files link to relevant standards in `agents-context/standards/`. These s
 | **Architecture** | `standards/architecture.md` |
 | **Testing** | `standards/testing.md` |
 
-> Standards are created by running `/define-standards`. Add rows to this table as new standards files are created.
+> Standards are installed by running `/define-standards`. Add rows to this table as new standards files are added.
 
 ## Using Context Files
 

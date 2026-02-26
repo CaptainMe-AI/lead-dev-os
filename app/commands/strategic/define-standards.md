@@ -12,6 +12,8 @@ Read any existing files in `agents-context/standards/` to avoid duplicating or c
 
 Read `agents-context/concepts/product-mission.md` if it exists to understand the technology stack.
 
+Read `config.local.yml` (or `config.default.yml` if local doesn't exist) to determine which tech stacks are enabled. Tailor your questions to focus on the active stacks — for example, only ask FastAPI-specific questions if `fastapi: true` is set.
+
 Ask the user the following questions:
 
 **Coding Style:**
@@ -35,7 +37,11 @@ Ask the user the following questions:
 
 ### Phase 2: Generate Standards
 
-Based on responses, create one or more standards files in `agents-context/standards/`:
+Based on responses, create standards files. Place them in the appropriate stack subdirectory under `app/agents-context/standards/`:
+- Universal standards (coding style, architecture) → `app/agents-context/standards/shared/`
+- Stack-specific standards → `app/agents-context/standards/{stack}/` (e.g., `python/`, `fastapi/`)
+
+When installed into target projects, all standards are flattened into `agents-context/standards/`.
 
 **`agents-context/standards/coding-style.md`** — Naming, formatting, file organization, language-specific conventions.
 
@@ -65,7 +71,7 @@ Each standards file should follow this format:
 
 ### Phase 3: Output
 
-Save files to `agents-context/standards/`.
+Save files to the appropriate subdirectory under `agents-context/standards/` (or `app/agents-context/standards/` if working in the agents-flight-deck repo itself).
 
 Tell the user:
 - Which standards files were created

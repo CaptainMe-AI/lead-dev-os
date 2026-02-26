@@ -82,13 +82,13 @@ test_commands_overwritten() {
   setup
 
   # First install
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT") > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   # Modify a command file
   echo "user modified this" > "$TARGET/.claude/commands/agents-flight-deck/plan-product.md"
 
   # Re-install
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT") > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   # Should be overwritten with original content
   assert_file_contains "command overwritten with original" "$TARGET/.claude/commands/agents-flight-deck/plan-product.md" "Plan Product"
@@ -110,12 +110,12 @@ test_templates_overwritten() {
   echo "test_templates_overwritten — templates are replaced on re-install"
   setup
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT") > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   # Modify a template
   echo "custom template" > "$TARGET/agents-flight-deck/templates/spec-template.md"
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT") > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   # Should be overwritten
   assert_file_contains "template overwritten" "$TARGET/agents-flight-deck/templates/spec-template.md" "Spec:"
@@ -127,11 +127,11 @@ test_guides_overwritten() {
   echo "test_guides_overwritten — guides are replaced on re-install"
   setup
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT") > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   echo "custom guide" > "$TARGET/agents-context/guides/workflow.md"
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT") > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   assert_file_contains "guide overwritten" "$TARGET/agents-context/guides/workflow.md" "Workflow Guide"
 
@@ -142,13 +142,13 @@ test_concepts_preserved() {
   echo "test_concepts_preserved — user concept files survive re-install"
   setup
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT") > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   # Add user concept files
   echo "# API Design Patterns" > "$TARGET/agents-context/concepts/api-design.md"
   echo "# Auth Conventions" > "$TARGET/agents-context/concepts/auth.md"
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT") > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   assert_file_exists "api-design.md preserved" "$TARGET/agents-context/concepts/api-design.md"
   assert_file_exists "auth.md preserved" "$TARGET/agents-context/concepts/auth.md"
@@ -162,11 +162,11 @@ test_standards_preserved() {
   echo "test_standards_preserved — user standard files survive re-install"
   setup
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT") > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   echo "# Coding Style" > "$TARGET/agents-context/standards/coding-style.md"
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT") > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   assert_file_exists "coding-style.md preserved" "$TARGET/agents-context/standards/coding-style.md"
   assert_eq "content intact" "# Coding Style" "$(cat "$TARGET/agents-context/standards/coding-style.md")"
@@ -178,14 +178,14 @@ test_specs_preserved() {
   echo "test_specs_preserved — user spec folders survive re-install"
   setup
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT") > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   # Create a spec folder as the tactical commands would
   mkdir -p "$TARGET/agents-flight-deck/specs/2026-02-25-user-auth/planning"
   echo "# User Auth Spec" > "$TARGET/agents-flight-deck/specs/2026-02-25-user-auth/spec.md"
   echo "raw idea" > "$TARGET/agents-flight-deck/specs/2026-02-25-user-auth/planning/initialization.md"
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT") > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   assert_file_exists "spec.md preserved" "$TARGET/agents-flight-deck/specs/2026-02-25-user-auth/spec.md"
   assert_file_exists "initialization.md preserved" "$TARGET/agents-flight-deck/specs/2026-02-25-user-auth/planning/initialization.md"
@@ -198,12 +198,12 @@ test_claude_md_not_duplicated() {
   echo "test_claude_md_not_duplicated — CLAUDE.md section not appended twice"
   setup
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT") > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   local count_before
   count_before="$(count_occurrences "$TARGET/CLAUDE.md" "## agents-flight-deck Framework")"
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT") > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   local count_after
   count_after="$(count_occurrences "$TARGET/CLAUDE.md" "## agents-flight-deck Framework")"
@@ -218,7 +218,7 @@ test_commands_only_preserves_everything() {
   echo "test_commands_only_preserves_everything — --commands-only updates only commands"
   setup
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT") > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   # Add user content everywhere
   echo "# My Concept" > "$TARGET/agents-context/concepts/my-concept.md"

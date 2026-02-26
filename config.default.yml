@@ -1,0 +1,36 @@
+version: 1.0
+current_profile: default
+
+# Tech stack profiles — controls which standards get installed
+# Copy to config.local.yml and customize your profile
+profiles:
+  default:
+    stack:
+      # Backend frameworks
+      fastapi: true
+      django: true
+      rails: true
+      express: true
+
+      # Databases
+      postgresql: true
+      mysql: true
+      mongodb: true
+      redis: true
+
+      # Frontend
+      react: true
+      nextjs: true
+      vue: true
+
+      # Infrastructure
+      nginx: true
+      gunicorn: true
+      uvicorn: true
+      docker: true
+
+      # Languages
+      python: true
+      ruby: true
+      typescript: true
+      javascript: true
