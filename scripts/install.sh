@@ -22,6 +22,52 @@ TARGET_DIR="$(pwd)"
 # Source shared utilities
 source "$SCRIPT_DIR/common-functions.sh"
 
+show_help() {
+  cat <<'HELPTEXT'
+agents-flight-deck installer
+
+Installs the agents-flight-deck kit into a target project, giving you
+structured slash commands for product planning, spec writing, task scoping,
+and context-aware implementation with Claude Code.
+
+USAGE
+  cd /path/to/your-project
+  /path/to/agents-flight-deck/scripts/install.sh [OPTIONS]
+
+  Run this script from inside the target project directory.
+
+OPTIONS
+  --commands-only   Only install slash commands; skip context, standards,
+                    templates, and CLAUDE.md updates.
+  --profile <name>  Use the named config profile instead of prompting
+                    interactively (e.g. --profile fullstack).
+  --verbose         Show detailed output for every file operation.
+  --help            Show this help message and exit.
+
+WHAT GETS INSTALLED
+  .claude/commands/agents-flight-deck/   Slash commands for Claude Code
+  agents-context/concepts/               Project-specific domain knowledge
+  agents-context/standards/              Coding standards (shared + stack-specific)
+  agents-context/guides/                 Workflow how-to guides
+  agents-flight-deck/templates/          Reusable document templates
+  agents-flight-deck/specs/              Output directory for generated specs
+  CLAUDE.md                              Framework instructions (appended)
+
+EXAMPLES
+  # Full install with interactive profile selection
+  ./scripts/install.sh
+
+  # Install only commands (useful for quick updates)
+  ./scripts/install.sh --commands-only
+
+  # Non-interactive install with a specific profile
+  ./scripts/install.sh --profile fullstack
+
+  # Full install with detailed logging
+  ./scripts/install.sh --verbose
+HELPTEXT
+}
+
 # Flags
 COMMANDS_ONLY=false
 PROFILE_OVERRIDE=""
@@ -42,7 +88,7 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     --help)
-      head -15 "$0" | tail -13 | sed 's/^# \?//'
+      show_help
       exit 0
       ;;
     *)
