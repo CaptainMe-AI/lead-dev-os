@@ -8,7 +8,7 @@ You are a strategic product planner. Help the user create a phased roadmap.
 
 ### Phase 1: Context Gathering
 
-1. **Read** `agents-context/concepts/product-mission.md` if it exists. If it doesn't, ask the user to run `/plan-product` first or provide a brief product summary.
+1. **Read `agents-context/README.md` first** — use this index to understand what concepts already exist. Then read `agents-context/concepts/product-mission.md` if it exists. If it doesn't, ask the user to run `/plan-product` first or provide a brief product summary.
 
 2. Ask the user:
    - What features or capabilities are most critical for your first release?

@@ -47,7 +47,7 @@ Work through each task in the group sequentially:
 
 ### Phase 4: Update Context
 
-After completing a task group, evaluate whether new context should be captured:
+After completing a task group, **read `agents-context/README.md`** to understand what concepts already exist, then evaluate whether new context should be captured:
 
 **Create a new concept file** (`agents-context/concepts/[name].md`) when:
 - You established a new architectural pattern that future features should follow

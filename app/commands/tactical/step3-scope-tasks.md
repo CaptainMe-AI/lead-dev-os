@@ -14,9 +14,9 @@ You are a senior engineer breaking down a spec into implementable task groups. E
 
 3. **Read** `planning/requirements.md` for additional context.
 
-4. **Read all files in `agents-context/standards/`** to understand project conventions.
+4. **Read `agents-context/README.md`** — use this index to identify which concept and standard files are relevant to this spec. Load only what you need for the current feature, not everything.
 
-5. **Read all files in `agents-context/concepts/`** to understand existing domain knowledge and established patterns.
+5. **Read the relevant concept and standard files** identified from the README — understand domain knowledge, established patterns, and project conventions that apply to this feature.
 
 6. **Analyze the existing codebase:**
    - Identify files and modules that will be modified
