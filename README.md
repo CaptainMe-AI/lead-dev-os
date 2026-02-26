@@ -1,9 +1,13 @@
-# ✈️ lead-dev-os
+# 🚀 lead-dev-os 🚀 
+
+<p align="center">
+  <img src="images/banner.png" alt="lead-dev-os" width="800">
+</p>
 
 [![Tests](https://github.com/CaptainMe-AI/lead-dev-os/actions/workflows/actions.yml/badge.svg)](https://github.com/CaptainMe-AI/lead-dev-os/actions/workflows/actions.yml)
 
 
-`lead-dev-os` is a spec & context-aware framework for Claude Code development on large projects. It provides structured commands for product planning, spec writing, task scoping, and context-aware implementation.
+`lead-dev-os` is a spec & context-aware agentic kit for Claude Code development on large projects. It provides structured commands for product planning, spec writing, task scoping, and context-aware implementation.
 The context of the project is stored under `agents-context/` directory, it is domain specific and an agents is provided only the context it needs to perform its task.
 
 Think about it as a lead developer's main tool for guiding a team of AI agents in a project.
@@ -67,7 +71,7 @@ cd /path/to/your-project
 ```
 
 The installer is idempotent — safe to re-run. It will:
-- Overwrite commands, templates, and guides (framework-managed files)
+- Overwrite commands, templates, and guides (kit-managed files)
 - Preserve your `agents-context/concepts/` and `agents-context/standards/` content
 - Append to your existing `CLAUDE.md` without duplicating if the section already exists
 
@@ -105,7 +109,7 @@ your-project/
 │   └── specs/                              # Generated specs live here
 │       └── .gitkeep                        # Empty — populated by /step1-shape-spec
 │
-└── CLAUDE.md                               # Updated with lead-dev-os framework instructions
+└── CLAUDE.md                               # Updated with lead-dev-os kit instructions
 ```
 
 ### What each directory does
@@ -245,7 +249,7 @@ test_full_install — fresh install into empty project
   PASS: spec-template.md has content
   PASS: specs/.gitkeep exists
   PASS: CLAUDE.md created
-  PASS: CLAUDE.md has framework section
+  PASS: CLAUDE.md has kit section
 test_commands_only_flag — --commands-only skips context/templates
   PASS: commands installed
   PASS: commands installed
@@ -254,7 +258,7 @@ test_commands_only_flag — --commands-only skips context/templates
   PASS: CLAUDE.md not created with --commands-only
 test_claude_md_appended_to_existing — appends to existing CLAUDE.md
   PASS: preserves existing content
-  PASS: appends framework section
+  PASS: appends kit section
 test_no_git_directory_still_works — installs without .git
   PASS: commands still installed
   PASS: agents-context still created
