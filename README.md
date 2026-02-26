@@ -3,14 +3,33 @@
 [![Tests](https://github.com/CaptainMe-AI/agents-flight-deck/actions/workflows/actions.yml/badge.svg)](https://github.com/CaptainMe-AI/agents-flight-deck/actions/workflows/actions.yml)
 
 
-`agents-flight-deck` is a spec & context-driven framework for Claude Code development on large projects. It provides structured commands for product planning, spec writing, task scoping, and context-aware implementation.
-The context of the project is stored in `agents-context/` directory, it is domain specific and an agents is provided only the context it needs to perform its task.
+`agents-flight-deck` is a spec & context-aware framework for Claude Code development on large projects. It provides structured commands for product planning, spec writing, task scoping, and context-aware implementation.
+The context of the project is stored under `agents-context/` directory, it is domain specific and an agents is provided only the context it needs to perform its task.
 
 Think about it as a lead developer's main tool for guiding a team of AI agents in a project.
 When a Lead Developer has a team of engineers, their responsobilitiy is to guide them in the right direction. The Lead developer needs to explain the specific context and domain knowledge for the spec at hand only.
 
-When it comes to implementation, we take a different approach, where IN MOST cases, the Lead Developer is not directly involved in the implementation, but they need to review the atomicly before the scope is out.
 See [Recomendations for Development with `agents-flight-deck`](#recomendations-for-development-with-agents-flight-deck) for more details.
+
+## Key Principles & Concepts 
+
+### Spec-Driven Development
+- Spec is the contract, code follows
+- Requirements before implementation, always
+- Agents execute against testable acceptance criteria
+- Eliminates ambiguity-driven rework
+- Inspirations from [agent-os](https://github.com/buildermethods/agent-os) for spec-driven development, file organization and thourough prompting
+
+### Context-aware Implementation
+- **Composable** — Load only what you need for the current task
+- **Self-referencing** — Concepts link to related concepts
+- **Version-controlled** — Track evolution of ideas over time
+- **AI-friendly** — Agents load specific concepts as context before working
+- Inspirations from [agor](https://github.com/preset-io/agor) for organizing the context
+
+### PARA for AI Agents
+- [PARA method from Tiego Forte](https://www.buildingasecondbrain.com/)
+
 
 ## 📦 Installation
 
@@ -147,6 +166,9 @@ When agents-flight-deck releases new command versions, update without touching y
 
 ### Recomendations for development with `agents-flight-deck`
 
+
+# Contributing to `agents-flight-deck`
+We are open to contributions, please open an issue or a pull request. 
 
 ## 🧪 Testing
 
