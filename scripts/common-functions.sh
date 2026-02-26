@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# agents-flight-deck — Shared shell utilities
+# lead-dev-os — Shared shell utilities
 
 set -euo pipefail
 
@@ -15,24 +15,24 @@ FORCE=false
 
 # Print functions
 print_status() {
-  echo -e "${BLUE}[agents-flight-deck]${NC} $1"
+  echo -e "${BLUE}[lead-dev-os]${NC} $1"
 }
 
 print_success() {
-  echo -e "${GREEN}[agents-flight-deck]${NC} $1"
+  echo -e "${GREEN}[lead-dev-os]${NC} $1"
 }
 
 print_error() {
-  echo -e "${RED}[agents-flight-deck]${NC} $1" >&2
+  echo -e "${RED}[lead-dev-os]${NC} $1" >&2
 }
 
 print_warning() {
-  echo -e "${YELLOW}[agents-flight-deck]${NC} $1"
+  echo -e "${YELLOW}[lead-dev-os]${NC} $1"
 }
 
 print_verbose() {
   if [ "$VERBOSE" = true ]; then
-    echo -e "${BLUE}[agents-flight-deck]${NC} (verbose) $1"
+    echo -e "${BLUE}[lead-dev-os]${NC} (verbose) $1"
   fi
 }
 
@@ -77,7 +77,7 @@ confirm_overwrite() {
     return 0
   fi
   local answer
-  read -rp "$(echo -e "${YELLOW}[agents-flight-deck]${NC}") Overwrite $path? [y/N] " answer
+  read -rp "$(echo -e "${YELLOW}[lead-dev-os]${NC}") Overwrite $path? [y/N] " answer
   case "$answer" in
     [yY]|[yY][eE][sS]) return 0 ;;
     *) return 1 ;;
@@ -156,7 +156,7 @@ prompt_for_profile() {
   current="$(get_current_profile "$config_file")"
 
   echo ""
-  read -rp "$(echo -e "${BLUE}[agents-flight-deck]${NC}") Use default profile (${current})? [Y/n] " answer
+  read -rp "$(echo -e "${BLUE}[lead-dev-os]${NC}") Use default profile (${current})? [Y/n] " answer
   case "$answer" in
     [nN]|[nN][oO])
       # Show available profiles and let user pick
@@ -181,7 +181,7 @@ prompt_for_profile() {
       done <<< "$profiles"
 
       echo ""
-      read -rp "$(echo -e "${BLUE}[agents-flight-deck]${NC}") Select profile [1-${#profile_array[@]}]: " choice
+      read -rp "$(echo -e "${BLUE}[lead-dev-os]${NC}") Select profile [1-${#profile_array[@]}]: " choice
 
       if [[ "$choice" =~ ^[0-9]+$ ]] && [ "$choice" -ge 1 ] && [ "$choice" -le "${#profile_array[@]}" ]; then
         echo "${profile_array[$((choice - 1))]}"

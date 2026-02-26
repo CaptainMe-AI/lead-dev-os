@@ -71,7 +71,7 @@ Each standards file should follow this format:
 
 ### Phase 3: Output
 
-Save files to the appropriate subdirectory under `agents-context/standards/` (or `app/agents-context/standards/` if working in the agents-flight-deck repo itself).
+Save files to the appropriate subdirectory under `agents-context/standards/` (or `app/agents-context/standards/` if working in the lead-dev-os repo itself).
 
 Tell the user:
 - Which standards files were created

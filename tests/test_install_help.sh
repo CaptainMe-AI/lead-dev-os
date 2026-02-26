@@ -78,7 +78,7 @@ test_help_does_not_install() {
 
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --help) > /dev/null 2>&1
 
-  if [ ! -d "$TARGET/.claude" ] && [ ! -d "$TARGET/agents-context" ] && [ ! -d "$TARGET/agents-flight-deck" ] && [ ! -f "$TARGET/CLAUDE.md" ]; then
+  if [ ! -d "$TARGET/.claude" ] && [ ! -d "$TARGET/agents-context" ] && [ ! -d "$TARGET/lead-dev-os" ] && [ ! -f "$TARGET/CLAUDE.md" ]; then
     echo "  PASS: no files installed"
     PASS=$((PASS + 1))
   else
