@@ -1,5 +1,7 @@
 # agents-flight-deck
 
+[![Tests](https://github.com/CaptainMe-AI/agents-flight-deck/actions/workflows/actions.yml/badge.svg)](https://github.com/CaptainMe-AI/agents-flight-deck/actions/workflows/actions.yml)
+
 Command center for spec & context-driven Claude Code development on large projects in a mono repo or just diverse engineering logic.
 
 ## Installation

@@ -1,0 +1,24 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run unit tests
+        run: ./tests/test_common_functions.sh
+
+      - name: Run integration tests (fresh install)
+        run: ./tests/test_install_creates.sh
+
+      - name: Run integration tests (overwrite behavior)
+        run: ./tests/test_install_overwrites.sh
