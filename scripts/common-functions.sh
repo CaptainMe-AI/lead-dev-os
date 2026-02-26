@@ -11,6 +11,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 VERBOSE=false
+FORCE=false
 
 # Print functions
 print_status() {
@@ -67,12 +68,29 @@ copy_if_not_exists() {
   fi
 }
 
+confirm_overwrite() {
+  local path="$1"
+  if [ ! -f "$path" ]; then
+    return 0
+  fi
+  if [ "$FORCE" = true ]; then
+    return 0
+  fi
+  local answer
+  read -rp "$(echo -e "${YELLOW}[agents-flight-deck]${NC}") Overwrite $path? [y/N] " answer
+  case "$answer" in
+    [yY]|[yY][eE][sS]) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
 copy_with_warning() {
   local src="$1"
   local dest="$2"
   local label="${3:-file}"
-  if [ -f "$dest" ]; then
-    print_warning "$label already exists at $dest — overwriting"
+  if ! confirm_overwrite "$dest"; then
+    print_verbose "Skipped (user declined): $dest"
+    return 0
   fi
   cp "$src" "$dest"
   print_verbose "Copied: $src → $dest"

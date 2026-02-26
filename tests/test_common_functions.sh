@@ -130,10 +130,12 @@ test_copy_with_warning() {
   assert_file_exists "copies when dest missing" "$TMPDIR/dest.txt"
   assert_eq "content matches" "source content" "$(cat "$TMPDIR/dest.txt")"
 
-  # Modify dest, run again — SHOULD overwrite
+  # Modify dest, run again with FORCE — SHOULD overwrite
   echo "old content" > "$TMPDIR/dest.txt"
   echo "new source" > "$TMPDIR/src.txt"
+  FORCE=true
   copy_with_warning "$TMPDIR/src.txt" "$TMPDIR/dest.txt" "TestFile"
+  FORCE=false
   assert_eq "overwrites existing file" "new source" "$(cat "$TMPDIR/dest.txt")"
 
   teardown

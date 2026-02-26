@@ -6,6 +6,7 @@
 #
 # Options:
 #   --commands-only       Only update commands, skip context/standards/templates
+#   --force               Overwrite existing files without prompting
 #   --profile <name>      Use this profile (skip interactive prompt)
 #   --verbose             Show detailed output
 #   --help                Show this help message
@@ -41,6 +42,7 @@ OPTIONS
                     templates, and CLAUDE.md updates.
   --profile <name>  Use the named config profile instead of prompting
                     interactively (e.g. --profile fullstack).
+  --force           Overwrite existing files without prompting.
   --verbose         Show detailed output for every file operation.
   --help            Show this help message and exit.
 
@@ -83,6 +85,10 @@ while [[ $# -gt 0 ]]; do
       PROFILE_OVERRIDE="$2"
       shift 2
       ;;
+    --force)
+      FORCE=true
+      shift
+      ;;
     --verbose)
       VERBOSE=true
       shift
@@ -115,8 +121,13 @@ print_status "Installing commands..."
 for cmd_file in "$APP_DIR"/commands/strategic/*.md "$APP_DIR"/commands/tactical/*.md; do
   if [ -f "$cmd_file" ]; then
     filename="$(basename "$cmd_file")"
-    cp "$cmd_file" "$COMMANDS_DEST/$filename"
-    print_verbose "  Installed command: $filename"
+    dest_path="$COMMANDS_DEST/$filename"
+    if confirm_overwrite "$dest_path"; then
+      cp "$cmd_file" "$dest_path"
+      print_verbose "  Installed command: $filename"
+    else
+      print_verbose "  Skipped command: $filename"
+    fi
   fi
 done
 

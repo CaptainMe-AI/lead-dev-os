@@ -78,17 +78,17 @@ count_occurrences() {
 # --- Tests ---
 
 test_commands_overwritten() {
-  echo "test_commands_overwritten — commands are replaced on re-install"
+  echo "test_commands_overwritten — commands are replaced on re-install with --force"
   setup
 
   # First install
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
 
   # Modify a command file
   echo "user modified this" > "$TARGET/.claude/commands/agents-flight-deck/plan-product.md"
 
-  # Re-install
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
+  # Re-install with --force
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
 
   # Should be overwritten with original content
   assert_file_contains "command overwritten with original" "$TARGET/.claude/commands/agents-flight-deck/plan-product.md" "Plan Product"
@@ -107,15 +107,15 @@ test_commands_overwritten() {
 }
 
 test_templates_overwritten() {
-  echo "test_templates_overwritten — templates are replaced on re-install"
+  echo "test_templates_overwritten — templates are replaced on re-install with --force"
   setup
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
 
   # Modify a template
   echo "custom template" > "$TARGET/agents-flight-deck/templates/spec-template.md"
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
 
   # Should be overwritten
   assert_file_contains "template overwritten" "$TARGET/agents-flight-deck/templates/spec-template.md" "Spec:"
@@ -124,14 +124,14 @@ test_templates_overwritten() {
 }
 
 test_guides_overwritten() {
-  echo "test_guides_overwritten — guides are replaced on re-install"
+  echo "test_guides_overwritten — guides are replaced on re-install with --force"
   setup
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
 
   echo "custom guide" > "$TARGET/agents-context/guides/workflow.md"
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
 
   assert_file_contains "guide overwritten" "$TARGET/agents-context/guides/workflow.md" "Workflow Guide"
 
@@ -218,7 +218,7 @@ test_commands_only_preserves_everything() {
   echo "test_commands_only_preserves_everything — --commands-only updates only commands"
   setup
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
 
   # Add user content everywhere
   echo "# My Concept" > "$TARGET/agents-context/concepts/my-concept.md"
@@ -228,8 +228,8 @@ test_commands_only_preserves_everything() {
   # Modify a command
   echo "old command" > "$TARGET/.claude/commands/agents-flight-deck/plan-product.md"
 
-  # Re-install commands only
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --commands-only) > /dev/null 2>&1
+  # Re-install commands only with --force
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --commands-only) > /dev/null 2>&1
 
   # Command should be updated
   assert_file_contains "command updated" "$TARGET/.claude/commands/agents-flight-deck/plan-product.md" "Plan Product"
@@ -238,6 +238,48 @@ test_commands_only_preserves_everything() {
   assert_eq "concept preserved" "# My Concept" "$(cat "$TARGET/agents-context/concepts/my-concept.md")"
   assert_eq "guide NOT overwritten" "custom guide" "$(cat "$TARGET/agents-context/guides/workflow.md")"
   assert_eq "template NOT overwritten" "custom template" "$(cat "$TARGET/agents-flight-deck/templates/spec-template.md")"
+
+  teardown
+}
+
+test_no_overwrite_without_force() {
+  echo "test_no_overwrite_without_force — declining prompt preserves modified files"
+  setup
+
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
+
+  # Modify files in each overwrite category
+  echo "my custom command" > "$TARGET/.claude/commands/agents-flight-deck/plan-product.md"
+  echo "my custom guide" > "$TARGET/agents-context/guides/workflow.md"
+  echo "my custom template" > "$TARGET/agents-flight-deck/templates/spec-template.md"
+
+  # Re-install without --force, piping "n" to decline all prompts
+  yes n | (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1 || true
+
+  assert_eq "command preserved" "my custom command" "$(cat "$TARGET/.claude/commands/agents-flight-deck/plan-product.md")"
+  assert_eq "guide preserved" "my custom guide" "$(cat "$TARGET/agents-context/guides/workflow.md")"
+  assert_eq "template preserved" "my custom template" "$(cat "$TARGET/agents-flight-deck/templates/spec-template.md")"
+
+  teardown
+}
+
+test_force_flag_overwrites() {
+  echo "test_force_flag_overwrites — --force replaces modified files without prompting"
+  setup
+
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
+
+  # Modify files
+  echo "my custom command" > "$TARGET/.claude/commands/agents-flight-deck/plan-product.md"
+  echo "my custom guide" > "$TARGET/agents-context/guides/workflow.md"
+  echo "my custom template" > "$TARGET/agents-flight-deck/templates/spec-template.md"
+
+  # Re-install with --force
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
+
+  assert_file_contains "command overwritten" "$TARGET/.claude/commands/agents-flight-deck/plan-product.md" "Plan Product"
+  assert_file_contains "guide overwritten" "$TARGET/agents-context/guides/workflow.md" "Workflow Guide"
+  assert_file_contains "template overwritten" "$TARGET/agents-flight-deck/templates/spec-template.md" "Spec:"
 
   teardown
 }
@@ -255,6 +297,8 @@ test_standards_preserved
 test_specs_preserved
 test_claude_md_not_duplicated
 test_commands_only_preserves_everything
+test_no_overwrite_without_force
+test_force_flag_overwrites
 
 echo ""
 echo "=== Results: $PASS passed, $FAIL failed ==="
