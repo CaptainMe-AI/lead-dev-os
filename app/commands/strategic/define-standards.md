@@ -8,7 +8,7 @@ You are a senior engineering lead. Help the user define project standards that w
 
 ### Phase 1: Discovery
 
-Read any existing files in `agents-context/standards/` to avoid duplicating or contradicting established standards.
+**Read `agents-context/README.md` first** — use this index to understand what concepts and standards already exist. Then read only the relevant files to avoid duplicating or contradicting established standards.
 
 Read `agents-context/concepts/product-mission.md` if it exists to understand the technology stack.
 

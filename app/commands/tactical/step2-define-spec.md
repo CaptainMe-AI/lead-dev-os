@@ -16,10 +16,9 @@ You are a senior engineer writing a formal specification. Transform the raw requ
 
 4. **Read** any visual assets referenced in the requirements.
 
-5. **Search the codebase** for existing patterns relevant to this feature:
-   - Look for similar components, modules, or services
-   - Check `agents-context/standards/` for applicable conventions
-   - Check `agents-context/concepts/` for related domain knowledge
+5. **Read `agents-context/README.md`** — use this index to identify which concept and standard files are relevant to this feature. Load only what you need:
+   - Read relevant standards files for applicable conventions
+   - Read relevant concept files for related domain knowledge and source file paths they reference
    - Note anything that can be reused or extended
 
 ### Phase 2: Draft Specification
