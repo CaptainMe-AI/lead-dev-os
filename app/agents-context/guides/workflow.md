@@ -1,10 +1,10 @@
 # Workflow Guide
 
-How to use lead-dev-os for spec-driven development.
+How to use agents-flight-deck for spec-driven development.
 
 ## Overview
 
-lead-dev-os follows a **shape → define → scope → implement** workflow for building features. This ensures every feature is well-understood before implementation begins, and that implementation stays aligned with project conventions through context files.
+agents-flight-deck follows a **shape → define → scope → implement** workflow for building features. This ensures every feature is well-understood before implementation begins, and that implementation stays aligned with project conventions through context files.
 
 ## Strategic Commands (Run Once or Occasionally)
 

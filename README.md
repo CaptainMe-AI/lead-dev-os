@@ -1,4 +1,4 @@
-# lead-dev-os
+# agents-flight-deck
 
 Command center for spec & context-driven Claude Code development on large projects in a mono repo or just diverse engineering logic.
 
@@ -14,27 +14,27 @@ Command center for spec & context-driven Claude Code development on large projec
 Clone this repo somewhere on your machine, then run the install script from inside your target project:
 
 ```bash
-# Clone lead-dev-os (one-time)
-git clone https://github.com/your-org/lead-dev-os.git ~/lead-dev-os
+# Clone agents-flight-deck (one-time)
+git clone https://github.com/your-org/agents-flight-deck.git ~/agents-flight-deck
 
 # Navigate to your project
 cd /path/to/your-project
 
 # Run the installer
-~/lead-dev-os/scripts/install.sh
+~/agents-flight-deck/scripts/install.sh
 ```
 
 ### Installer options
 
 ```bash
 # Full install (commands + context + templates)
-~/lead-dev-os/scripts/install.sh
+~/agents-flight-deck/scripts/install.sh
 
 # Update commands only (preserves your context and standards)
-~/lead-dev-os/scripts/install.sh --commands-only
+~/agents-flight-deck/scripts/install.sh --commands-only
 
 # Verbose output for debugging
-~/lead-dev-os/scripts/install.sh --verbose
+~/agents-flight-deck/scripts/install.sh --verbose
 ```
 
 The installer is idempotent — safe to re-run. It will:
@@ -51,7 +51,7 @@ your-project/
 │
 ├── .claude/
 │   └── commands/
-│       └── lead-dev-os/                    # Slash commands available in Claude Code
+│       └── agents-flight-deck/                    # Slash commands available in Claude Code
 │           ├── plan-product.md             # /plan-product
 │           ├── plan-roadmap.md             # /plan-roadmap
 │           ├── define-standards.md         # /define-standards
@@ -68,7 +68,7 @@ your-project/
 │   └── guides/
 │       └── workflow.md                     # Overview of the shape → define → scope → implement workflow
 │
-├── lead-dev-os/
+├── agents-flight-deck/
 │   ├── templates/                          # Document structure templates
 │   │   ├── spec-template.md                # Spec document format
 │   │   ├── tasks-template.md               # Task groups format with context directives
@@ -76,26 +76,26 @@ your-project/
 │   └── specs/                              # Generated specs live here
 │       └── .gitkeep                        # Empty — populated by /step1-shape-spec
 │
-└── CLAUDE.md                               # Updated with lead-dev-os framework instructions
+└── CLAUDE.md                               # Updated with agents-flight-deck framework instructions
 ```
 
 ### What each directory does
 
 | Directory | Purpose | Managed by |
 |-----------|---------|------------|
-| `.claude/commands/lead-dev-os/` | Slash commands that appear in Claude Code | Installer (overwritten on update) |
+| `.claude/commands/agents-flight-deck/` | Slash commands that appear in Claude Code | Installer (overwritten on update) |
 | `agents-context/concepts/` | Project-specific domain knowledge and general guidance | You + commands + implementation |
 | `agents-context/standards/` | Coding standards, conventions, architecture patterns | `/define-standards` command |
 | `agents-context/guides/` | Workflow documentation | Installer (overwritten on update) |
-| `lead-dev-os/templates/` | Reusable document templates for specs and tasks | Installer (overwritten on update) |
-| `lead-dev-os/specs/` | Dated spec folders created by the tactical workflow | `/step1-shape-spec` and subsequent steps |
+| `agents-flight-deck/templates/` | Reusable document templates for specs and tasks | Installer (overwritten on update) |
+| `agents-flight-deck/specs/` | Dated spec folders created by the tactical workflow | `/step1-shape-spec` and subsequent steps |
 
 ### Spec folder structure
 
-Each feature produces a dated folder in `lead-dev-os/specs/`:
+Each feature produces a dated folder in `agents-flight-deck/specs/`:
 
 ```
-lead-dev-os/specs/
+agents-flight-deck/specs/
 └── 2026-02-25-user-auth/
     ├── planning/
     │   ├── initialization.md       # Raw idea captured in Step 1
@@ -129,10 +129,10 @@ Run the tactical commands sequentially for each feature:
 
 ### Updating commands
 
-When lead-dev-os releases new command versions, update without touching your project's context:
+When agents-flight-deck releases new command versions, update without touching your project's context:
 
 ```bash
-~/lead-dev-os/scripts/install.sh --commands-only
+~/agents-flight-deck/scripts/install.sh --commands-only
 ```
 
 ## Testing
@@ -201,9 +201,9 @@ test_full_install — fresh install into empty project
   PASS: standards/.gitkeep exists
   PASS: workflow.md installed
   PASS: workflow.md has content
-  PASS: lead-dev-os/ exists
-  PASS: lead-dev-os/templates/ exists
-  PASS: lead-dev-os/specs/ exists
+  PASS: agents-flight-deck/ exists
+  PASS: agents-flight-deck/templates/ exists
+  PASS: agents-flight-deck/specs/ exists
   PASS: spec-template.md installed
   PASS: tasks-template.md installed
   PASS: requirements-template.md installed
@@ -215,7 +215,7 @@ test_commands_only_flag — --commands-only skips context/templates
   PASS: commands installed
   PASS: commands installed
   PASS: agents-context/ not created with --commands-only
-  PASS: lead-dev-os/ not created with --commands-only
+  PASS: agents-flight-deck/ not created with --commands-only
   PASS: CLAUDE.md not created with --commands-only
 test_claude_md_appended_to_existing — appends to existing CLAUDE.md
   PASS: preserves existing content

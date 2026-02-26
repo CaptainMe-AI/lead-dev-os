@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# lead-dev-os — Shared shell utilities
+# agents-flight-deck — Shared shell utilities
 
 set -euo pipefail
 
@@ -14,24 +14,24 @@ VERBOSE=false
 
 # Print functions
 print_status() {
-  echo -e "${BLUE}[lead-dev-os]${NC} $1"
+  echo -e "${BLUE}[agents-flight-deck]${NC} $1"
 }
 
 print_success() {
-  echo -e "${GREEN}[lead-dev-os]${NC} $1"
+  echo -e "${GREEN}[agents-flight-deck]${NC} $1"
 }
 
 print_error() {
-  echo -e "${RED}[lead-dev-os]${NC} $1" >&2
+  echo -e "${RED}[agents-flight-deck]${NC} $1" >&2
 }
 
 print_warning() {
-  echo -e "${YELLOW}[lead-dev-os]${NC} $1"
+  echo -e "${YELLOW}[agents-flight-deck]${NC} $1"
 }
 
 print_verbose() {
   if [ "$VERBOSE" = true ]; then
-    echo -e "${BLUE}[lead-dev-os]${NC} (verbose) $1"
+    echo -e "${BLUE}[agents-flight-deck]${NC} (verbose) $1"
   fi
 }
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# lead-dev-os — Install into a target project
+# agents-flight-deck — Install into a target project
 #
 # Usage:
 #   ./scripts/install.sh [OPTIONS]
@@ -51,10 +51,10 @@ if [ ! -d "$TARGET_DIR/.git" ]; then
   print_warning "Target directory is not a git repository. Continuing anyway."
 fi
 
-print_status "Installing lead-dev-os into: $TARGET_DIR"
+print_status "Installing agents-flight-deck into: $TARGET_DIR"
 
 # --- Install Commands ---
-COMMANDS_DEST="$TARGET_DIR/.claude/commands/lead-dev-os"
+COMMANDS_DEST="$TARGET_DIR/.claude/commands/agents-flight-deck"
 ensure_dir "$COMMANDS_DEST"
 
 print_status "Installing commands..."
@@ -68,7 +68,7 @@ for cmd_file in "$APP_DIR"/commands/strategic/*.md "$APP_DIR"/commands/tactical/
   fi
 done
 
-print_success "Commands installed to .claude/commands/lead-dev-os/"
+print_success "Commands installed to .claude/commands/agents-flight-deck/"
 
 if [ "$COMMANDS_ONLY" = true ]; then
   print_success "Done (commands only)."
@@ -93,8 +93,8 @@ done
 
 print_success "Context installed to agents-context/"
 
-# --- Install Templates & Specs (inside lead-dev-os/) ---
-FRAMEWORK_DEST="$TARGET_DIR/lead-dev-os"
+# --- Install Templates & Specs (inside agents-flight-deck/) ---
+FRAMEWORK_DEST="$TARGET_DIR/agents-flight-deck"
 
 print_status "Installing framework files..."
 
@@ -109,7 +109,7 @@ done
 # Specs directory
 ensure_gitkeep "$FRAMEWORK_DEST/specs"
 
-print_success "Framework files installed to lead-dev-os/"
+print_success "Framework files installed to agents-flight-deck/"
 
 # --- Install/Update CLAUDE.md ---
 print_status "Updating CLAUDE.md..."
@@ -119,19 +119,19 @@ CLAUDE_MD_DEST="$TARGET_DIR/CLAUDE.md"
 
 if [ -f "$CLAUDE_MD_SRC" ]; then
   if [ -f "$CLAUDE_MD_DEST" ]; then
-    # Check if lead-dev-os section already exists
-    if grep -q "## lead-dev-os Framework" "$CLAUDE_MD_DEST" 2>/dev/null; then
-      print_warning "CLAUDE.md already contains lead-dev-os section — skipping."
-      print_warning "To update, remove the '## lead-dev-os Framework' section and re-run."
+    # Check if agents-flight-deck section already exists
+    if grep -q "## agents-flight-deck Framework" "$CLAUDE_MD_DEST" 2>/dev/null; then
+      print_warning "CLAUDE.md already contains agents-flight-deck section — skipping."
+      print_warning "To update, remove the '## agents-flight-deck Framework' section and re-run."
     else
       # Append framework instructions to existing CLAUDE.md
       echo "" >> "$CLAUDE_MD_DEST"
       cat "$CLAUDE_MD_SRC" >> "$CLAUDE_MD_DEST"
-      print_success "Appended lead-dev-os instructions to existing CLAUDE.md"
+      print_success "Appended agents-flight-deck instructions to existing CLAUDE.md"
     fi
   else
     cp "$CLAUDE_MD_SRC" "$CLAUDE_MD_DEST"
-    print_success "Created CLAUDE.md with lead-dev-os instructions"
+    print_success "Created CLAUDE.md with agents-flight-deck instructions"
   fi
 fi
 
@@ -140,10 +140,10 @@ echo ""
 print_success "Installation complete!"
 echo ""
 print_status "Installed structure:"
-print_status "  .claude/commands/lead-dev-os/  — Slash commands"
+print_status "  .claude/commands/agents-flight-deck/  — Slash commands"
 print_status "  agents-context/                — Knowledge base (concepts, standards, guides)"
-print_status "  lead-dev-os/templates/         — Document templates"
-print_status "  lead-dev-os/specs/             — Spec output directory"
+print_status "  agents-flight-deck/templates/         — Document templates"
+print_status "  agents-flight-deck/specs/             — Spec output directory"
 echo ""
 print_status "Get started:"
 print_status "  1. Run /plan-product to define your product mission"

@@ -1,4 +1,4 @@
-# lead-dev-os — Initial Plan
+# agents-flight-deck — Initial Plan
 
 ## Vision
 
@@ -9,7 +9,7 @@ A spec & context-driven framework for Claude Code development on large projects.
 ## Directory Structure
 
 ```
-lead-dev-os/
+agents-flight-deck/
 ├── .github/
 │   ├── CODE_OF_CONDUCT.md
 │   └── SECURITY.md
@@ -37,7 +37,7 @@ lead-dev-os/
 │   └── CLAUDE.md                       # Framework instructions injected into target project
 │
 ├── scripts/                            # Installation & setup scripts
-│   ├── install.sh                      # Install lead-dev-os into a target project
+│   ├── install.sh                      # Install agents-flight-deck into a target project
 │   └── common-functions.sh             # Shared shell utilities
 │
 ├── tests/                              # Tests for the framework itself
@@ -146,9 +146,9 @@ Concept files are **project-specific, per-feature/domain knowledge** — not gen
 Modeled after agent-os installation script. Key behaviors:
 - Accepts `--commands-only` flag to update commands without overwriting context/standards
 - Accepts `--verbose` flag for detailed output
-- Validates it's not running inside the lead-dev-os repo itself
-- Copies `app/` contents into the target project's `lead-dev-os/` directory
-- Installs commands to `.claude/commands/lead-dev-os/`
+- Validates it's not running inside the agents-flight-deck repo itself
+- Copies `app/` contents into the target project's `agents-flight-deck/` directory
+- Installs commands to `.claude/commands/agents-flight-deck/`
 - Creates `specs/` directory
 - Seeds empty context directories with `.gitkeep`
 - Merges or creates `CLAUDE.md` in the target project
@@ -192,7 +192,7 @@ When `scripts/install.sh` runs in a target project:
 target-project/
 ├── .claude/
 │   └── commands/
-│       └── lead-dev-os/               # Slash commands available in Claude Code
+│       └── agents-flight-deck/               # Slash commands available in Claude Code
 │           ├── plan-product.md
 │           ├── plan-roadmap.md
 │           ├── define-standards.md
@@ -200,10 +200,10 @@ target-project/
 │           ├── step2-define-spec.md
 │           ├── step3-scope-tasks.md
 │           └── step4-implement-tasks.md
-├── lead-dev-os/
+├── agents-flight-deck/
 │   ├── context/
 │   │   ├── concepts/                  # Empty, populated per-project by user & commands
-│   │   ├── standards/                 # Seeded from lead-dev-os defaults or empty
+│   │   ├── standards/                 # Seeded from agents-flight-deck defaults or empty
 │   │   └── guides/
 │   ├── templates/
 │   │   ├── spec-template.md
