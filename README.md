@@ -1,10 +1,18 @@
-# agents-flight-deck
+# ✈️ agents-flight-deck
 
 [![Tests](https://github.com/CaptainMe-AI/agents-flight-deck/actions/workflows/actions.yml/badge.svg)](https://github.com/CaptainMe-AI/agents-flight-deck/actions/workflows/actions.yml)
 
-Command center for spec & context-driven Claude Code development on large projects in a mono repo or just diverse engineering logic.
 
-## Installation
+`agents-flight-deck` is a spec & context-driven framework for Claude Code development on large projects. It provides structured commands for product planning, spec writing, task scoping, and context-aware implementation.
+The context of the project is stored in `agents-context/` directory, it is domain specific and an agents is provided only the context it needs to perform its task.
+
+Think about it as a lead developer's main tool for guiding a team of AI agents in a project.
+When a Lead Developer has a team of engineers, their responsobilitiy is to guide them in the right direction. The Lead developer needs to explain the specific context and domain knowledge for the spec at hand only.
+
+When it comes to implementation, we take a different approach, where IN MOST cases, the Lead Developer is not directly involved in the implementation, but they need to review the atomicly before the scope is out.
+See [Recomendations for Development with `agents-flight-deck`](#recomendations-for-development-with-agents-flight-deck) for more details.
+
+## 📦 Installation
 
 ### Prerequisites
 
@@ -44,7 +52,7 @@ The installer is idempotent — safe to re-run. It will:
 - Preserve your `agents-context/concepts/` and `agents-context/standards/` content
 - Append to your existing `CLAUDE.md` without duplicating if the section already exists
 
-## What gets installed
+## 🗂️ What gets installed
 
 After running `install.sh` in your project, you'll have:
 
@@ -106,9 +114,9 @@ agents-flight-deck/specs/
     └── tasks.md                    # Context-aware task groups from Step 3
 ```
 
-## Usage
+## 🚀 Usage
 
-### Getting started (new project)
+### 🧭 Getting started (new project)
 
 Run the strategic commands once to establish your project foundation:
 
@@ -118,7 +126,7 @@ Run the strategic commands once to establish your project foundation:
 /plan-roadmap          → Creates prioritized feature roadmap with phases
 ```
 
-### Building a feature
+### 🔨 Building a feature
 
 Run the tactical commands sequentially for each feature:
 
@@ -137,7 +145,10 @@ When agents-flight-deck releases new command versions, update without touching y
 ~/agents-flight-deck/scripts/install.sh --commands-only
 ```
 
-## Testing
+### Recomendations for development with `agents-flight-deck`
+
+
+## 🧪 Testing
 
 Tests live in `tests/` and cover both unit and integration behavior of the install script.
 
@@ -261,6 +272,10 @@ test_commands_only_preserves_everything — --commands-only updates only command
 === Results: 19 passed, 0 failed ===
 ```
 
-## License
+## 💬 Support
+
+For support, please open a [GitHub issue](https://github.com/CaptainMe-AI/agents-flight-deck/issues). We welcome bug reports, feature requests, and questions about using Spec-Driven Development.
+
+## 📄 License
 
 MIT License
