@@ -50,6 +50,7 @@ test_help_prints_all_sections() {
   assert_output_contains "contains EXAMPLES section" "$help_output" "EXAMPLES"
   assert_output_contains "documents --commands-only flag" "$help_output" "\-\-commands-only"
   assert_output_contains "documents --profile flag" "$help_output" "\-\-profile"
+  assert_output_contains "documents --force flag" "$help_output" "\-\-force"
   assert_output_contains "documents --verbose flag" "$help_output" "\-\-verbose"
   assert_output_contains "documents --help flag" "$help_output" "\-\-help"
 
