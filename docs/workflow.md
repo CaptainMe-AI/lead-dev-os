@@ -6,7 +6,7 @@ nav_order: 3
 
 # Workflow
 
-lead-dev-os uses a 4-step tactical workflow to go from idea to shipped feature. Each step produces an artifact that feeds into the next.
+lead-dev-os uses a 3-step tactical workflow to go from idea to shipped feature. Each step produces an artifact that feeds into the next.
 
 ## Getting started (new project)
 
@@ -26,19 +26,15 @@ These are one-time setup skills. They populate `agents-context/` with the standa
 
 Run the tactical skills sequentially for each feature:
 
-### Step 1: Shape (`/step1-shape-spec`)
+### Step 1: Write Spec (`/step1-write-spec`)
 
-Interactive Q&A session to gather requirements. The agent asks targeted questions about the feature, edge cases, constraints, and dependencies. Produces a `requirements.md` with structured answers.
+Interactive Q&A session to gather requirements, then formalizes into a structured spec with numbered requirements (`FR-001`, `FR-002`, etc.). Produces `requirements.md` and `spec.md` — the contract that implementation executes against.
 
-### Step 2: Define (`/step2-define-spec`)
-
-Formalizes the gathered requirements into a structured spec with numbered requirements (`FR-001`, `FR-002`, etc.). Each requirement is testable and unambiguous. Produces `spec.md` — the contract that implementation executes against.
-
-### Step 3: Scope (`/step3-scope-tasks`)
+### Step 2: Scope (`/step2-scope-tasks`)
 
 Breaks the spec into task groups with explicit context directives. Each task group declares which files from `agents-context/` to load before executing. Produces `tasks.md` with atomic, implementable work items.
 
-### Step 4: Implement (`/step4-implement-tasks`)
+### Step 3: Implement (`/step3-implement-tasks`)
 
 Context-aware execution of task groups. The agent loads only the context it needs for each task group, implements the code, and runs tests. See [Implementation]({{ site.baseurl }}/implementation) for the three execution modes.
 
@@ -54,8 +50,8 @@ lead-dev-os/specs/
     ├── planning/
     │   ├── initialization.md       # Raw idea captured in Step 1
     │   └── requirements.md         # Structured Q&A from Step 1
-    ├── spec.md                     # Formal specification from Step 2
-    └── tasks.md                    # Context-aware task groups from Step 3
+    ├── spec.md                     # Formal specification from Step 1
+    └── tasks.md                    # Context-aware task groups from Step 2
 ```
 
 ## Context philosophy

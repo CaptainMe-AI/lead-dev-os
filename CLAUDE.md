@@ -36,19 +36,15 @@ lead-dev-os/
 │   │   │       ├── template.md
 │   │   │       └── examples/
 │   │   └── tactical/                  # Spec-driven implementation skills
-│   │       ├── step1-shape-spec/
+│   │       ├── step1-write-spec/
 │   │       │   ├── SKILL.md
 │   │       │   ├── template.md
 │   │       │   └── examples/
-│   │       ├── step2-define-spec/
+│   │       ├── step2-scope-tasks/
 │   │       │   ├── SKILL.md
 │   │       │   ├── template.md
 │   │       │   └── examples/
-│   │       ├── step3-scope-tasks/
-│   │       │   ├── SKILL.md
-│   │       │   ├── template.md
-│   │       │   └── examples/
-│   │       └── step4-implement-tasks/
+│   │       └── step3-implement-tasks/
 │   │           └── SKILL.md
 │   ├── agents-context/                # Modular knowledge base (installed top-level)
 │   │   ├── concepts/                  # Project-specific domain knowledge
@@ -71,16 +67,15 @@ lead-dev-os/
 - `app/` contains everything that gets copied into target projects via `scripts/install.sh`
 - Skills in `app/skills/` are installed as `.claude/skills/<category>/<skill-name>/SKILL.md` in the target project, preserving directory structure
 - `app/agents-context/` is installed as top-level `agents-context/` in the target project
-- Templates are co-located with their skills (e.g., `step1-shape-spec/template.md`)
+- Templates are co-located with their skills (e.g., `step1-write-spec/template.md`)
 - Specs go into `lead-dev-os/specs/` directory in the target project
 - `app/CLAUDE.md` gets appended to the target project's CLAUDE.md
 
-## Workflow (4 steps)
+## Workflow (3 steps)
 
-1. `/step1-shape-spec` — Interactive Q&A to gather requirements
-2. `/step2-define-spec` — Formalize into structured spec with FR-### requirements
-3. `/step3-scope-tasks` — Break into task groups with explicit context directives
-4. `/step4-implement-tasks` — Context-aware execution of task groups
+1. `/step1-write-spec` — Interactive Q&A to gather requirements, then formalize into structured spec
+2. `/step2-scope-tasks` — Break into task groups with explicit context directives
+3. `/step3-implement-tasks` — Context-aware execution of task groups
 
 ## Context Philosophy
 

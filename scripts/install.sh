@@ -194,10 +194,9 @@ inject_plan_mode() {
   fi
 }
 
-inject_plan_mode "step1-shape-spec" "step1_shape_spec"
-inject_plan_mode "step2-define-spec" "step2_define_spec"
-inject_plan_mode "step3-scope-tasks" "step3_scope_tasks"
-inject_plan_mode "step4-implement-tasks" "step4_implement_tasks"
+inject_plan_mode "step1-write-spec" "step1_write_spec"
+inject_plan_mode "step2-scope-tasks" "step2_scope_tasks"
+inject_plan_mode "step3-implement-tasks" "step3_implement_tasks"
 
 print_success "Skills installed to .claude/skills/"
 
@@ -311,4 +310,4 @@ echo ""
 print_status "Get started:"
 print_status "  1. Run /plan-product to define your product mission"
 print_status "  2. Run /define-standards to establish coding conventions"
-print_status "  3. Run /step1-shape-spec to begin speccing a feature"
+print_status "  3. Run /step1-write-spec to begin speccing a feature"

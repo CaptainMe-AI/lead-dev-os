@@ -1,16 +1,16 @@
 ---
-name: step1-shape-spec
-description: Shape a new feature through structured Q&A, research, and visual analysis.
+name: step1-write-spec
+description: Gather requirements through structured Q&A, then formalize into a specification document.
 disable-model-invocation: true
 ---
 
-# Step 1: Shape Spec
+# Step 1: Write Spec
 
-Interactively gather requirements for a new feature through structured Q&A, research, and visual analysis.
+Interactively gather requirements for a new feature through structured Q&A, research, and visual analysis, then formalize into a structured specification document.
 
 ## Instructions
 
-You are a senior product engineer conducting a requirements discovery session. Your goal is to deeply understand what needs to be built before any code is written.
+You are a senior product engineer conducting a requirements discovery session and writing a formal specification. Your goal is to deeply understand what needs to be built and produce an implementable spec before any code is written.
 
 {{...INSERT-PLAN-MODE-HERE...}}
 
@@ -87,7 +87,7 @@ After receiving the user's answers:
    - Check filenames for low-fidelity indicators (`lofi`, `lo-fi`, `wireframe`, `sketch`, `rough`) — if found, note that design details may change
 
 4. **If the user provided paths to similar features:**
-   - Document these paths for the spec-writer to reference later
+   - Document these paths for reference later
    - Do NOT explore them yourself at this stage
 
 ### Phase 5: Follow-up Questions (Round 2)
@@ -104,10 +104,39 @@ If needed, ask **1-3 targeted follow-up questions**. If answers from Round 1 are
 
 Save all findings to `specs/YYYY-MM-DD-<spec-name>/planning/requirements.md`.
 
-Generate the requirements document using the template in [template.md](template.md).
+Generate the requirements document using the requirements template section in [template.md](template.md).
 For a filled-in example, see [examples/user-profile-feature.md](examples/user-profile-feature.md).
 
-### Phase 7: Handoff
+### Phase 7: Load Spec Context
+
+Now prepare to formalize the requirements into a specification:
+
+1. **Read** `planning/requirements.md` from the spec folder (just saved in Phase 6).
+
+2. **Read** `planning/initialization.md` for the original idea.
+
+3. **Read** any visual assets referenced in the requirements.
+
+4. **Read `agents-context/README.md`** — use this index to identify which concept and standard files are relevant to this feature. Load only what you need:
+   - Read relevant standards files for applicable conventions
+   - Read relevant concept files for related domain knowledge and source file paths they reference
+   - Note anything that can be reused or extended
+
+### Phase 8: Draft Specification
+
+Generate `spec.md` in the spec folder using the spec template section in [template.md](template.md).
+For a filled-in example, see [examples/user-profile-feature.md](examples/user-profile-feature.md).
+
+Fill in every section with concrete values derived from the requirements.
+
+### Phase 9: Review & Save
+
+1. Present the spec to the user for review.
+2. Ask: "Does this spec accurately capture what you want to build? Any changes needed?"
+3. Incorporate feedback if provided.
+4. Save the final spec to `specs/YYYY-MM-DD-<spec-name>/spec.md`.
+
+### Phase 10: Handoff
 
 Assess the feature size based on everything gathered:
 - **Small** — Single component or minor change, limited scope, few integration points
@@ -116,5 +145,6 @@ Assess the feature size based on everything gathered:
 
 Tell the user:
 - "Requirements saved to `specs/YYYY-MM-DD-<spec-name>/planning/requirements.md`"
+- "Specification saved to `specs/YYYY-MM-DD-<spec-name>/spec.md`"
 - **"Estimated size: [Small/Medium/Large]"** — with a one-line rationale
-- "Run `/step2-define-spec` to formalize these into a structured specification."
+- "Run `/step2-scope-tasks` to break this spec into implementable task groups."

@@ -53,10 +53,9 @@ profiles:
       react: true
       postgresql: true
     plan_mode:
-      step1_shape_spec: true
-      step2_define_spec: true
-      step3_scope_tasks: true
-      step4_implement_tasks: false   # skip planning for implementation
+      step1_write_spec: true
+      step2_scope_tasks: true
+      step3_implement_tasks: false   # skip planning for implementation
 ```
 
 You can define multiple profiles and switch between them via `current_profile`:
@@ -70,19 +69,17 @@ profiles:
       python: true
       fastapi: true
     plan_mode:
-      step1_shape_spec: true
-      step2_define_spec: true
-      step3_scope_tasks: true
-      step4_implement_tasks: true
+      step1_write_spec: true
+      step2_scope_tasks: true
+      step3_implement_tasks: true
   frontend:
     stack:
       react: true
       typescript: true
     plan_mode:
-      step1_shape_spec: false
-      step2_define_spec: false
-      step3_scope_tasks: true
-      step4_implement_tasks: true
+      step1_write_spec: false
+      step2_scope_tasks: true
+      step3_implement_tasks: true
 ```
 
 Select a profile at install time with `--profile`:
@@ -133,19 +130,15 @@ your-project/
 │       │       ├── template.md
 │       │       └── examples/
 │       └── tactical/
-│           ├── step1-shape-spec/              # /step1-shape-spec
+│           ├── step1-write-spec/              # /step1-write-spec
 │           │   ├── SKILL.md
 │           │   ├── template.md
 │           │   └── examples/
-│           ├── step2-define-spec/             # /step2-define-spec
+│           ├── step2-scope-tasks/             # /step2-scope-tasks
 │           │   ├── SKILL.md
 │           │   ├── template.md
 │           │   └── examples/
-│           ├── step3-scope-tasks/             # /step3-scope-tasks
-│           │   ├── SKILL.md
-│           │   ├── template.md
-│           │   └── examples/
-│           └── step4-implement-tasks/         # /step4-implement-tasks
+│           └── step3-implement-tasks/         # /step3-implement-tasks
 │               └── SKILL.md
 │
 ├── agents-context/                            # Top-level knowledge base
@@ -168,7 +161,7 @@ your-project/
 | **agents-context/concepts/** | Domain knowledge and general guidance | You + skills + implementation |
 | **agents-context/standards/** | Coding standards, conventions, patterns | /define-standards skill |
 | **agents-context/guides/** | Workflow documentation | Installer (overwritten on update) |
-| **lead-dev-os/specs/** | Dated spec folders from the workflow | /step1-shape-spec and subsequent steps |
+| **lead-dev-os/specs/** | Dated spec folders from the workflow | /step1-write-spec and subsequent steps |
 
 ## Updating skills
 

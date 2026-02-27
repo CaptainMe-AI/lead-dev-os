@@ -315,10 +315,9 @@ profiles:
       python: true
       fastapi: true
     plan_mode:
-      step1_shape_spec: true
-      step2_define_spec: true
-      step3_scope_tasks: true
-      step4_implement_tasks: true
+      step1_write_spec: true
+      step2_scope_tasks: true
+      step3_implement_tasks: true
 EOF
 
   local result
@@ -342,18 +341,18 @@ profiles:
     stack:
       python: true
     plan_mode:
-      step1_shape_spec: true
-      step2_define_spec: false
+      step1_write_spec: true
+      step2_scope_tasks: false
 EOF
 
   local result
-  result="$(get_plan_mode "$ROOT_DIR/config.local.yml" "step1_shape_spec")"
+  result="$(get_plan_mode "$ROOT_DIR/config.local.yml" "step1_write_spec")"
   assert_eq "step1 plan mode true" "true" "$result"
 
-  result="$(get_plan_mode "$ROOT_DIR/config.local.yml" "step2_define_spec")"
+  result="$(get_plan_mode "$ROOT_DIR/config.local.yml" "step2_scope_tasks")"
   assert_eq "step2 plan mode false" "false" "$result"
 
-  result="$(get_plan_mode "$ROOT_DIR/config.local.yml" "step3_scope_tasks")"
+  result="$(get_plan_mode "$ROOT_DIR/config.local.yml" "step3_implement_tasks")"
   assert_eq "missing step returns false" "false" "$result"
 
   rm -f "$ROOT_DIR/config.local.yml"
@@ -373,7 +372,7 @@ profiles:
 EOF
 
   local result
-  result="$(get_plan_mode "$ROOT_DIR/config.local.yml" "step1_shape_spec")"
+  result="$(get_plan_mode "$ROOT_DIR/config.local.yml" "step1_write_spec")"
   assert_eq "no plan_mode section returns false" "false" "$result"
 
   rm -f "$ROOT_DIR/config.local.yml"
@@ -392,14 +391,14 @@ profiles:
     stack:
       python: true
     plan_mode:
-      step1_shape_spec: true
-      step4_implement_tasks: false
+      step1_write_spec: true
+      step3_implement_tasks: false
 EOF
 
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   # step1 should have plan mode injected (placeholder replaced)
-  if grep -q "## Planning" "$TARGET/.claude/skills/tactical/step1-shape-spec/SKILL.md"; then
+  if grep -q "## Planning" "$TARGET/.claude/skills/tactical/step1-write-spec/SKILL.md"; then
     echo "  PASS: step1 has plan mode injected"
     PASS=$((PASS + 1))
   else
@@ -408,7 +407,7 @@ EOF
   fi
 
   # step1 should NOT have the placeholder anymore
-  if grep -q "INSERT-PLAN-MODE-HERE" "$TARGET/.claude/skills/tactical/step1-shape-spec/SKILL.md"; then
+  if grep -q "INSERT-PLAN-MODE-HERE" "$TARGET/.claude/skills/tactical/step1-write-spec/SKILL.md"; then
     echo "  FAIL: step1 still has placeholder"
     FAIL=$((FAIL + 1))
   else
@@ -416,20 +415,20 @@ EOF
     PASS=$((PASS + 1))
   fi
 
-  # step4 should have placeholder removed (plan_mode false)
-  if grep -q "INSERT-PLAN-MODE-HERE" "$TARGET/.claude/skills/tactical/step4-implement-tasks/SKILL.md"; then
-    echo "  FAIL: step4 still has placeholder"
+  # step3 should have placeholder removed (plan_mode false)
+  if grep -q "INSERT-PLAN-MODE-HERE" "$TARGET/.claude/skills/tactical/step3-implement-tasks/SKILL.md"; then
+    echo "  FAIL: step3 still has placeholder"
     FAIL=$((FAIL + 1))
   else
-    echo "  PASS: step4 placeholder removed"
+    echo "  PASS: step3 placeholder removed"
     PASS=$((PASS + 1))
   fi
 
-  if grep -q "## Planning" "$TARGET/.claude/skills/tactical/step4-implement-tasks/SKILL.md"; then
-    echo "  FAIL: step4 should NOT have plan mode injected"
+  if grep -q "## Planning" "$TARGET/.claude/skills/tactical/step3-implement-tasks/SKILL.md"; then
+    echo "  FAIL: step3 should NOT have plan mode injected"
     FAIL=$((FAIL + 1))
   else
-    echo "  PASS: step4 does not have plan mode"
+    echo "  PASS: step3 does not have plan mode"
     PASS=$((PASS + 1))
   fi
 

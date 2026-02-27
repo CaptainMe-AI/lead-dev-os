@@ -94,29 +94,26 @@ test_full_install() {
   assert_file_exists "define-standards example installed" "$skills_dir/strategic/define-standards/examples/python-fastapi-standards.md"
 
   # Tactical skills
-  assert_file_exists "step1-shape-spec SKILL.md installed" "$skills_dir/tactical/step1-shape-spec/SKILL.md"
-  assert_file_exists "step2-define-spec SKILL.md installed" "$skills_dir/tactical/step2-define-spec/SKILL.md"
-  assert_file_exists "step3-scope-tasks SKILL.md installed" "$skills_dir/tactical/step3-scope-tasks/SKILL.md"
-  assert_file_exists "step4-implement-tasks SKILL.md installed" "$skills_dir/tactical/step4-implement-tasks/SKILL.md"
+  assert_file_exists "step1-write-spec SKILL.md installed" "$skills_dir/tactical/step1-write-spec/SKILL.md"
+  assert_file_exists "step2-scope-tasks SKILL.md installed" "$skills_dir/tactical/step2-scope-tasks/SKILL.md"
+  assert_file_exists "step3-implement-tasks SKILL.md installed" "$skills_dir/tactical/step3-implement-tasks/SKILL.md"
 
   # Templates co-located with skills
-  assert_file_exists "step1 template.md installed" "$skills_dir/tactical/step1-shape-spec/template.md"
-  assert_file_exists "step2 template.md installed" "$skills_dir/tactical/step2-define-spec/template.md"
-  assert_file_exists "step3 template.md installed" "$skills_dir/tactical/step3-scope-tasks/template.md"
+  assert_file_exists "step1 template.md installed" "$skills_dir/tactical/step1-write-spec/template.md"
+  assert_file_exists "step2 template.md installed" "$skills_dir/tactical/step2-scope-tasks/template.md"
 
   # Examples co-located with skills
-  assert_file_exists "step1 example installed" "$skills_dir/tactical/step1-shape-spec/examples/user-profile-feature.md"
-  assert_file_exists "step2 example installed" "$skills_dir/tactical/step2-define-spec/examples/user-profile-feature.md"
-  assert_file_exists "step3 example installed" "$skills_dir/tactical/step3-scope-tasks/examples/user-profile-feature.md"
+  assert_file_exists "step1 example installed" "$skills_dir/tactical/step1-write-spec/examples/user-profile-feature.md"
+  assert_file_exists "step2 example installed" "$skills_dir/tactical/step2-scope-tasks/examples/user-profile-feature.md"
 
-  # Verify SKILL.md count (3 strategic + 4 tactical = 7)
+  # Verify SKILL.md count (3 strategic + 3 tactical = 6)
   local skill_count
   skill_count="$(find "$skills_dir" -name 'SKILL.md' | wc -l | tr -d ' ')"
-  if [ "$skill_count" -eq 7 ]; then
-    echo "  PASS: exactly 7 SKILL.md files installed"
+  if [ "$skill_count" -eq 6 ]; then
+    echo "  PASS: exactly 6 SKILL.md files installed"
     PASS=$((PASS + 1))
   else
-    echo "  FAIL: expected 7 SKILL.md files, got $skill_count"
+    echo "  FAIL: expected 6 SKILL.md files, got $skill_count"
     FAIL=$((FAIL + 1))
   fi
 
@@ -151,7 +148,7 @@ test_skills_only_flag() {
 
   # Skills should exist
   assert_file_exists "skills installed" "$TARGET/.claude/skills/strategic/plan-product/SKILL.md"
-  assert_file_exists "skills installed" "$TARGET/.claude/skills/tactical/step1-shape-spec/SKILL.md"
+  assert_file_exists "skills installed" "$TARGET/.claude/skills/tactical/step1-write-spec/SKILL.md"
 
   # Context, CLAUDE.md should NOT exist
   if [ ! -d "$TARGET/agents-context" ]; then

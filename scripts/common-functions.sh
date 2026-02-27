@@ -198,7 +198,7 @@ prompt_for_profile() {
 
 # Returns "true" or "false" for a plan_mode step in a profile
 # Usage: get_plan_mode <config_file> <step_key> [profile_name]
-# Example: get_plan_mode config.default.yml step1_shape_spec
+# Example: get_plan_mode config.default.yml step1_write_spec
 get_plan_mode() {
   local config_file="$1"
   local step_key="$2"
