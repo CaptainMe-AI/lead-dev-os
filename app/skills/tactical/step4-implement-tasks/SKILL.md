@@ -1,3 +1,9 @@
+---
+name: step4-implement-tasks
+description: Implement tasks from a scoped task breakdown.
+disable-model-invocation: true
+---
+
 # Step 4: Implement Tasks
 
 Execute task groups sequentially with full context awareness.

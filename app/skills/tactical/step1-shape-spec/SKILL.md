@@ -1,3 +1,9 @@
+---
+name: step1-shape-spec
+description: Shape a new feature through structured Q&A, research, and visual analysis.
+disable-model-invocation: true
+---
+
 # Step 1: Shape Spec
 
 Interactively gather requirements for a new feature through structured Q&A, research, and visual analysis.
@@ -96,74 +102,10 @@ If needed, ask **1-3 targeted follow-up questions**. If answers from Round 1 are
 
 ### Phase 6: Save Requirements
 
-Save all findings to `specs/YYYY-MM-DD-<spec-name>/planning/requirements.md`:
+Save all findings to `specs/YYYY-MM-DD-<spec-name>/planning/requirements.md`.
 
-```markdown
-# Spec Requirements: [Feature Name]
-
-## Initial Description
-> [User's original description from initialization.md]
-
-## Requirements Discussion
-
-### First Round Questions
-
-**Q1:** [Question]
-**Answer:** [User's answer]
-
-**Q2:** [Question]
-**Answer:** [User's answer]
-
-<!-- ... all Q&A pairs ... -->
-
-### Existing Code to Reference
-
-**From Concept Files:**
-- Concept: [concept filename] — Related source: `[path referenced in concept]`
-- Relevance: [why this pattern applies to the current feature]
-
-**From User Input:**
-- Feature: [Name] — Path: `[path]`
-- Components to potentially reuse: [description]
-
-[OR: No similar existing features identified for reference.]
-
-### Follow-up Questions
-
-**Follow-up 1:** [Question]
-**Answer:** [User's answer]
-
-[OR: No follow-up questions needed.]
-
-## Visual Assets
-
-### Files Provided
-[Based on actual bash check, NOT user statement]
-- `filename.png`: [Description from analysis]
-
-### Visual Insights
-- [Design patterns identified]
-- [User flow implications]
-- [UI components shown]
-- [Fidelity level: high-fidelity mockup / low-fidelity wireframe]
-
-[OR: No visual assets provided.]
-
-## Requirements Summary
-
-### Must Have
-- ...
-
-### Should Have
-- ...
-
-### Reusability Opportunities
-- [Components/patterns that may already exist]
-- [Backend patterns to investigate]
-
-### Out of Scope
-- ...
-```
+Generate the requirements document using the template in [template.md](template.md).
+For a filled-in example, see [examples/user-profile-feature.md](examples/user-profile-feature.md).
 
 ### Phase 7: Handoff
 

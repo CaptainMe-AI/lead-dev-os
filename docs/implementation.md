@@ -6,7 +6,7 @@ nav_order: 4
 
 # Implementation Phase (`/step4-implement-tasks`)
 
-The implementation phase executes task groups produced by `/step3-scope-tasks`. Each task group contains context directives (which files from `agents-context/` to load) and atomic tasks derived from the spec.
+The implementation phase executes task groups produced by `/step3-scope-tasks`. Each task group contains context directives (which files from `agents-context/` to load) and atomic tasks derived from the spec. Templates and examples are co-located with each skill for reference.
 
 Three execution modes control how much human oversight the AI receives during implementation.
 

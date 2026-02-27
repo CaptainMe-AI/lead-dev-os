@@ -23,8 +23,8 @@ Tests live in `tests/` and cover both unit and integration behavior of the insta
 | Suite | File | What it tests |
 |-------|------|---------------|
 | Unit | `tests/test_common_functions.sh` | `ensure_dir`, `ensure_gitkeep`, `copy_if_not_exists`, `copy_with_warning`, `print_verbose` |
-| Integration: creates | `tests/test_install_creates.sh` | Fresh install produces all expected files, `--commands-only` flag, append to existing CLAUDE.md, install without .git |
-| Integration: overwrites | `tests/test_install_overwrites.sh` | Re-install overwrites commands/templates/guides, preserves concepts/standards/specs/CLAUDE.md, `--commands-only` only touches commands |
+| Integration: creates | `tests/test_install_creates.sh` | Fresh install produces all expected files, `--skills-only` flag, append to existing CLAUDE.md, install without .git |
+| Integration: overwrites | `tests/test_install_overwrites.sh` | Re-install overwrites skills/guides, preserves concepts/standards/specs/CLAUDE.md, `--skills-only` only touches skills |
 
 Each test suite creates a temporary directory, runs `install.sh` against it, asserts outcomes, and cleans up. No side effects on your working directory.
 

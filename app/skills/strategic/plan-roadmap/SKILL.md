@@ -1,3 +1,9 @@
+---
+name: plan-roadmap
+description: Create or update a prioritized product roadmap with phased milestones.
+disable-model-invocation: true
+---
+
 # Plan Roadmap
 
 Create or update a prioritized product roadmap with phased milestones.

@@ -4,32 +4,47 @@ Dev instructions for the lead-dev-os repository itself.
 
 ## Project
 
-lead-dev-os is a spec & context-driven framework for Claude Code development on large projects. It provides structured commands for product planning, spec writing, task scoping, and context-aware implementation.
+lead-dev-os is a spec & context-driven framework for Claude Code development on large projects. It provides structured skills for product planning, spec writing, task scoping, and context-aware implementation.
 
 ## License
 
 MIT License
+
+## Terminology
+
+- **target project** — the project where `lead-dev-os` is installed
+- **spec** — a feature specification
+- **task** — a task to be executed by the AI agent
 
 ## Repository Structure
 
 ```
 lead-dev-os/
 ├── app/                               # Everything installed into target projects
-│   ├── commands/                      # Slash commands (Claude Code skills)
-│   │   ├── strategic/                 # High-level planning commands
-│   │   │   ├── plan-product.md
-│   │   │   ├── plan-roadmap.md
-│   │   │   └── define-standards.md
-│   │   └── tactical/                  # Spec-driven implementation commands
-│   │       ├── step1-shape-spec.md
-│   │       ├── step2-define-spec.md
-│   │       ├── step3-scope-tasks.md
-│   │       └── step4-implement-tasks.md
+│   ├── skills/                        # Skills (Claude Code)
+│   │   ├── strategic/                 # High-level planning skills
+│   │   │   ├── plan-product/SKILL.md
+│   │   │   ├── plan-roadmap/SKILL.md
+│   │   │   └── define-standards/SKILL.md
+│   │   └── tactical/                  # Spec-driven implementation skills
+│   │       ├── step1-shape-spec/
+│   │       │   ├── SKILL.md
+│   │       │   ├── template.md
+│   │       │   └── examples/
+│   │       ├── step2-define-spec/
+│   │       │   ├── SKILL.md
+│   │       │   ├── template.md
+│   │       │   └── examples/
+│   │       ├── step3-scope-tasks/
+│   │       │   ├── SKILL.md
+│   │       │   ├── template.md
+│   │       │   └── examples/
+│   │       └── step4-implement-tasks/
+│   │           └── SKILL.md
 │   ├── agents-context/                # Modular knowledge base (installed top-level)
 │   │   ├── concepts/                  # Project-specific domain knowledge
 │   │   ├── standards/                 # Coding standards and conventions
 │   │   └── guides/                    # How-to guides for workflows
-│   ├── templates/                     # Reusable document templates
 │   ├── specs/                         # Generated specs output directory
 │   └── CLAUDE.md                      # Framework instructions injected into target project
 ├── scripts/                           # Installation & setup scripts
@@ -45,9 +60,10 @@ lead-dev-os/
 ## Key Conventions
 
 - `app/` contains everything that gets copied into target projects via `scripts/install.sh`
-- Commands in `app/commands/` are flattened into `.claude/commands/lead-dev-os/` when installed
+- Skills in `app/skills/` are installed as `.claude/skills/<category>/<skill-name>/SKILL.md` in the target project, preserving directory structure
 - `app/agents-context/` is installed as top-level `agents-context/` in the target project
-- Templates and specs go into `lead-dev-os/` directory in the target project
+- Templates are co-located with their skills (e.g., `step1-shape-spec/template.md`)
+- Specs go into `lead-dev-os/specs/` directory in the target project
 - `app/CLAUDE.md` gets appended to the target project's CLAUDE.md
 
 ## Workflow (4 steps)

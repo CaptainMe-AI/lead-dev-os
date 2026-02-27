@@ -78,29 +78,39 @@ test_full_install() {
   # Run installer
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
-  # --- Commands (flattened into .claude/commands/lead-dev-os/) ---
-  local cmd_dir="$TARGET/.claude/commands/lead-dev-os"
-  assert_dir_exists "commands directory exists" "$cmd_dir"
+  # --- Skills (.claude/skills/<category>/<name>/) ---
+  local skills_dir="$TARGET/.claude/skills"
+  assert_dir_exists "skills directory exists" "$skills_dir"
 
-  # Strategic commands
-  assert_file_exists "plan-product.md installed" "$cmd_dir/plan-product.md"
-  assert_file_exists "plan-roadmap.md installed" "$cmd_dir/plan-roadmap.md"
-  assert_file_exists "define-standards.md installed" "$cmd_dir/define-standards.md"
+  # Strategic skills
+  assert_file_exists "plan-product SKILL.md installed" "$skills_dir/strategic/plan-product/SKILL.md"
+  assert_file_exists "plan-roadmap SKILL.md installed" "$skills_dir/strategic/plan-roadmap/SKILL.md"
+  assert_file_exists "define-standards SKILL.md installed" "$skills_dir/strategic/define-standards/SKILL.md"
 
-  # Tactical commands
-  assert_file_exists "step1-shape-spec.md installed" "$cmd_dir/step1-shape-spec.md"
-  assert_file_exists "step2-define-spec.md installed" "$cmd_dir/step2-define-spec.md"
-  assert_file_exists "step3-scope-tasks.md installed" "$cmd_dir/step3-scope-tasks.md"
-  assert_file_exists "step4-implement-tasks.md installed" "$cmd_dir/step4-implement-tasks.md"
+  # Tactical skills
+  assert_file_exists "step1-shape-spec SKILL.md installed" "$skills_dir/tactical/step1-shape-spec/SKILL.md"
+  assert_file_exists "step2-define-spec SKILL.md installed" "$skills_dir/tactical/step2-define-spec/SKILL.md"
+  assert_file_exists "step3-scope-tasks SKILL.md installed" "$skills_dir/tactical/step3-scope-tasks/SKILL.md"
+  assert_file_exists "step4-implement-tasks SKILL.md installed" "$skills_dir/tactical/step4-implement-tasks/SKILL.md"
 
-  # Verify command count (3 strategic + 4 tactical = 7)
-  local cmd_count
-  cmd_count="$(find "$cmd_dir" -name '*.md' | wc -l | tr -d ' ')"
-  if [ "$cmd_count" -eq 7 ]; then
-    echo "  PASS: exactly 7 command files installed"
+  # Templates co-located with skills
+  assert_file_exists "step1 template.md installed" "$skills_dir/tactical/step1-shape-spec/template.md"
+  assert_file_exists "step2 template.md installed" "$skills_dir/tactical/step2-define-spec/template.md"
+  assert_file_exists "step3 template.md installed" "$skills_dir/tactical/step3-scope-tasks/template.md"
+
+  # Examples co-located with skills
+  assert_file_exists "step1 example installed" "$skills_dir/tactical/step1-shape-spec/examples/user-profile-feature.md"
+  assert_file_exists "step2 example installed" "$skills_dir/tactical/step2-define-spec/examples/user-profile-feature.md"
+  assert_file_exists "step3 example installed" "$skills_dir/tactical/step3-scope-tasks/examples/user-profile-feature.md"
+
+  # Verify SKILL.md count (3 strategic + 4 tactical = 7)
+  local skill_count
+  skill_count="$(find "$skills_dir" -name 'SKILL.md' | wc -l | tr -d ' ')"
+  if [ "$skill_count" -eq 7 ]; then
+    echo "  PASS: exactly 7 SKILL.md files installed"
     PASS=$((PASS + 1))
   else
-    echo "  FAIL: expected 7 command files, got $cmd_count"
+    echo "  FAIL: expected 7 SKILL.md files, got $skill_count"
     FAIL=$((FAIL + 1))
   fi
 
@@ -113,16 +123,9 @@ test_full_install() {
   assert_file_exists "workflow.md installed" "$TARGET/agents-context/guides/workflow.md"
   assert_file_not_empty "workflow.md has content" "$TARGET/agents-context/guides/workflow.md"
 
-  # --- lead-dev-os/ (templates + specs) ---
+  # --- lead-dev-os/ (specs only, no templates) ---
   assert_dir_exists "lead-dev-os/ exists" "$TARGET/lead-dev-os"
-  assert_dir_exists "lead-dev-os/templates/ exists" "$TARGET/lead-dev-os/templates"
   assert_dir_exists "lead-dev-os/specs/ exists" "$TARGET/lead-dev-os/specs"
-
-  # Templates
-  assert_file_exists "spec-template.md installed" "$TARGET/lead-dev-os/templates/spec-template.md"
-  assert_file_exists "tasks-template.md installed" "$TARGET/lead-dev-os/templates/tasks-template.md"
-  assert_file_exists "requirements-template.md installed" "$TARGET/lead-dev-os/templates/requirements-template.md"
-  assert_file_not_empty "spec-template.md has content" "$TARGET/lead-dev-os/templates/spec-template.md"
 
   # Specs .gitkeep
   assert_file_exists "specs/.gitkeep exists" "$TARGET/lead-dev-os/specs/.gitkeep"
@@ -134,38 +137,38 @@ test_full_install() {
   teardown
 }
 
-test_commands_only_flag() {
-  echo "test_commands_only_flag — --commands-only skips context/templates"
+test_skills_only_flag() {
+  echo "test_skills_only_flag — --skills-only skips context"
   setup
 
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --commands-only) > /dev/null 2>&1
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --skills-only) > /dev/null 2>&1
 
-  # Commands should exist
-  assert_file_exists "commands installed" "$TARGET/.claude/commands/lead-dev-os/plan-product.md"
-  assert_file_exists "commands installed" "$TARGET/.claude/commands/lead-dev-os/step1-shape-spec.md"
+  # Skills should exist
+  assert_file_exists "skills installed" "$TARGET/.claude/skills/strategic/plan-product/SKILL.md"
+  assert_file_exists "skills installed" "$TARGET/.claude/skills/tactical/step1-shape-spec/SKILL.md"
 
-  # Context, templates, CLAUDE.md should NOT exist
+  # Context, CLAUDE.md should NOT exist
   if [ ! -d "$TARGET/agents-context" ]; then
-    echo "  PASS: agents-context/ not created with --commands-only"
+    echo "  PASS: agents-context/ not created with --skills-only"
     PASS=$((PASS + 1))
   else
-    echo "  FAIL: agents-context/ should not exist with --commands-only"
+    echo "  FAIL: agents-context/ should not exist with --skills-only"
     FAIL=$((FAIL + 1))
   fi
 
   if [ ! -d "$TARGET/lead-dev-os" ]; then
-    echo "  PASS: lead-dev-os/ not created with --commands-only"
+    echo "  PASS: lead-dev-os/ not created with --skills-only"
     PASS=$((PASS + 1))
   else
-    echo "  FAIL: lead-dev-os/ should not exist with --commands-only"
+    echo "  FAIL: lead-dev-os/ should not exist with --skills-only"
     FAIL=$((FAIL + 1))
   fi
 
   if [ ! -f "$TARGET/CLAUDE.md" ]; then
-    echo "  PASS: CLAUDE.md not created with --commands-only"
+    echo "  PASS: CLAUDE.md not created with --skills-only"
     PASS=$((PASS + 1))
   else
-    echo "  FAIL: CLAUDE.md should not exist with --commands-only"
+    echo "  FAIL: CLAUDE.md should not exist with --skills-only"
     FAIL=$((FAIL + 1))
   fi
 
@@ -196,7 +199,7 @@ test_no_git_directory_still_works() {
 
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
-  assert_file_exists "commands still installed" "$TARGET/.claude/commands/lead-dev-os/plan-product.md"
+  assert_file_exists "skills still installed" "$TARGET/.claude/skills/strategic/plan-product/SKILL.md"
   assert_dir_exists "agents-context still created" "$TARGET/agents-context"
 
   teardown
@@ -208,7 +211,7 @@ echo "=== Integration Tests: install.sh (fresh install) ==="
 echo ""
 
 test_full_install
-test_commands_only_flag
+test_skills_only_flag
 test_claude_md_appended_to_existing
 test_no_git_directory_still_works
 
