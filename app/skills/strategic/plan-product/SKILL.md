@@ -33,51 +33,8 @@ Ask the user the following questions **one group at a time**, waiting for respon
 
 ### Phase 2: Synthesis
 
-After gathering responses, generate a product mission document with the following structure:
-
-```markdown
-# Product Mission
-
-## Mission Statement
-<!-- One clear sentence -->
-
-## Vision
-<!-- 2-3 sentences describing the future state -->
-
-## Problem Statement
-<!-- What pain point this solves and for whom -->
-
-## Target Users
-### Persona 1: [Name]
-- **Role:** ...
-- **Pain points:** ...
-- **Goals:** ...
-
-### Persona 2: [Name]
-- **Role:** ...
-- **Pain points:** ...
-- **Goals:** ...
-
-## Differentiation
-<!-- What sets this apart from alternatives -->
-
-## Technology Stack
-| Layer | Choice | Rationale |
-|-------|--------|-----------|
-| Language | ... | ... |
-| Framework | ... | ... |
-| Database | ... | ... |
-| Infrastructure | ... | ... |
-
-## Success Metrics
-- 6-month: ...
-- 2-year: ...
-
-## Minimum Viable Feature Set
-1. ...
-2. ...
-3. ...
-```
+After gathering responses, generate a product mission document using the template in [template.md](template.md).
+For a filled-in example, see [examples/saas-project-tracker.md](examples/saas-project-tracker.md).
 
 ### Phase 3: Output
 

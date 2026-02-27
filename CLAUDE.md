@@ -23,9 +23,18 @@ lead-dev-os/
 ├── app/                               # Everything installed into target projects
 │   ├── skills/                        # Skills (Claude Code)
 │   │   ├── strategic/                 # High-level planning skills
-│   │   │   ├── plan-product/SKILL.md
-│   │   │   ├── plan-roadmap/SKILL.md
-│   │   │   └── define-standards/SKILL.md
+│   │   │   ├── plan-product/
+│   │   │   │   ├── SKILL.md
+│   │   │   │   ├── template.md
+│   │   │   │   └── examples/
+│   │   │   ├── plan-roadmap/
+│   │   │   │   ├── SKILL.md
+│   │   │   │   ├── template.md
+│   │   │   │   └── examples/
+│   │   │   └── define-standards/
+│   │   │       ├── SKILL.md
+│   │   │       ├── template.md
+│   │   │       └── examples/
 │   │   └── tactical/                  # Spec-driven implementation skills
 │   │       ├── step1-shape-spec/
 │   │       │   ├── SKILL.md
