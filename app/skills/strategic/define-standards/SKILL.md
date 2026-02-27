@@ -64,5 +64,5 @@ Save files to the appropriate subdirectory under `agents-context/standards/` (or
 
 Tell the user:
 - Which standards files were created
-- These standards will be automatically referenced by task groups generated via `/step3-scope-tasks`
+- These standards will be automatically referenced by task groups generated via `/step2-scope-tasks`
 - Standards can be updated at any time by re-running `/define-standards` or editing the files directly

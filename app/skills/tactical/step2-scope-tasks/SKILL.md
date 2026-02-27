@@ -1,10 +1,10 @@
 ---
-name: step3-scope-tasks
+name: step2-scope-tasks
 description: Break a specification into ordered task groups with explicit context-awareness directives.
 disable-model-invocation: true
 ---
 
-# Step 3: Scope Tasks
+# Step 2: Scope Tasks
 
 Break a specification into ordered task groups with explicit context-awareness directives.
 
@@ -101,5 +101,5 @@ If a relevant concept or standard file does NOT yet exist, the directive should 
 
 Tell the user:
 - "Tasks saved to `specs/YYYY-MM-DD-<spec-name>/tasks.md`"
-- "Run `/step4-implement-tasks` to begin context-aware implementation, or work through task groups manually."
+- "Run `/step3-implement-tasks` to begin context-aware implementation, or work through task groups manually."
 - "Each group's **Read before starting** section lists the context files to load before beginning."

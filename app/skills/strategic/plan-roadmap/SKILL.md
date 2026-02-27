@@ -33,4 +33,4 @@ Save the document to `agents-context/concepts/product-roadmap.md`.
 
 Tell the user:
 - "Roadmap saved to `agents-context/concepts/product-roadmap.md`"
-- Suggest picking a feature from Phase 1 and running `/step1-shape-spec` to begin speccing it out.
+- Suggest picking a feature from Phase 1 and running `/step1-write-spec` to begin speccing it out.

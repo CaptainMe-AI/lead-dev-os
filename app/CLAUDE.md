@@ -10,10 +10,9 @@ This project uses lead-dev-os for spec-driven development. All features go throu
 - `/define-standards` — Establish coding & architecture standards → `agents-context/standards/`
 
 **Tactical (run per feature):**
-1. `/step1-shape-spec` — Interactive Q&A → `lead-dev-os/specs/YYYY-MM-DD-name/planning/requirements.md`
-2. `/step2-define-spec` — Formalize into spec → `lead-dev-os/specs/YYYY-MM-DD-name/spec.md`
-3. `/step3-scope-tasks` — Break into context-aware task groups → `lead-dev-os/specs/YYYY-MM-DD-name/tasks.md`
-4. `/step4-implement-tasks` — Context-aware implementation of task groups
+1. `/step1-write-spec` — Interactive Q&A + formalize into spec → `lead-dev-os/specs/YYYY-MM-DD-name/spec.md`
+2. `/step2-scope-tasks` — Break into context-aware task groups → `lead-dev-os/specs/YYYY-MM-DD-name/tasks.md`
+3. `/step3-implement-tasks` — Context-aware implementation of task groups
 
 ### Context System
 
@@ -25,7 +24,7 @@ This project uses lead-dev-os for spec-driven development. All features go throu
 
 ### Key Principles
 
-- Spec before code — every feature goes through shape → define → scope → implement
+- Spec before code — every feature goes through write → scope → implement
 - Context-aware — task groups reference concept and standard files for guidance
 - Test-first — task groups list test tasks before implementation tasks
 - Concept files are general guidance, not code — they describe approaches, conventions, and decision rationale

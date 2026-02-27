@@ -59,9 +59,8 @@ See [Installation]({{ site.baseurl }}/installation) for full details and options
 
 | Phase | Skill | What it does |
 |-------|---------|--------------|
-| Shape | `/step1-shape-spec` | Interactive Q&A to gather requirements |
-| Define | `/step2-define-spec` | Formalize into spec with numbered requirements (FR-###) |
-| Scope | `/step3-scope-tasks` | Break into task groups with context directives |
-| Implement | `/step4-implement-tasks` | Context-aware execution of task groups |
+| Write | `/step1-write-spec` | Interactive Q&A + formalize into spec with numbered requirements (FR-###) |
+| Scope | `/step2-scope-tasks` | Break into task groups with context directives |
+| Implement | `/step3-implement-tasks` | Context-aware execution of task groups |
 
-See [Workflow]({{ site.baseurl }}/workflow) for the full 4-step process, and [Implementation]({{ site.baseurl }}/implementation) for execution modes.
+See [Workflow]({{ site.baseurl }}/workflow) for the full 3-step process, and [Implementation]({{ site.baseurl }}/implementation) for execution modes.

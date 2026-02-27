@@ -41,7 +41,7 @@ See [Recomendations for Development with `lead-dev-os`](#recomendations-for-deve
 Full documentation is available at [captainme-ai.github.io/lead-dev-os](https://captainme-ai.github.io/lead-dev-os/).
 
 - [Installation](https://captainme-ai.github.io/lead-dev-os/installation) — Prerequisites, installer options, what gets installed
-- [Workflow](https://captainme-ai.github.io/lead-dev-os/workflow) — The 4-step shape → define → scope → implement process
+- [Workflow](https://captainme-ai.github.io/lead-dev-os/workflow) — The 3-step write → scope → implement process
 - [Implementation](https://captainme-ai.github.io/lead-dev-os/implementation) — Autonomous, lead-in-the-loop, and hybrid execution modes
 - [Contributing](https://captainme-ai.github.io/lead-dev-os/contributing) — Testing and how to contribute
 
@@ -60,10 +60,9 @@ See the [Installation Guide](https://captainme-ai.github.io/lead-dev-os/installa
 Run the strategic commands once to set up your project, then use the tactical workflow for each feature:
 
 ```
-/step1-shape-spec      → Interactive Q&A to gather requirements
-/step2-define-spec     → Formalize into spec with numbered requirements (FR-###)
-/step3-scope-tasks     → Break into task groups with context directives
-/step4-implement-tasks → Context-aware implementation of task groups
+/step1-write-spec        → Interactive Q&A + formalize into spec with numbered requirements (FR-###)
+/step2-scope-tasks       → Break into task groups with context directives
+/step3-implement-tasks   → Context-aware implementation of task groups
 ```
 
 See the [Workflow Guide](https://captainme-ai.github.io/lead-dev-os/workflow) for the full process, and [Implementation Modes](https://captainme-ai.github.io/lead-dev-os/implementation) for autonomous, lead-in-the-loop, and hybrid execution.
