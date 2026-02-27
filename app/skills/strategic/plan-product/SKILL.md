@@ -1,3 +1,9 @@
+---
+name: plan-product
+description: Define product mission, vision, target users, and technology stack.
+disable-model-invocation: true
+---
+
 # Plan Product
 
 Define the product mission, vision, target users, and technology stack for this project.

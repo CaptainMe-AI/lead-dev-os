@@ -8,7 +8,7 @@ nav_order: 1
 
 # lead-dev-os
 
-`lead-dev-os` is a spec & context-aware agentic kit for Claude Code development on large projects. It provides structured commands for product planning, spec writing, task scoping, and context-aware implementation.
+`lead-dev-os` is a spec & context-aware agentic kit for Claude Code development on large projects. It provides structured skills for product planning, spec writing, task scoping, and context-aware implementation.
 The context of the project is stored under `agents-context/` directory, it is domain specific and an agent is provided only the context it needs to perform its task.
 
 Think about it as a lead developer's main tool for guiding a team of AI agents.
@@ -57,7 +57,7 @@ See [Installation]({{ site.baseurl }}/installation) for full details and options
 
 ## Workflow Overview
 
-| Phase | Command | What it does |
+| Phase | Skill | What it does |
 |-------|---------|--------------|
 | Shape | `/step1-shape-spec` | Interactive Q&A to gather requirements |
 | Define | `/step2-define-spec` | Formalize into spec with numbered requirements (FR-###) |

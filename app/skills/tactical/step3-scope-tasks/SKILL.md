@@ -1,3 +1,9 @@
+---
+name: step3-scope-tasks
+description: Break a specification into ordered task groups with explicit context-awareness directives.
+disable-model-invocation: true
+---
+
 # Step 3: Scope Tasks
 
 Break a specification into ordered task groups with explicit context-awareness directives.
@@ -41,7 +47,8 @@ For each task group, follow a **test-first approach**: write tests before implem
 
 ### Phase 3: Generate Tasks Document
 
-Create `tasks.md` in the spec folder using the template from `templates/tasks-template.md`.
+Create `tasks.md` in the spec folder using the template in [template.md](template.md).
+For a filled-in example, see [examples/user-profile-feature.md](examples/user-profile-feature.md).
 
 **CRITICAL: Context Directives**
 

@@ -399,7 +399,7 @@ EOF
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   # step1 should have plan mode injected (placeholder replaced)
-  if grep -q "## Planning" "$TARGET/.claude/commands/lead-dev-os/step1-shape-spec.md"; then
+  if grep -q "## Planning" "$TARGET/.claude/skills/tactical/step1-shape-spec/SKILL.md"; then
     echo "  PASS: step1 has plan mode injected"
     PASS=$((PASS + 1))
   else
@@ -408,7 +408,7 @@ EOF
   fi
 
   # step1 should NOT have the placeholder anymore
-  if grep -q "INSERT-PLAN-MODE-HERE" "$TARGET/.claude/commands/lead-dev-os/step1-shape-spec.md"; then
+  if grep -q "INSERT-PLAN-MODE-HERE" "$TARGET/.claude/skills/tactical/step1-shape-spec/SKILL.md"; then
     echo "  FAIL: step1 still has placeholder"
     FAIL=$((FAIL + 1))
   else
@@ -417,7 +417,7 @@ EOF
   fi
 
   # step4 should have placeholder removed (plan_mode false)
-  if grep -q "INSERT-PLAN-MODE-HERE" "$TARGET/.claude/commands/lead-dev-os/step4-implement-tasks.md"; then
+  if grep -q "INSERT-PLAN-MODE-HERE" "$TARGET/.claude/skills/tactical/step4-implement-tasks/SKILL.md"; then
     echo "  FAIL: step4 still has placeholder"
     FAIL=$((FAIL + 1))
   else
@@ -425,7 +425,7 @@ EOF
     PASS=$((PASS + 1))
   fi
 
-  if grep -q "## Planning" "$TARGET/.claude/commands/lead-dev-os/step4-implement-tasks.md"; then
+  if grep -q "## Planning" "$TARGET/.claude/skills/tactical/step4-implement-tasks/SKILL.md"; then
     echo "  FAIL: step4 should NOT have plan mode injected"
     FAIL=$((FAIL + 1))
   else

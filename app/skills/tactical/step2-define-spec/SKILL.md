@@ -1,3 +1,9 @@
+---
+name: step2-define-spec
+description: Formalize gathered requirements into a structured specification document.
+disable-model-invocation: true
+---
+
 # Step 2: Define Spec
 
 Formalize gathered requirements into a structured specification document.
@@ -25,63 +31,10 @@ You are a senior engineer writing a formal specification. Transform the raw requ
 
 ### Phase 2: Draft Specification
 
-Generate `spec.md` in the spec folder using the template from `templates/spec-template.md`.
+Generate `spec.md` in the spec folder using the template in [template.md](template.md).
+For a filled-in example, see [examples/user-profile-feature.md](examples/user-profile-feature.md).
 
-Fill in every section:
-
-```markdown
-# Spec: [Feature Name]
-
-> Spec ID: YYYY-MM-DD-<spec-name>
-> Status: Draft
-> Date: YYYY-MM-DD
-
-## Goal
-[1-2 sentences: what this feature does and why it matters]
-
-## User Stories
-
-### Story 1: [Title]
-**As a** [user type],
-**I want to** [action],
-**So that** [benefit].
-
-**Acceptance Criteria:**
-- **Given** [precondition], **When** [action], **Then** [expected result]
-- **Given** [precondition], **When** [action], **Then** [expected result]
-
-### Story 2: [Title]
-...
-
-## Requirements
-
-### Functional Requirements
-| ID | Requirement | Priority |
-|----|------------|----------|
-| FR-001 | System MUST [requirement] | Must |
-| FR-002 | System MUST [requirement] | Must |
-| FR-003 | System SHOULD [requirement] | Should |
-
-### Non-Functional Requirements
-| ID | Requirement | Priority |
-|----|------------|----------|
-| NFR-001 | System MUST [performance/security/etc requirement] | Must |
-
-## Technical Approach
-[High-level approach: what patterns to use, what to extend, key architectural decisions]
-
-### Existing Code to Reuse
-- [File/module path]: [What to reuse and how]
-
-## Success Criteria
-- [ ] [Measurable outcome 1]
-- [ ] [Measurable outcome 2]
-- [ ] [Measurable outcome 3]
-
-## Out of Scope
-- [Explicitly excluded items]
-- [Items deferred to future work]
-```
+Fill in every section with concrete values derived from the requirements.
 
 ### Phase 3: Review & Save
 

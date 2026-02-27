@@ -39,7 +39,7 @@ A profile has two sections:
 **`stack`** — Controls which coding standards are installed. Only standards matching enabled stacks are copied to `agents-context/standards/`. Set a stack to `false` or remove it to exclude its standards.
 Add or change any stack types based on your preferences.
 
-**`plan_mode`** — Controls whether tactical commands activate Claude Code's plan mode before executing. When enabled for a step, the installed command includes an instruction to present a plan and get user approval before proceeding. All steps default to `true`.
+**`plan_mode`** — Controls whether tactical skills activate Claude Code's plan mode before executing. When enabled for a step, the installed skill includes an instruction to present a plan and get user approval before proceeding. All steps default to `true`.
 
 ```yaml
 version: 1.0
@@ -96,11 +96,11 @@ If `--profile` is omitted, the installer prompts interactively.
 ## Installer options
 
 ```bash
-# Full install (commands + context + templates)
+# Full install (skills + context)
 ~/lead-dev-os/scripts/install.sh
 
-# Update commands only (preserves your context and standards)
-~/lead-dev-os/scripts/install.sh --commands-only
+# Update skills only (preserves your context and standards)
+~/lead-dev-os/scripts/install.sh --skills-only
 
 # Verbose output for debugging
 ~/lead-dev-os/scripts/install.sh --verbose
@@ -108,7 +108,7 @@ If `--profile` is omitted, the installer prompts interactively.
 
 The installer is idempotent — safe to re-run. It will:
 
-- Overwrite commands, templates, and guides (framework-managed files)
+- Overwrite skills and guides (framework-managed files)
 - Preserve your `agents-context/concepts/` and `agents-context/standards/` content
 - Append to your existing `CLAUDE.md` without duplicating if the section already exists
 
@@ -118,47 +118,53 @@ The installer is idempotent — safe to re-run. It will:
 your-project/
 │
 ├── .claude/
-│   └── commands/
-│       └── lead-dev-os/                    # Slash commands available in Claude Code
-│           ├── plan-product.md             # /plan-product
-│           ├── plan-roadmap.md             # /plan-roadmap
-│           ├── define-standards.md         # /define-standards
-│           ├── step1-shape-spec.md         # /step1-shape-spec
-│           ├── step2-define-spec.md        # /step2-define-spec
-│           ├── step3-scope-tasks.md        # /step3-scope-tasks
-│           └── step4-implement-tasks.md    # /step4-implement-tasks
+│   └── skills/                                # Skills available in Claude Code
+│       ├── strategic/
+│       │   ├── plan-product/SKILL.md          # /plan-product
+│       │   ├── plan-roadmap/SKILL.md          # /plan-roadmap
+│       │   └── define-standards/SKILL.md      # /define-standards
+│       └── tactical/
+│           ├── step1-shape-spec/              # /step1-shape-spec
+│           │   ├── SKILL.md
+│           │   ├── template.md
+│           │   └── examples/
+│           ├── step2-define-spec/             # /step2-define-spec
+│           │   ├── SKILL.md
+│           │   ├── template.md
+│           │   └── examples/
+│           ├── step3-scope-tasks/             # /step3-scope-tasks
+│           │   ├── SKILL.md
+│           │   ├── template.md
+│           │   └── examples/
+│           └── step4-implement-tasks/         # /step4-implement-tasks
+│               └── SKILL.md
 │
-├── agents-context/                         # Top-level knowledge base
-│   ├── concepts/                           # Project-specific domain guidance
-│   ├── standards/                          # Coding style, architecture, testing conventions
+├── agents-context/                            # Top-level knowledge base
+│   ├── concepts/                              # Project-specific domain guidance
+│   ├── standards/                             # Coding style, architecture, testing conventions
 │   └── guides/
-│       └── workflow.md                     # Workflow overview
+│       └── workflow.md                        # Workflow overview
 │
 ├── lead-dev-os/
-│   ├── templates/                          # Document structure templates
-│   │   ├── spec-template.md
-│   │   ├── tasks-template.md
-│   │   └── requirements-template.md
-│   └── specs/                              # Generated specs live here
+│   └── specs/                                 # Generated specs live here
 │
-└── CLAUDE.md                               # Updated with framework instructions
+└── CLAUDE.md                                  # Updated with framework instructions
 ```
 
 ## Directory purposes
 
 | Directory | Purpose | Managed by |
 |-----------|---------|------------|
-| **.claude/commands/lead-dev-os/** | Slash commands in Claude Code | Installer (overwritten on update) |
-| **agents-context/concepts/** | Domain knowledge and general guidance | You + commands + implementation |
-| **agents-context/standards/** | Coding standards, conventions, patterns | /define-standards command |
+| **.claude/skills/** | Skills in Claude Code | Installer (overwritten on update) |
+| **agents-context/concepts/** | Domain knowledge and general guidance | You + skills + implementation |
+| **agents-context/standards/** | Coding standards, conventions, patterns | /define-standards skill |
 | **agents-context/guides/** | Workflow documentation | Installer (overwritten on update) |
-| **lead-dev-os/templates/** | Reusable document templates | Installer (overwritten on update) |
 | **lead-dev-os/specs/** | Dated spec folders from the workflow | /step1-shape-spec and subsequent steps |
 
-## Updating commands
+## Updating skills
 
-When lead-dev-os releases new command versions, update without touching your project's context:
+When lead-dev-os releases new skill versions, update without touching your project's context:
 
 ```bash
-~/lead-dev-os/scripts/install.sh --commands-only
+~/lead-dev-os/scripts/install.sh --skills-only
 ```

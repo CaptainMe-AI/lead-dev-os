@@ -6,12 +6,12 @@ How to use lead-dev-os for spec-driven development.
 
 lead-dev-os follows a **shape → define → scope → implement** workflow for building features. This ensures every feature is well-understood before implementation begins, and that implementation stays aligned with project conventions through context files.
 
-## Strategic Commands (Run Once or Occasionally)
+## Strategic Skills (Run Once or Occasionally)
 
-These commands establish the project foundation. Run them when starting a new project or when the product direction changes.
+These skills establish the project foundation. Run them when starting a new project or when the product direction changes.
 
-| Command | Purpose | When to Run |
-|---------|---------|-------------|
+| Skill | Purpose | When to Run |
+|-------|---------|-------------|
 | `/plan-product` | Define product mission, vision, users, tech stack | Project kickoff |
 | `/plan-roadmap` | Create phased feature roadmap | After product mission, or when priorities shift |
 | `/define-standards` | Establish coding and architecture standards | Project kickoff, or when conventions evolve |
@@ -21,9 +21,9 @@ These commands establish the project foundation. Run them when starting a new pr
 2. `/define-standards` — Establish how you build
 3. `/plan-roadmap` — Plan what to build and when
 
-## Tactical Commands (Run Per Feature)
+## Tactical Skills (Run Per Feature)
 
-These commands drive the spec-to-implementation pipeline. Run them sequentially for each feature.
+These skills drive the spec-to-implementation pipeline. Run them sequentially for each feature.
 
 ### Step 1: Shape Spec (`/step1-shape-spec`)
 
@@ -82,7 +82,7 @@ These commands drive the spec-to-implementation pipeline. Run them sequentially 
 The `agents-context/` directory is a modular knowledge base that grows with your project.
 
 ### `agents-context/concepts/`
-Project-specific domain knowledge and general guidance. Captures approaches, conventions, and decision rationale — never code snippets or implementation details. Created by strategic commands and updated during implementation.
+Project-specific domain knowledge and general guidance. Captures approaches, conventions, and decision rationale — never code snippets or implementation details. Created by strategic skills and updated during implementation.
 
 ### `agents-context/standards/`
 Coding style, architecture patterns, and testing conventions. Created by `/define-standards`.

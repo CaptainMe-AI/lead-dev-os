@@ -1,3 +1,9 @@
+---
+name: define-standards
+description: Establish coding style, conventions, architecture patterns, and quality standards.
+disable-model-invocation: true
+---
+
 # Define Standards
 
 Establish coding style, conventions, architecture patterns, and quality standards for the project.

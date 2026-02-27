@@ -5,7 +5,7 @@
 #   ./scripts/install.sh [OPTIONS]
 #
 # Options:
-#   --commands-only       Only update commands, skip context/standards/templates
+#   --skills-only         Only update skills, skip context/standards
 #   --force               Overwrite existing files without prompting
 #   --profile <name>      Use this profile (skip interactive prompt)
 #   --verbose             Show detailed output
@@ -28,7 +28,7 @@ show_help() {
 lead-dev-os installer
 
 Installs the lead-dev-os kit into a target project, giving you
-structured slash commands for product planning, spec writing, task scoping,
+structured skills for product planning, spec writing, task scoping,
 and context-aware implementation with Claude Code.
 
 USAGE
@@ -38,8 +38,8 @@ USAGE
   Run this script from inside the target project directory.
 
 OPTIONS
-  --commands-only   Only install slash commands; skip context, standards,
-                    templates, and CLAUDE.md updates.
+  --skills-only   Only install skills; skip context, standards,
+                  and CLAUDE.md updates.
   --profile <name>  Use the named config profile instead of prompting
                     interactively (e.g. --profile fullstack).
   --force           Overwrite existing files without prompting.
@@ -47,20 +47,19 @@ OPTIONS
   --help            Show this help message and exit.
 
 WHAT GETS INSTALLED
-  .claude/commands/lead-dev-os/   Slash commands for Claude Code
-  agents-context/concepts/               Project-specific domain knowledge
-  agents-context/standards/              Coding standards (shared + stack-specific)
-  agents-context/guides/                 Workflow how-to guides
-  lead-dev-os/templates/          Reusable document templates
-  lead-dev-os/specs/              Output directory for generated specs
-  CLAUDE.md                              Framework instructions (appended)
+  .claude/skills/                      Skills for Claude Code
+  agents-context/concepts/             Project-specific domain knowledge
+  agents-context/standards/            Coding standards (shared + stack-specific)
+  agents-context/guides/               Workflow how-to guides
+  lead-dev-os/specs/                   Output directory for generated specs
+  CLAUDE.md                            Framework instructions (appended)
 
 EXAMPLES
   # Full install with interactive profile selection
   ./scripts/install.sh
 
-  # Install only commands (useful for quick updates)
-  ./scripts/install.sh --commands-only
+  # Install only skills (useful for quick updates)
+  ./scripts/install.sh --skills-only
 
   # Non-interactive install with a specific profile
   ./scripts/install.sh --profile fullstack
@@ -71,14 +70,14 @@ HELPTEXT
 }
 
 # Flags
-COMMANDS_ONLY=false
+SKILLS_ONLY=false
 PROFILE_OVERRIDE=""
 
 # Parse arguments
 while [[ $# -gt 0 ]]; do
   case $1 in
-    --commands-only)
-      COMMANDS_ONLY=true
+    --skills-only)
+      SKILLS_ONLY=true
       shift
       ;;
     --profile)
@@ -111,34 +110,67 @@ fi
 
 print_status "Installing lead-dev-os into: $TARGET_DIR"
 
-# --- Install Commands ---
-COMMANDS_DEST="$TARGET_DIR/.claude/commands/lead-dev-os"
-ensure_dir "$COMMANDS_DEST"
+# --- Install Skills ---
+SKILLS_DEST="$TARGET_DIR/.claude/skills"
 
-print_status "Installing commands..."
+print_status "Installing skills..."
 
-# Flatten strategic + tactical commands into one directory for slash-command access
-for cmd_file in "$APP_DIR"/commands/strategic/*.md "$APP_DIR"/commands/tactical/*.md; do
-  if [ -f "$cmd_file" ]; then
-    filename="$(basename "$cmd_file")"
-    dest_path="$COMMANDS_DEST/$filename"
-    if confirm_overwrite "$dest_path"; then
-      cp "$cmd_file" "$dest_path"
-      print_verbose "  Installed command: $filename"
-    else
-      print_verbose "  Skipped command: $filename"
-    fi
+# Install each skill preserving directory structure
+for skill_dir in "$APP_DIR"/skills/strategic/*/  "$APP_DIR"/skills/tactical/*/; do
+  if [ ! -d "$skill_dir" ]; then
+    continue
   fi
+  # Extract category (strategic/tactical) and skill name
+  local_path="${skill_dir#"$APP_DIR"/skills/}"
+  local_path="${local_path%/}"  # Remove trailing slash
+  dest_dir="$SKILLS_DEST/$local_path"
+  ensure_dir "$dest_dir"
+
+  # Copy all files in this skill directory (SKILL.md, template.md, etc.)
+  for skill_file in "$skill_dir"*; do
+    if [ -f "$skill_file" ]; then
+      filename="$(basename "$skill_file")"
+      dest_path="$dest_dir/$filename"
+      if confirm_overwrite "$dest_path"; then
+        cp "$skill_file" "$dest_path"
+        print_verbose "  Installed skill file: $local_path/$filename"
+      else
+        print_verbose "  Skipped skill file: $local_path/$filename"
+      fi
+    fi
+  done
+
+  # Copy subdirectories (e.g., examples/)
+  for subdir in "$skill_dir"*/; do
+    if [ ! -d "$subdir" ]; then
+      continue
+    fi
+    subdir_name="$(basename "$subdir")"
+    dest_subdir="$dest_dir/$subdir_name"
+    ensure_dir "$dest_subdir"
+    for sub_file in "$subdir"*; do
+      if [ -f "$sub_file" ]; then
+        filename="$(basename "$sub_file")"
+        dest_path="$dest_subdir/$filename"
+        if confirm_overwrite "$dest_path"; then
+          cp "$sub_file" "$dest_path"
+          print_verbose "  Installed skill file: $local_path/$subdir_name/$filename"
+        else
+          print_verbose "  Skipped skill file: $local_path/$subdir_name/$filename"
+        fi
+      fi
+    done
+  done
 done
 
-# --- Inject Plan Mode into tactical commands ---
+# --- Inject Plan Mode into tactical skills ---
 PM_CONFIG_FILE="$(get_config_file)"
 PM_PROFILE="${PROFILE_OVERRIDE:-$(get_current_profile "$PM_CONFIG_FILE")}"
 
 inject_plan_mode() {
-  local cmd_filename="$1"
+  local skill_path="$1"
   local step_key="$2"
-  local dest_path="$COMMANDS_DEST/$cmd_filename"
+  local dest_path="$SKILLS_DEST/tactical/$skill_path/SKILL.md"
   if [ ! -f "$dest_path" ]; then
     return
   fi
@@ -151,26 +183,26 @@ inject_plan_mode() {
     sed 's/{{\.\.\.INSERT-PLAN-MODE-HERE\.\.\.}}/## Planning\
 **Use plan mode for per task group when implementing** - This will allow to further break down the task into sub-tasks and plan them out./' "$dest_path" > "$tmpfile"
     mv "$tmpfile" "$dest_path"
-    print_verbose "  Plan mode injected: $cmd_filename"
+    print_verbose "  Plan mode injected: $skill_path"
   else
     # Remove placeholder line
     local tmpfile
     tmpfile="$(mktemp)"
     sed '/{{\.\.\.INSERT-PLAN-MODE-HERE\.\.\.}}/d' "$dest_path" > "$tmpfile"
     mv "$tmpfile" "$dest_path"
-    print_verbose "  Plan mode removed: $cmd_filename"
+    print_verbose "  Plan mode removed: $skill_path"
   fi
 }
 
-inject_plan_mode "step1-shape-spec.md" "step1_shape_spec"
-inject_plan_mode "step2-define-spec.md" "step2_define_spec"
-inject_plan_mode "step3-scope-tasks.md" "step3_scope_tasks"
-inject_plan_mode "step4-implement-tasks.md" "step4_implement_tasks"
+inject_plan_mode "step1-shape-spec" "step1_shape_spec"
+inject_plan_mode "step2-define-spec" "step2_define_spec"
+inject_plan_mode "step3-scope-tasks" "step3_scope_tasks"
+inject_plan_mode "step4-implement-tasks" "step4_implement_tasks"
 
-print_success "Commands installed to .claude/commands/lead-dev-os/"
+print_success "Skills installed to .claude/skills/"
 
-if [ "$COMMANDS_ONLY" = true ]; then
-  print_success "Done (commands only)."
+if [ "$SKILLS_ONLY" = true ]; then
+  print_success "Done (skills only)."
   exit 0
 fi
 
@@ -233,18 +265,10 @@ done
 
 print_success "Context installed to agents-context/"
 
-# --- Install Templates & Specs (inside lead-dev-os/) ---
+# --- Install Specs directory (inside lead-dev-os/) ---
 FRAMEWORK_DEST="$TARGET_DIR/lead-dev-os"
 
 print_status "Installing framework files..."
-
-# Templates (always overwrite — these are framework templates)
-ensure_dir "$FRAMEWORK_DEST/templates"
-for template_file in "$APP_DIR"/templates/*.md; do
-  if [ -f "$template_file" ]; then
-    copy_with_warning "$template_file" "$FRAMEWORK_DEST/templates/$(basename "$template_file")" "Template"
-  fi
-done
 
 # Specs directory
 ensure_gitkeep "$FRAMEWORK_DEST/specs"
@@ -280,9 +304,8 @@ echo ""
 print_success "Installation complete!"
 echo ""
 print_status "Installed structure:"
-print_status "  .claude/commands/lead-dev-os/  — Slash commands"
+print_status "  .claude/skills/                — Skills for Claude Code"
 print_status "  agents-context/                — Knowledge base (concepts, standards, guides)"
-print_status "  lead-dev-os/templates/         — Document templates"
 print_status "  lead-dev-os/specs/             — Spec output directory"
 echo ""
 print_status "Get started:"

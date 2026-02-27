@@ -10,7 +10,7 @@ lead-dev-os uses a 4-step tactical workflow to go from idea to shipped feature. 
 
 ## Getting started (new project)
 
-Run the strategic commands once to establish your project foundation:
+Run the strategic skills once to establish your project foundation:
 
 ```
 /plan-product          → Defines mission, vision, users, tech stack
@@ -18,13 +18,13 @@ Run the strategic commands once to establish your project foundation:
 /plan-roadmap          → Creates prioritized feature roadmap with phases
 ```
 
-These are one-time setup commands. They populate `agents-context/` with the standards and domain knowledge that all future specs will reference.
+These are one-time setup skills. They populate `agents-context/` with the standards and domain knowledge that all future specs will reference.
 
 ---
 
 ## Building a feature
 
-Run the tactical commands sequentially for each feature:
+Run the tactical skills sequentially for each feature:
 
 ### Step 1: Shape (`/step1-shape-spec`)
 

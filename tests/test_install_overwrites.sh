@@ -2,8 +2,7 @@
 # Integration test: verify install.sh overwrite/preserve behavior on re-run
 #
 # What gets OVERWRITTEN on re-install:
-#   - Commands (.claude/commands/lead-dev-os/*.md)
-#   - Templates (lead-dev-os/templates/*.md)
+#   - Skills (.claude/skills/**/*.md)
 #   - Guides (agents-context/guides/*.md)
 #
 # What gets PRESERVED on re-install:
@@ -77,48 +76,31 @@ count_occurrences() {
 
 # --- Tests ---
 
-test_commands_overwritten() {
-  echo "test_commands_overwritten — commands are replaced on re-install with --force"
+test_skills_overwritten() {
+  echo "test_skills_overwritten — skills are replaced on re-install with --force"
   setup
 
   # First install
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
 
-  # Modify a command file
-  echo "user modified this" > "$TARGET/.claude/commands/lead-dev-os/plan-product.md"
+  # Modify a skill file
+  echo "user modified this" > "$TARGET/.claude/skills/strategic/plan-product/SKILL.md"
 
   # Re-install with --force
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
 
   # Should be overwritten with original content
-  assert_file_contains "command overwritten with original" "$TARGET/.claude/commands/lead-dev-os/plan-product.md" "Plan Product"
+  assert_file_contains "skill overwritten with original" "$TARGET/.claude/skills/strategic/plan-product/SKILL.md" "Plan Product"
 
   local content
-  content="$(cat "$TARGET/.claude/commands/lead-dev-os/plan-product.md")"
+  content="$(cat "$TARGET/.claude/skills/strategic/plan-product/SKILL.md")"
   if echo "$content" | grep -q "user modified this"; then
-    echo "  FAIL: command should not contain user modifications after re-install"
+    echo "  FAIL: skill should not contain user modifications after re-install"
     FAIL=$((FAIL + 1))
   else
     echo "  PASS: user modifications replaced"
     PASS=$((PASS + 1))
   fi
-
-  teardown
-}
-
-test_templates_overwritten() {
-  echo "test_templates_overwritten — templates are replaced on re-install with --force"
-  setup
-
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
-
-  # Modify a template
-  echo "custom template" > "$TARGET/lead-dev-os/templates/spec-template.md"
-
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
-
-  # Should be overwritten
-  assert_file_contains "template overwritten" "$TARGET/lead-dev-os/templates/spec-template.md" "Spec:"
 
   teardown
 }
@@ -180,7 +162,7 @@ test_specs_preserved() {
 
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
-  # Create a spec folder as the tactical commands would
+  # Create a spec folder as the tactical skills would
   mkdir -p "$TARGET/lead-dev-os/specs/2026-02-25-user-auth/planning"
   echo "# User Auth Spec" > "$TARGET/lead-dev-os/specs/2026-02-25-user-auth/spec.md"
   echo "raw idea" > "$TARGET/lead-dev-os/specs/2026-02-25-user-auth/planning/initialization.md"
@@ -214,8 +196,8 @@ test_claude_md_not_duplicated() {
   teardown
 }
 
-test_commands_only_preserves_everything() {
-  echo "test_commands_only_preserves_everything — --commands-only updates only commands"
+test_skills_only_preserves_everything() {
+  echo "test_skills_only_preserves_everything — --skills-only updates only skills"
   setup
 
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
@@ -223,21 +205,19 @@ test_commands_only_preserves_everything() {
   # Add user content everywhere
   echo "# My Concept" > "$TARGET/agents-context/concepts/my-concept.md"
   echo "custom guide" > "$TARGET/agents-context/guides/workflow.md"
-  echo "custom template" > "$TARGET/lead-dev-os/templates/spec-template.md"
 
-  # Modify a command
-  echo "old command" > "$TARGET/.claude/commands/lead-dev-os/plan-product.md"
+  # Modify a skill
+  echo "old skill" > "$TARGET/.claude/skills/strategic/plan-product/SKILL.md"
 
-  # Re-install commands only with --force
-  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --commands-only) > /dev/null 2>&1
+  # Re-install skills only with --force
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --skills-only) > /dev/null 2>&1
 
-  # Command should be updated
-  assert_file_contains "command updated" "$TARGET/.claude/commands/lead-dev-os/plan-product.md" "Plan Product"
+  # Skill should be updated
+  assert_file_contains "skill updated" "$TARGET/.claude/skills/strategic/plan-product/SKILL.md" "Plan Product"
 
   # Everything else should be untouched
   assert_eq "concept preserved" "# My Concept" "$(cat "$TARGET/agents-context/concepts/my-concept.md")"
   assert_eq "guide NOT overwritten" "custom guide" "$(cat "$TARGET/agents-context/guides/workflow.md")"
-  assert_eq "template NOT overwritten" "custom template" "$(cat "$TARGET/lead-dev-os/templates/spec-template.md")"
 
   teardown
 }
@@ -249,16 +229,14 @@ test_no_overwrite_without_force() {
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
 
   # Modify files in each overwrite category
-  echo "my custom command" > "$TARGET/.claude/commands/lead-dev-os/plan-product.md"
+  echo "my custom skill" > "$TARGET/.claude/skills/strategic/plan-product/SKILL.md"
   echo "my custom guide" > "$TARGET/agents-context/guides/workflow.md"
-  echo "my custom template" > "$TARGET/lead-dev-os/templates/spec-template.md"
 
   # Re-install without --force, piping "n" to decline all prompts
   yes n | (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1 || true
 
-  assert_eq "command preserved" "my custom command" "$(cat "$TARGET/.claude/commands/lead-dev-os/plan-product.md")"
+  assert_eq "skill preserved" "my custom skill" "$(cat "$TARGET/.claude/skills/strategic/plan-product/SKILL.md")"
   assert_eq "guide preserved" "my custom guide" "$(cat "$TARGET/agents-context/guides/workflow.md")"
-  assert_eq "template preserved" "my custom template" "$(cat "$TARGET/lead-dev-os/templates/spec-template.md")"
 
   teardown
 }
@@ -270,16 +248,14 @@ test_force_flag_overwrites() {
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
 
   # Modify files
-  echo "my custom command" > "$TARGET/.claude/commands/lead-dev-os/plan-product.md"
+  echo "my custom skill" > "$TARGET/.claude/skills/strategic/plan-product/SKILL.md"
   echo "my custom guide" > "$TARGET/agents-context/guides/workflow.md"
-  echo "my custom template" > "$TARGET/lead-dev-os/templates/spec-template.md"
 
   # Re-install with --force
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --force --profile default) > /dev/null 2>&1
 
-  assert_file_contains "command overwritten" "$TARGET/.claude/commands/lead-dev-os/plan-product.md" "Plan Product"
+  assert_file_contains "skill overwritten" "$TARGET/.claude/skills/strategic/plan-product/SKILL.md" "Plan Product"
   assert_file_contains "guide overwritten" "$TARGET/agents-context/guides/workflow.md" "Workflow Guide"
-  assert_file_contains "template overwritten" "$TARGET/lead-dev-os/templates/spec-template.md" "Spec:"
 
   teardown
 }
@@ -289,14 +265,13 @@ test_force_flag_overwrites() {
 echo "=== Integration Tests: install.sh (overwrite behavior) ==="
 echo ""
 
-test_commands_overwritten
-test_templates_overwritten
+test_skills_overwritten
 test_guides_overwritten
 test_concepts_preserved
 test_standards_preserved
 test_specs_preserved
 test_claude_md_not_duplicated
-test_commands_only_preserves_everything
+test_skills_only_preserves_everything
 test_no_overwrite_without_force
 test_force_flag_overwrites
 

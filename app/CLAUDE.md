@@ -2,7 +2,7 @@
 
 This project uses lead-dev-os for spec-driven development. All features go through a structured workflow before implementation.
 
-### Commands
+### Skills
 
 **Strategic (run once or occasionally):**
 - `/plan-product` — Define product mission, vision, tech stack → `agents-context/concepts/product-mission.md`
