@@ -26,6 +26,73 @@ cd /path/to/your-project
 ~/lead-dev-os/scripts/install.sh
 ```
 
+## Profiles configuration (prerequisite to installation)
+
+The installer uses a YAML config to control what gets installed. The default config (`config.default.yml`) ships with a single `default` profile. To customize, copy it to `config.local.yml`:
+
+```bash
+cp ~/lead-dev-os/config.default.yml ~/lead-dev-os/config.local.yml
+```
+
+A profile has two sections:
+
+**`stack`** — Controls which coding standards are installed. Only standards matching enabled stacks are copied to `agents-context/standards/`. Set a stack to `false` or remove it to exclude its standards.
+Add or change any stack types based on your preferences.
+
+**`plan_mode`** — Controls whether tactical commands activate Claude Code's plan mode before executing. When enabled for a step, the installed command includes an instruction to present a plan and get user approval before proceeding. All steps default to `true`.
+
+```yaml
+version: 1.0
+current_profile: default
+
+profiles:
+  default:
+    stack:
+      python: true
+      fastapi: true
+      react: true
+      postgresql: true
+    plan_mode:
+      step1_shape_spec: true
+      step2_define_spec: true
+      step3_scope_tasks: true
+      step4_implement_tasks: false   # skip planning for implementation
+```
+
+You can define multiple profiles and switch between them via `current_profile`:
+
+```yaml
+current_profile: backend
+
+profiles:
+  backend:
+    stack:
+      python: true
+      fastapi: true
+    plan_mode:
+      step1_shape_spec: true
+      step2_define_spec: true
+      step3_scope_tasks: true
+      step4_implement_tasks: true
+  frontend:
+    stack:
+      react: true
+      typescript: true
+    plan_mode:
+      step1_shape_spec: false
+      step2_define_spec: false
+      step3_scope_tasks: true
+      step4_implement_tasks: true
+```
+
+Select a profile at install time with `--profile`:
+
+```bash
+~/lead-dev-os/scripts/install.sh --profile backend
+```
+
+If `--profile` is omitted, the installer prompts interactively.
+
 ## Installer options
 
 ```bash
