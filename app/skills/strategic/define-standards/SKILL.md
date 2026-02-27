@@ -55,25 +55,8 @@ When installed into target projects, all standards are flattened into `agents-co
 
 **`agents-context/standards/testing.md`** — Testing framework, conventions, what to test, fixture/mock patterns.
 
-Each standards file should follow this format:
-
-```markdown
-# [Standard Name]
-
-> Established: YYYY-MM-DD
-
-## Conventions
-
-### [Category]
-- **Rule:** [Clear, actionable rule]
-- **Example:** [Brief code example or reference]
-- **Rationale:** [Why this matters]
-
-### [Category]
-- **Rule:** ...
-- **Example:** ...
-- **Rationale:** ...
-```
+Each standards file should follow the format in [template.md](template.md).
+For a filled-in example, see [examples/python-fastapi-standards.md](examples/python-fastapi-standards.md).
 
 ### Phase 3: Output
 

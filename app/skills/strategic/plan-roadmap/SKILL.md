@@ -24,51 +24,8 @@ You are a strategic product planner. Help the user create a phased roadmap.
 
 ### Phase 2: Roadmap Creation
 
-Organize features into phases based on priority, dependencies, and complexity:
-
-```markdown
-# Product Roadmap
-
-> Last updated: YYYY-MM-DD
-> Based on: [product-mission.md](../../agents-context/concepts/product-mission.md)
-
-## Phase 1: Foundation
-**Goal:** [What this phase achieves]
-**Target:** [Timeframe or milestone]
-
-| Priority | Feature | Description | Dependencies |
-|----------|---------|-------------|--------------|
-| P0 | ... | ... | None |
-| P0 | ... | ... | ... |
-| P1 | ... | ... | ... |
-
-## Phase 2: Core Experience
-**Goal:** [What this phase achieves]
-**Target:** [Timeframe or milestone]
-
-| Priority | Feature | Description | Dependencies |
-|----------|---------|-------------|--------------|
-| P0 | ... | ... | Phase 1 |
-| P1 | ... | ... | ... |
-
-## Phase 3: Growth & Polish
-**Goal:** [What this phase achieves]
-**Target:** [Timeframe or milestone]
-
-| Priority | Feature | Description | Dependencies |
-|----------|---------|-------------|--------------|
-| P1 | ... | ... | Phase 2 |
-| P2 | ... | ... | ... |
-
-## Future Considerations
-- ...
-- ...
-
-## Priority Legend
-- **P0:** Must have — blocks release
-- **P1:** Should have — significant value
-- **P2:** Nice to have — enhances experience
-```
+Organize features into phases based on priority, dependencies, and complexity using the template in [template.md](template.md).
+For a filled-in example, see [examples/saas-project-tracker.md](examples/saas-project-tracker.md).
 
 ### Phase 3: Output
 

@@ -120,9 +120,18 @@ your-project/
 ├── .claude/
 │   └── skills/                                # Skills available in Claude Code
 │       ├── strategic/
-│       │   ├── plan-product/SKILL.md          # /plan-product
-│       │   ├── plan-roadmap/SKILL.md          # /plan-roadmap
-│       │   └── define-standards/SKILL.md      # /define-standards
+│       │   ├── plan-product/                  # /plan-product
+│       │   │   ├── SKILL.md
+│       │   │   ├── template.md
+│       │   │   └── examples/
+│       │   ├── plan-roadmap/                  # /plan-roadmap
+│       │   │   ├── SKILL.md
+│       │   │   ├── template.md
+│       │   │   └── examples/
+│       │   └── define-standards/              # /define-standards
+│       │       ├── SKILL.md
+│       │       ├── template.md
+│       │       └── examples/
 │       └── tactical/
 │           ├── step1-shape-spec/              # /step1-shape-spec
 │           │   ├── SKILL.md

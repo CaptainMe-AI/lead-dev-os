@@ -84,8 +84,14 @@ test_full_install() {
 
   # Strategic skills
   assert_file_exists "plan-product SKILL.md installed" "$skills_dir/strategic/plan-product/SKILL.md"
+  assert_file_exists "plan-product template.md installed" "$skills_dir/strategic/plan-product/template.md"
+  assert_file_exists "plan-product example installed" "$skills_dir/strategic/plan-product/examples/saas-project-tracker.md"
   assert_file_exists "plan-roadmap SKILL.md installed" "$skills_dir/strategic/plan-roadmap/SKILL.md"
+  assert_file_exists "plan-roadmap template.md installed" "$skills_dir/strategic/plan-roadmap/template.md"
+  assert_file_exists "plan-roadmap example installed" "$skills_dir/strategic/plan-roadmap/examples/saas-project-tracker.md"
   assert_file_exists "define-standards SKILL.md installed" "$skills_dir/strategic/define-standards/SKILL.md"
+  assert_file_exists "define-standards template.md installed" "$skills_dir/strategic/define-standards/template.md"
+  assert_file_exists "define-standards example installed" "$skills_dir/strategic/define-standards/examples/python-fastapi-standards.md"
 
   # Tactical skills
   assert_file_exists "step1-shape-spec SKILL.md installed" "$skills_dir/tactical/step1-shape-spec/SKILL.md"
