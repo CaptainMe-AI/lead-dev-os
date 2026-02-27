@@ -74,4 +74,4 @@ The autonomous portion handles scaffolding, boilerplate, or well-defined setup t
 | Prototype / spike / throwaway | **Autonomous** |
 | Production feature with stakeholder scrutiny | **Lead-in-the-Loop** |
 
-The mode is set at the start of `/step4-implement-tasks` and can reference specific task group numbers for the hybrid checkpoint.
+When you run `/step4-implement-tasks`, the skill prompts you to select a mode (A / L / H) after loading the spec context. If you choose Hybrid, it also asks which task group number to use as the checkpoint.

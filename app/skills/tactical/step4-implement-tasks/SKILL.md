@@ -25,7 +25,25 @@ You are a senior engineer implementing a feature from a scoped task breakdown. Y
 
 3. **Identify the next incomplete task group** (first group with unchecked tasks).
 
-### Phase 2: Load Task Group Context
+### Phase 2: Select Execution Mode
+
+Before executing any tasks, present the three execution modes and ask the user to choose one.
+
+**Available modes:**
+
+| Mode | Behavior | Best for |
+|------|----------|----------|
+| **A — Autonomous** | All task groups execute sequentially. Auto-commit after each group. No pauses. | Small features, well-understood domains, low risk |
+| **L — Lead-in-the-Loop** | Execute one task group, then pause for lead review before continuing. | Complex features, new domains, high visibility |
+| **H — Hybrid** | Autonomous up to a checkpoint group, then Lead-in-the-Loop for the rest. | Mix of boilerplate setup + complex logic |
+
+Ask the user: **"Which execution mode? (A / L / H)"**
+
+- If the user selects **H (Hybrid)**, also ask: **"Which task group number should be the checkpoint?"** (autonomous execution runs up to but not including this group; Lead-in-the-Loop starts at this group).
+
+Store the selected mode and checkpoint (if applicable) for the remainder of the session.
+
+### Phase 3: Load Task Group Context
 
 Before starting ANY task group, you MUST:
 
@@ -35,7 +53,7 @@ Before starting ANY task group, you MUST:
 
 3. **Review the group's dependencies.** If this group depends on a previous group, verify that group's work is complete and tests pass.
 
-### Phase 3: Execute Tasks
+### Phase 4: Execute Tasks
 
 Work through each task in the group sequentially:
 
@@ -53,7 +71,7 @@ Work through each task in the group sequentially:
 
 4. **Mark tasks complete** by checking them off in `tasks.md`.
 
-### Phase 4: Update Context
+### Phase 5: Update Context
 
 After completing a task group, **read `agents-context/README.md`** to understand what concepts already exist, then evaluate whether new context should be captured:
 
@@ -75,15 +93,47 @@ After completing a task group, **read `agents-context/README.md`** to understand
 
 Do NOT put code snippets, implementation details, or file-by-file documentation in concept files.
 
-### Phase 5: Progress Report
+### Phase 6: Progress Report / Review Gate
 
-After completing each task group, tell the user:
-- Which task group was completed
-- How many tests were written and their status
-- Any concept files created or updated
-- Which task group is next
+After completing each task group, behavior depends on the execution mode:
 
-After all groups are complete:
+#### Mode A (Autonomous)
+
+1. **Auto-commit** the completed task group with a descriptive commit message summarizing what was implemented.
+2. **Report progress:**
+   - Which task group was completed
+   - How many tests were written and their status
+   - Any concept files created or updated
+   - Which task group is next
+3. **Proceed immediately** to the next task group (back to Phase 3).
+
+#### Mode L (Lead-in-the-Loop)
+
+1. **Report progress:**
+   - Which task group was completed
+   - How many tests were written and their status
+   - Any concept files created or updated
+   - Summary of what was implemented (diff overview)
+2. **STOP and present the review gate.** Tell the user:
+   > **Review gate — Task Group [N] complete.**
+   > The following changes are ready for your review:
+   > - [Brief summary of changes]
+   >
+   > You can now:
+   > - **Review the diff** — inspect changes via your git GUI (GitLens, GitHub Desktop, `lazygit`, or `git diff`)
+   > - **Request changes** — tell me what to modify, fix, or adjust
+   > - **Commit** — say "commit" and I'll create a descriptive commit, or commit manually yourself
+   > - **Continue** — say "continue" to proceed to the next task group
+3. **Wait for explicit instruction** before proceeding. Do NOT continue to the next group until the user says to continue.
+
+#### Mode H (Hybrid)
+
+- **Before the checkpoint group:** behave as **Mode A** (auto-commit, report, proceed immediately).
+- **At and after the checkpoint group:** behave as **Mode L** (report, stop, present review gate, wait for instruction).
+
+#### After all groups are complete
+
+Regardless of mode:
 - Confirm all completion criteria from `tasks.md` are met
 - List any concept files that were created or updated during implementation
 - Summarize what was built
