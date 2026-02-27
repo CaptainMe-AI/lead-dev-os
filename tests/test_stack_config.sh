@@ -32,6 +32,8 @@ teardown() {
   rm -f "$ROOT_DIR/app/agents-context/standards/python/python-conventions.md"
   rm -f "$ROOT_DIR/app/agents-context/standards/fastapi/fastapi-api.md"
   rm -f "$ROOT_DIR/app/agents-context/standards/rails/rails-conventions.md"
+  rm -f "$ROOT_DIR/app/agents-context/standards/global/global-conventions.md"
+  rm -f "$ROOT_DIR/app/agents-context/standards/backend/backend-conventions.md"
   rm -f "$ROOT_DIR/config.local.yml"
 }
 
@@ -146,10 +148,9 @@ test_get_enabled_stacks_default_profile() {
 
   local result
   result="$(get_enabled_stacks "$ROOT_DIR/config.default.yml")"
-  # Should contain all 20 stacks
   local count
   count="$(echo "$result" | wc -l | tr -d ' ')"
-  assert_eq "all 19 stacks enabled in default" "19" "$count"
+  assert_eq "all 3 stacks enabled in default" "3" "$count"
 }
 
 test_get_enabled_stacks_specific_profile() {
@@ -192,8 +193,10 @@ test_default_config_installs_all() {
 
   # Create sample standards in multiple stacks
   echo "# Coding Style" > "$ROOT_DIR/app/agents-context/standards/shared/coding-style.md"
-  echo "# Python Conventions" > "$ROOT_DIR/app/agents-context/standards/python/python-conventions.md"
-  echo "# Rails Conventions" > "$ROOT_DIR/app/agents-context/standards/rails/rails-conventions.md"
+  mkdir -p "$ROOT_DIR/app/agents-context/standards/global"
+  echo "# Global Conventions" > "$ROOT_DIR/app/agents-context/standards/global/global-conventions.md"
+  mkdir -p "$ROOT_DIR/app/agents-context/standards/backend"
+  echo "# Backend Conventions" > "$ROOT_DIR/app/agents-context/standards/backend/backend-conventions.md"
 
   # No config.local.yml — uses default (all stacks enabled)
   rm -f "$ROOT_DIR/config.local.yml"
@@ -201,8 +204,8 @@ test_default_config_installs_all() {
   (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
 
   assert_file_exists "shared standard installed" "$TARGET/agents-context/standards/coding-style.md"
-  assert_file_exists "python standard installed" "$TARGET/agents-context/standards/python-conventions.md"
-  assert_file_exists "rails standard installed" "$TARGET/agents-context/standards/rails-conventions.md"
+  assert_file_exists "global standard installed" "$TARGET/agents-context/standards/global-conventions.md"
+  assert_file_exists "backend standard installed" "$TARGET/agents-context/standards/backend-conventions.md"
 
   teardown
 }

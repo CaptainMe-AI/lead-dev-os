@@ -22,3 +22,9 @@ jobs:
 
       - name: Run integration tests (overwrite behavior)
         run: ./tests/test_install_overwrites.sh
+
+      - name: Run integration tests (help flag)
+        run: ./tests/test_install_help.sh
+
+      - name: Run integration tests (stack config & plan mode)
+        run: ./tests/test_stack_config.sh

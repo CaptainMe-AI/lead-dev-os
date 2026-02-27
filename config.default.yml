@@ -6,34 +6,42 @@ current_profile: default
 profiles:
   default:
     stack:
-      # Backend frameworks
-      fastapi: true
-      django: true
-      rails: true
-      express: true
+      # Global
+      global: true
 
-      # Databases
-      postgresql: true
-      mysql: true
-      mongodb: true
-      redis: true
+      # Backend
+      backend: true
+      # Testing
+      testing: true
 
-      # Frontend
-      react: true
-      nextjs: true
-      vue: true
+      # # Backend frameworks
+      # fastapi: true
+      # django: true
+      # rails: true
+      # express: true
 
-      # Infrastructure
-      nginx: true
-      gunicorn: true
-      uvicorn: true
-      docker: true
+      # # Databases
+      # postgresql: true
+      # mysql: true
+      # mongodb: true
+      # redis: true
 
-      # Languages
-      python: true
-      ruby: true
-      typescript: true
-      javascript: true
+      # # Frontend
+      # react: true
+      # nextjs: true
+      # vue: true
+
+      # # Infrastructure
+      # nginx: true
+      # gunicorn: true
+      # uvicorn: true
+      # docker: true
+
+      # # Languages
+      # python: true
+      # ruby: true
+      # typescript: true
+      # javascript: true
 
     plan_mode:
       step1_shape_spec: true
