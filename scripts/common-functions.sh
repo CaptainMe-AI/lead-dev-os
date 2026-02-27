@@ -196,6 +196,80 @@ prompt_for_profile() {
   esac
 }
 
+# Returns "true" or "false" for a plan_mode step in a profile
+# Usage: get_plan_mode <config_file> <step_key> [profile_name]
+# Example: get_plan_mode config.default.yml step1_shape_spec
+get_plan_mode() {
+  local config_file="$1"
+  local step_key="$2"
+  local profile="${3:-}"
+  if [ ! -f "$config_file" ]; then
+    echo "false"
+    return
+  fi
+  if [ -z "$profile" ]; then
+    profile="$(get_current_profile "$config_file")"
+  fi
+
+  # State machine to parse: profiles > {profile} > plan_mode > step_key: true/false
+  local state="seek_profiles"
+  while IFS= read -r line; do
+    case "$state" in
+      seek_profiles)
+        if echo "$line" | grep -qE '^profiles:'; then
+          state="seek_profile"
+        fi
+        ;;
+      seek_profile)
+        if echo "$line" | grep -qE '^[^ #]'; then
+          echo "false"
+          return
+        fi
+        if echo "$line" | grep -qE "^  ${profile}:$"; then
+          state="seek_plan_mode"
+        fi
+        ;;
+      seek_plan_mode)
+        if echo "$line" | grep -qE '^[^ #]'; then
+          echo "false"
+          return
+        fi
+        if echo "$line" | grep -qE '^  [a-zA-Z0-9_-]*:$'; then
+          echo "false"
+          return
+        fi
+        if echo "$line" | grep -qE '^    plan_mode:'; then
+          state="read_plan_mode"
+        fi
+        ;;
+      read_plan_mode)
+        if echo "$line" | grep -qE '^[^ #]'; then
+          echo "false"
+          return
+        fi
+        if echo "$line" | grep -qE '^  [a-zA-Z0-9_-]*:$'; then
+          echo "false"
+          return
+        fi
+        if echo "$line" | grep -qE '^    [a-zA-Z0-9_-]*:'; then
+          echo "false"
+          return
+        fi
+        # Match the specific step key
+        if echo "$line" | grep -qE "^[[:space:]]*${step_key}:[[:space:]]*true"; then
+          echo "true"
+          return
+        fi
+        if echo "$line" | grep -qE "^[[:space:]]*${step_key}:[[:space:]]*false"; then
+          echo "false"
+          return
+        fi
+        ;;
+    esac
+  done < "$config_file"
+  echo "false"
+}
+
 # Parses config file and returns enabled stack names for a profile (one per line)
 # Usage: get_enabled_stacks <config_file> [profile_name]
 # If profile_name is omitted, uses current_profile from the config file

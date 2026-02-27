@@ -6,6 +6,8 @@ Formalize gathered requirements into a structured specification document.
 
 You are a senior engineer writing a formal specification. Transform the raw requirements from Step 1 into a precise, implementable spec.
 
+{{...INSERT-PLAN-MODE-HERE...}}
+
 ### Phase 1: Load Context
 
 1. **Find the spec folder.** Look for the most recent `specs/YYYY-MM-DD-*/` folder, or ask the user which spec to formalize if multiple exist.

@@ -131,6 +131,42 @@ for cmd_file in "$APP_DIR"/commands/strategic/*.md "$APP_DIR"/commands/tactical/
   fi
 done
 
+# --- Inject Plan Mode into tactical commands ---
+PM_CONFIG_FILE="$(get_config_file)"
+PM_PROFILE="${PROFILE_OVERRIDE:-$(get_current_profile "$PM_CONFIG_FILE")}"
+
+inject_plan_mode() {
+  local cmd_filename="$1"
+  local step_key="$2"
+  local dest_path="$COMMANDS_DEST/$cmd_filename"
+  if [ ! -f "$dest_path" ]; then
+    return
+  fi
+  local plan_enabled
+  plan_enabled="$(get_plan_mode "$PM_CONFIG_FILE" "$step_key" "$PM_PROFILE")"
+  if [ "$plan_enabled" = "true" ]; then
+    # Replace placeholder with plan mode instruction
+    local tmpfile
+    tmpfile="$(mktemp)"
+    sed 's/{{\.\.\.INSERT-PLAN-MODE-HERE\.\.\.}}/## Planning\
+**Use plan mode for per task group when implementing** - This will allow to further break down the task into sub-tasks and plan them out./' "$dest_path" > "$tmpfile"
+    mv "$tmpfile" "$dest_path"
+    print_verbose "  Plan mode injected: $cmd_filename"
+  else
+    # Remove placeholder line
+    local tmpfile
+    tmpfile="$(mktemp)"
+    sed '/{{\.\.\.INSERT-PLAN-MODE-HERE\.\.\.}}/d' "$dest_path" > "$tmpfile"
+    mv "$tmpfile" "$dest_path"
+    print_verbose "  Plan mode removed: $cmd_filename"
+  fi
+}
+
+inject_plan_mode "step1-shape-spec.md" "step1_shape_spec"
+inject_plan_mode "step2-define-spec.md" "step2_define_spec"
+inject_plan_mode "step3-scope-tasks.md" "step3_scope_tasks"
+inject_plan_mode "step4-implement-tasks.md" "step4_implement_tasks"
+
 print_success "Commands installed to .claude/commands/lead-dev-os/"
 
 if [ "$COMMANDS_ONLY" = true ]; then

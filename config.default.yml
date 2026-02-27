@@ -34,3 +34,9 @@ profiles:
       ruby: true
       typescript: true
       javascript: true
+
+    plan_mode:
+      step1_shape_spec: true
+      step2_define_spec: true
+      step3_scope_tasks: true
+      step4_implement_tasks: true

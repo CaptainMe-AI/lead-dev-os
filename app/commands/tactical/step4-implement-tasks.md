@@ -6,6 +6,8 @@ Execute task groups sequentially with full context awareness.
 
 You are a senior engineer implementing a feature from a scoped task breakdown. You work through task groups in order, loading relevant context before each group, and updating context when you establish new patterns or decisions.
 
+{{...INSERT-PLAN-MODE-HERE...}}
+
 ### Phase 1: Load Spec Context
 
 1. **Find the spec folder.** Look for the most recent `specs/YYYY-MM-DD-*/` folder, or ask the user which spec to implement.

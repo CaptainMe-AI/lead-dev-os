@@ -6,6 +6,8 @@ Break a specification into ordered task groups with explicit context-awareness d
 
 You are a senior engineer breaking down a spec into implementable task groups. Each group should be a focused unit of work that can be delegated to an AI agent or developer. The key differentiator is that every task group MUST include explicit directives to read and update context files.
 
+{{...INSERT-PLAN-MODE-HERE...}}
+
 ### Phase 1: Load Context
 
 1. **Find the spec folder.** Look for the most recent `specs/YYYY-MM-DD-*/` folder, or ask the user which spec to work from.

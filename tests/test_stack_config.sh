@@ -299,6 +299,140 @@ EOF
   teardown
 }
 
+test_plan_mode_does_not_pollute_stacks() {
+  echo "test_plan_mode_does_not_pollute_stacks — plan_mode keys excluded from get_enabled_stacks"
+
+  cat > "$ROOT_DIR/config.local.yml" <<'EOF'
+version: 1.0
+current_profile: default
+
+profiles:
+  default:
+    stack:
+      python: true
+      fastapi: true
+    plan_mode:
+      step1_shape_spec: true
+      step2_define_spec: true
+      step3_scope_tasks: true
+      step4_implement_tasks: true
+EOF
+
+  local result
+  result="$(get_enabled_stacks "$ROOT_DIR/config.local.yml")"
+  local expected
+  expected="$(printf 'python\nfastapi')"
+  assert_eq "plan_mode keys not in stacks" "$expected" "$result"
+
+  rm -f "$ROOT_DIR/config.local.yml"
+}
+
+test_get_plan_mode_enabled() {
+  echo "test_get_plan_mode_enabled — returns true when plan_mode step is true"
+
+  cat > "$ROOT_DIR/config.local.yml" <<'EOF'
+version: 1.0
+current_profile: default
+
+profiles:
+  default:
+    stack:
+      python: true
+    plan_mode:
+      step1_shape_spec: true
+      step2_define_spec: false
+EOF
+
+  local result
+  result="$(get_plan_mode "$ROOT_DIR/config.local.yml" "step1_shape_spec")"
+  assert_eq "step1 plan mode true" "true" "$result"
+
+  result="$(get_plan_mode "$ROOT_DIR/config.local.yml" "step2_define_spec")"
+  assert_eq "step2 plan mode false" "false" "$result"
+
+  result="$(get_plan_mode "$ROOT_DIR/config.local.yml" "step3_scope_tasks")"
+  assert_eq "missing step returns false" "false" "$result"
+
+  rm -f "$ROOT_DIR/config.local.yml"
+}
+
+test_get_plan_mode_missing_section() {
+  echo "test_get_plan_mode_missing_section — returns false when plan_mode section missing"
+
+  cat > "$ROOT_DIR/config.local.yml" <<'EOF'
+version: 1.0
+current_profile: default
+
+profiles:
+  default:
+    stack:
+      python: true
+EOF
+
+  local result
+  result="$(get_plan_mode "$ROOT_DIR/config.local.yml" "step1_shape_spec")"
+  assert_eq "no plan_mode section returns false" "false" "$result"
+
+  rm -f "$ROOT_DIR/config.local.yml"
+}
+
+test_plan_mode_injected_on_install() {
+  echo "test_plan_mode_injected_on_install — installer replaces placeholder when plan_mode is true"
+  setup
+
+  cat > "$ROOT_DIR/config.local.yml" <<'EOF'
+version: 1.0
+current_profile: default
+
+profiles:
+  default:
+    stack:
+      python: true
+    plan_mode:
+      step1_shape_spec: true
+      step4_implement_tasks: false
+EOF
+
+  (cd "$TARGET" && bash "$INSTALL_SCRIPT" --profile default) > /dev/null 2>&1
+
+  # step1 should have plan mode injected (placeholder replaced)
+  if grep -q "## Planning" "$TARGET/.claude/commands/lead-dev-os/step1-shape-spec.md"; then
+    echo "  PASS: step1 has plan mode injected"
+    PASS=$((PASS + 1))
+  else
+    echo "  FAIL: step1 should have plan mode injected"
+    FAIL=$((FAIL + 1))
+  fi
+
+  # step1 should NOT have the placeholder anymore
+  if grep -q "INSERT-PLAN-MODE-HERE" "$TARGET/.claude/commands/lead-dev-os/step1-shape-spec.md"; then
+    echo "  FAIL: step1 still has placeholder"
+    FAIL=$((FAIL + 1))
+  else
+    echo "  PASS: step1 placeholder removed"
+    PASS=$((PASS + 1))
+  fi
+
+  # step4 should have placeholder removed (plan_mode false)
+  if grep -q "INSERT-PLAN-MODE-HERE" "$TARGET/.claude/commands/lead-dev-os/step4-implement-tasks.md"; then
+    echo "  FAIL: step4 still has placeholder"
+    FAIL=$((FAIL + 1))
+  else
+    echo "  PASS: step4 placeholder removed"
+    PASS=$((PASS + 1))
+  fi
+
+  if grep -q "## Planning" "$TARGET/.claude/commands/lead-dev-os/step4-implement-tasks.md"; then
+    echo "  FAIL: step4 should NOT have plan mode injected"
+    FAIL=$((FAIL + 1))
+  else
+    echo "  PASS: step4 does not have plan mode"
+    PASS=$((PASS + 1))
+  fi
+
+  teardown
+}
+
 # --- Run all tests ---
 
 echo "=== Tests: Stack-Based Config System (Profiles) ==="
@@ -314,6 +448,10 @@ test_default_config_installs_all
 test_local_config_filters_stacks
 test_standards_not_overwritten_by_installer
 test_shared_always_installed
+test_plan_mode_does_not_pollute_stacks
+test_get_plan_mode_enabled
+test_get_plan_mode_missing_section
+test_plan_mode_injected_on_install
 
 echo ""
 echo "=== Results: $PASS passed, $FAIL failed ==="
