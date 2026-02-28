@@ -56,11 +56,15 @@ specs/
 
 ## Context philosophy
 
+The `agents-context/` directory contains an `AGENTS.md` index file that points to `README.md` — the full context documentation index. The README lists all available concepts, standards, and task-to-concept mappings.
+
 Concept files in `agents-context/concepts/` are general guidance, not code:
 
 - Describe approaches, conventions, and decision rationale
 - Reference file paths instead of duplicating code
 - Each file covers one concept or feature domain
 - Composable — load only what's needed for the current task
+
+When implementing features (`/lead-dev-os:step3-implement-tasks`), the agent keeps `agents-context/README.md` in sync whenever new concept files are created or updated.
 
 This keeps agent context windows focused and prevents information overload.

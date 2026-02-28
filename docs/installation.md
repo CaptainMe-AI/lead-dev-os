@@ -36,9 +36,11 @@ The init skill will:
 
 1. Check for existing lead-dev-os artifacts
 2. Ask about your technology stacks (languages, frameworks, databases, infrastructure)
-3. Create the `agents-context/` directory structure with standards and guides
+3. Create the `agents-context/` directory structure with standards, guides, AGENTS.md, and README.md
 4. Create the `specs/` directory
 5. Update your `CLAUDE.md` with framework instructions
+
+The init skill uses bundled templates (for AGENTS.md, README.md, workflow guide, CLAUDE.md) and copies global and testing standards from the plugin into your project.
 
 ## What gets created
 
@@ -46,7 +48,8 @@ The init skill will:
 your-project/
 │
 ├── agents-context/                            # Top-level knowledge base
-│   ├── README.md                              # Index of concepts and standards
+│   ├── AGENTS.md                              # Context documentation index (points to README.md)
+│   ├── README.md                              # Full index of concepts, standards, and usage
 │   ├── concepts/                              # Project-specific domain guidance
 │   ├── standards/                             # Coding style, architecture, testing conventions
 │   │   ├── coding-style.md                    # Global standard (always included)

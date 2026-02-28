@@ -60,7 +60,7 @@ claude --plugin-dir ~/lead-dev-os/lead-dev-os
 /lead-dev-os:init
 ```
 
-The `/lead-dev-os:init` skill will interactively set up your project — creating `agents-context/`, `specs/`, and updating your `CLAUDE.md`.
+The `/lead-dev-os:init` skill will interactively set up your project — creating `agents-context/` (with AGENTS.md, README.md, standards, and guides), `specs/`, and updating your `CLAUDE.md`.
 
 See the [Installation Guide](https://captainme-ai.github.io/lead-dev-os/installation) for full details.
 

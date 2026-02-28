@@ -107,6 +107,7 @@ done
 
 # Skills with examples
 SKILLS_WITH_EXAMPLES=(
+  "init"
   "plan-product"
   "plan-roadmap"
   "define-standards"

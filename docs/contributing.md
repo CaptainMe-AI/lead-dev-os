@@ -18,6 +18,16 @@ lead-dev-os/                          # The plugin
 │   └── plugin.json                   # Plugin metadata
 ├── skills/                           # Flat skill directories (no nesting)
 │   ├── init/                         # Project initialization
+│   │   ├── SKILL.md
+│   │   ├── templates/                # Templates for target project files
+│   │   │   ├── agents.md             # → agents-context/AGENTS.md
+│   │   │   ├── claude.md             # → CLAUDE.md framework section
+│   │   │   ├── readme.md             # → agents-context/README.md
+│   │   │   └── workflow.md           # → agents-context/guides/workflow.md
+│   │   ├── examples/
+│   │   │   └── readme-filled.md      # Example of a mature README.md
+│   │   ├── standards-global/         # Global standards (always copied)
+│   │   └── standards-testing/        # Testing standards (always copied)
 │   ├── plan-product/                 # Strategic: product mission
 │   ├── plan-roadmap/                 # Strategic: feature roadmap
 │   ├── define-standards/             # Strategic: coding standards

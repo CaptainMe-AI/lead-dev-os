@@ -94,6 +94,11 @@ After completing a task group, **read `agents-context/README.md`** to understand
 
 Do NOT put code snippets, implementation details, or file-by-file documentation in concept files.
 
+**CRITICAL: Keep `agents-context/README.md` in sync.** Whenever you create or update a concept file, you MUST also update `agents-context/README.md`:
+- Add new entries under the appropriate section (Core Concepts or Domain Concepts)
+- Update the "For AI Agents" task-to-concept mapping
+- Update cross-references in related concept entries
+
 ### Phase 6: Progress Report / Review Gate
 
 After completing each task group, behavior depends on the execution mode:
