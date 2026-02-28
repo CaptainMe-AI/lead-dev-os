@@ -66,7 +66,21 @@ See the [Installation Guide](https://captainme-ai.github.io/lead-dev-os/installa
 
 ## 🚀 Usage
 
-Run the strategic skills once to set up your project, then use the tactical workflow for each feature:
+### Initialize
+
+```
+/lead-dev-os:init                    → Set up agents-context, specs, standards, and CLAUDE.md
+```
+
+### Strategic (run once to set up your project)
+
+```
+/lead-dev-os:plan-product            → Define product mission, vision, users, tech stack
+/lead-dev-os:define-standards        → Establish coding style, architecture, testing conventions
+/lead-dev-os:plan-roadmap            → Create prioritized feature roadmap with phases
+```
+
+### Tactical (run per feature)
 
 ```
 /lead-dev-os:step1-write-spec        → Interactive Q&A + formalize into spec with numbered requirements (FR-###)
