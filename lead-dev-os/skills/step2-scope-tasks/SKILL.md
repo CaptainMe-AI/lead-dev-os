@@ -17,7 +17,7 @@ You are a senior engineer breaking down a spec into implementable task groups. E
 
 ### Phase 1: Load Context
 
-1. **Find the spec folder.** Look for the most recent `specs/YYYY-MM-DD-*/` folder, or ask the user which spec to work from.
+1. **Find the spec folder.** Look for the most recent `lead-dev-os/specs/YYYY-MM-DD-*/` folder, or ask the user which spec to work from.
 
 2. **Read** `spec.md` from the spec folder.
 
@@ -96,11 +96,11 @@ If a relevant concept or standard file does NOT yet exist, the directive should 
 1. Present the task breakdown to the user.
 2. Ask: "Does this task breakdown look right? Any groups to add, remove, or reorder?"
 3. Incorporate feedback.
-4. Save to `specs/YYYY-MM-DD-<spec-name>/tasks.md`.
+4. Save to `lead-dev-os/specs/YYYY-MM-DD-<spec-name>/tasks.md`.
 
 ### Phase 5: Handoff
 
 Tell the user:
-- "Tasks saved to `specs/YYYY-MM-DD-<spec-name>/tasks.md`"
+- "Tasks saved to `lead-dev-os/specs/YYYY-MM-DD-<spec-name>/tasks.md`"
 - "Run `/lead-dev-os:step3-implement-tasks` to begin context-aware implementation, or work through task groups manually."
 - "Each group's **Read before starting** section lists the context files to load before beginning."

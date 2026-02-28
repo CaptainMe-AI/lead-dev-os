@@ -37,7 +37,7 @@ The init skill will:
 1. Check for existing lead-dev-os artifacts
 2. Ask about your technology stacks (languages, frameworks, databases, infrastructure)
 3. Create the `agents-context/` directory structure with standards, guides, AGENTS.md, and README.md
-4. Create the `specs/` directory
+4. Create the `lead-dev-os/specs/` directory
 5. Update your `CLAUDE.md` with framework instructions
 
 The init skill uses bundled templates (for AGENTS.md, README.md, workflow guide, CLAUDE.md) and copies global and testing standards from the plugin into your project.
@@ -62,7 +62,8 @@ your-project/
 │   └── guides/
 │       └── workflow.md                        # Workflow overview
 │
-├── specs/                                     # Generated specs live here
+├── lead-dev-os/
+│   └── specs/                                 # Generated specs live here
 │
 └── CLAUDE.md                                  # Updated with framework instructions
 ```
@@ -88,7 +89,7 @@ All skills are accessed via the `/lead-dev-os:` namespace:
 | **agents-context/concepts/** | Domain knowledge and general guidance | You + skills + implementation |
 | **agents-context/standards/** | Coding standards, conventions, patterns | `/lead-dev-os:define-standards` skill |
 | **agents-context/guides/** | Workflow documentation | `/lead-dev-os:init` skill |
-| **specs/** | Dated spec folders from the workflow | `/lead-dev-os:step1-write-spec` and subsequent steps |
+| **lead-dev-os/specs/** | Dated spec folders from the workflow | `/lead-dev-os:step1-write-spec` and subsequent steps |
 
 ## Updating
 
@@ -102,11 +103,3 @@ claude --plugin-dir ~/lead-dev-os/lead-dev-os
 
 Skills are loaded from the plugin directory — no need to re-run init.
 
-## Migration from install.sh
-
-If you previously used `scripts/install.sh`:
-
-1. Start Claude Code with the plugin: `claude --plugin-dir ~/lead-dev-os/lead-dev-os`
-2. All skills now use the `/lead-dev-os:` namespace (e.g., `/lead-dev-os:step1-write-spec`)
-3. Your existing `agents-context/` and `specs/` directories are fully compatible
-4. Config profiles (`config.local.yml`) are replaced by interactive prompts in `/lead-dev-os:init`

@@ -21,7 +21,7 @@ You are a senior product engineer conducting a requirements discovery session an
 
 2. Create a dated spec folder with a visuals directory:
    ```bash
-   mkdir -p specs/YYYY-MM-DD-<spec-name>/planning/visuals
+   mkdir -p lead-dev-os/specs/YYYY-MM-DD-<spec-name>/planning/visuals
    ```
    Use kebab-case for `<spec-name>`.
 
@@ -69,7 +69,7 @@ For each question, **propose a sensible assumption** when possible — e.g., "I'
 
 7. **Reusability check** — If the concept scan (Phase 2) found relevant patterns, present them: "I found these existing patterns that may be relevant: [list concepts and the source paths they reference]. Should we reuse or extend any of these?" If no relevant concepts were found, ask: "Are there existing patterns, components, or modules in the codebase that this feature should reuse or extend? If so, point me to the file/folder paths."
 
-8. **Visual assets** — "Do you have any mockups, screenshots, or wireframes for this feature? If so, drop them into `specs/YYYY-MM-DD-<spec-name>/planning/visuals/` (e.g., `homepage-mockup.png`, `login-flow-wireframe.jpg`). I'll analyze them automatically."
+8. **Visual assets** — "Do you have any mockups, screenshots, or wireframes for this feature? If so, drop them into `lead-dev-os/specs/YYYY-MM-DD-<spec-name>/planning/visuals/` (e.g., `homepage-mockup.png`, `login-flow-wireframe.jpg`). I'll analyze them automatically."
 
 ### Phase 4: Process Answers & Visual Check
 
@@ -79,7 +79,7 @@ After receiving the user's answers:
 
 2. **MANDATORY — check the visuals folder** regardless of what the user said about visuals:
    ```bash
-   ls -la specs/YYYY-MM-DD-<spec-name>/planning/visuals/ 2>/dev/null | grep -E '\.(png|jpg|jpeg|gif|svg|pdf|webp)$' || echo "No visual files found"
+   ls -la lead-dev-os/specs/YYYY-MM-DD-<spec-name>/planning/visuals/ 2>/dev/null | grep -E '\.(png|jpg|jpeg|gif|svg|pdf|webp)$' || echo "No visual files found"
    ```
 
 3. **If visual files are found:**
@@ -103,7 +103,7 @@ If needed, ask **1-3 targeted follow-up questions**. If answers from Round 1 are
 
 ### Phase 6: Save Requirements
 
-Save all findings to `specs/YYYY-MM-DD-<spec-name>/planning/requirements.md`.
+Save all findings to `lead-dev-os/specs/YYYY-MM-DD-<spec-name>/planning/requirements.md`.
 
 Generate the requirements document using the requirements template section in [template.md](template.md).
 For a filled-in example, see [examples/user-profile-feature.md](examples/user-profile-feature.md).
@@ -135,7 +135,7 @@ Fill in every section with concrete values derived from the requirements.
 1. Present the spec to the user for review.
 2. Ask: "Does this spec accurately capture what you want to build? Any changes needed?"
 3. Incorporate feedback if provided.
-4. Save the final spec to `specs/YYYY-MM-DD-<spec-name>/spec.md`.
+4. Save the final spec to `lead-dev-os/specs/YYYY-MM-DD-<spec-name>/spec.md`.
 
 ### Phase 10: Handoff
 
@@ -145,7 +145,7 @@ Assess the feature size based on everything gathered:
 - **Large** — Cross-cutting concerns, significant data model changes, many integration points, multiple user flows
 
 Tell the user:
-- "Requirements saved to `specs/YYYY-MM-DD-<spec-name>/planning/requirements.md`"
-- "Specification saved to `specs/YYYY-MM-DD-<spec-name>/spec.md`"
+- "Requirements saved to `lead-dev-os/specs/YYYY-MM-DD-<spec-name>/planning/requirements.md`"
+- "Specification saved to `lead-dev-os/specs/YYYY-MM-DD-<spec-name>/spec.md`"
 - **"Estimated size: [Small/Medium/Large]"** — with a one-line rationale
 - "Run `/lead-dev-os:step2-scope-tasks` to break this spec into implementable task groups."

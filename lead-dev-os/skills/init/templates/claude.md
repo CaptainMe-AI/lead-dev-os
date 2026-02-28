@@ -10,8 +10,8 @@ This project uses lead-dev-os for spec-driven development. All features go throu
 - `/lead-dev-os:define-standards` — Establish coding & architecture standards → `agents-context/standards/`
 
 **Tactical (run per feature):**
-1. `/lead-dev-os:step1-write-spec` — Interactive Q&A + formalize into spec → `specs/YYYY-MM-DD-name/spec.md`
-2. `/lead-dev-os:step2-scope-tasks` — Break into context-aware task groups → `specs/YYYY-MM-DD-name/tasks.md`
+1. `/lead-dev-os:step1-write-spec` — Interactive Q&A + formalize into spec → `lead-dev-os/specs/YYYY-MM-DD-name/spec.md`
+2. `/lead-dev-os:step2-scope-tasks` — Break into context-aware task groups → `lead-dev-os/specs/YYYY-MM-DD-name/tasks.md`
 3. `/lead-dev-os:step3-implement-tasks` — Context-aware implementation of task groups
 
 ### Context System

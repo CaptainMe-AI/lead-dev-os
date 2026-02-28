@@ -60,7 +60,7 @@ claude --plugin-dir ~/lead-dev-os/lead-dev-os
 /lead-dev-os:init
 ```
 
-The `/lead-dev-os:init` skill will interactively set up your project — creating `agents-context/` (with AGENTS.md, README.md, standards, and guides), `specs/`, and updating your `CLAUDE.md`.
+The `/lead-dev-os:init` skill will interactively set up your project — creating `agents-context/` (with AGENTS.md, README.md, standards, and guides), `lead-dev-os/specs/`, and updating your `CLAUDE.md`.
 
 See the [Installation Guide](https://captainme-ai.github.io/lead-dev-os/installation) for full details.
 
@@ -75,23 +75,6 @@ Run the strategic skills once to set up your project, then use the tactical work
 ```
 
 See the [Workflow Guide](https://captainme-ai.github.io/lead-dev-os/workflow) for the full process, and [Implementation Modes](https://captainme-ai.github.io/lead-dev-os/implementation) for autonomous, lead-in-the-loop, and hybrid execution.
-
-## Migration from install.sh
-
-If you previously used `scripts/install.sh`, the plugin replaces that workflow:
-
-| Before | After |
-|--------|-------|
-| `scripts/install.sh` | `/lead-dev-os:init` |
-| `config.default.yml` / `config.local.yml` | Interactive prompts in `/lead-dev-os:init` |
-| `/step1-write-spec` | `/lead-dev-os:step1-write-spec` |
-| `/step2-scope-tasks` | `/lead-dev-os:step2-scope-tasks` |
-| `/step3-implement-tasks` | `/lead-dev-os:step3-implement-tasks` |
-| `/plan-product` | `/lead-dev-os:plan-product` |
-| `/plan-roadmap` | `/lead-dev-os:plan-roadmap` |
-| `/define-standards` | `/lead-dev-os:define-standards` |
-
-The `app/` directory and `scripts/install.sh` are deprecated but still functional for backwards compatibility.
 
 ## 🤝 Contributing
 

@@ -42,16 +42,17 @@ Context-aware execution of task groups. The agent loads only the context it need
 
 ## Spec folder structure
 
-Each feature produces a dated folder in `specs/`:
+Each feature produces a dated folder in `lead-dev-os/specs/`:
 
 ```
-specs/
-└── 2026-02-25-user-auth/
-    ├── planning/
-    │   ├── initialization.md       # Raw idea captured in Step 1
-    │   └── requirements.md         # Structured Q&A from Step 1
-    ├── spec.md                     # Formal specification from Step 1
-    └── tasks.md                    # Context-aware task groups from Step 2
+lead-dev-os/
+└── specs/
+    └── 2026-02-25-user-auth/
+        ├── planning/
+        │   ├── initialization.md       # Raw idea captured in Step 1
+        │   └── requirements.md         # Structured Q&A from Step 1
+        ├── spec.md                     # Formal specification from Step 1
+        └── tasks.md                    # Context-aware task groups from Step 2
 ```
 
 ## Context philosophy

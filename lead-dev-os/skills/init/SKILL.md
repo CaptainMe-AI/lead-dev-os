@@ -16,7 +16,7 @@ You are a project setup assistant. Initialize the lead-dev-os framework by creat
 
 Check if any lead-dev-os artifacts already exist:
 - `agents-context/` directory
-- `specs/` directory
+- `lead-dev-os/specs/` directory
 - `CLAUDE.md` with `## lead-dev-os Framework` section
 
 If any exist, inform the user what was found and ask: **"Some lead-dev-os artifacts already exist. Should I skip existing files (preserve your changes) or overwrite them with fresh defaults?"**
@@ -42,7 +42,7 @@ Create the following directories:
 mkdir -p agents-context/concepts
 mkdir -p agents-context/standards
 mkdir -p agents-context/guides
-mkdir -p specs
+mkdir -p lead-dev-os/specs
 ```
 
 ### Phase 4: Copy Standards
@@ -113,7 +113,7 @@ Created:
       {stack dirs based on selection}
     guides/
       workflow.md
-  specs/
+  lead-dev-os/specs/
   CLAUDE.md (updated)
 
 Next steps:

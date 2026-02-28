@@ -17,7 +17,7 @@ You are a senior engineer implementing a feature from a scoped task breakdown. Y
 
 ### Phase 1: Load Spec Context
 
-1. **Find the spec folder.** Look for the most recent `specs/YYYY-MM-DD-*/` folder, or ask the user which spec to implement.
+1. **Find the spec folder.** Look for the most recent `lead-dev-os/specs/YYYY-MM-DD-*/` directory, or ask the user which spec to implement.
 
 2. **Read these files in order:**
    - `tasks.md` — the task breakdown (your work plan)

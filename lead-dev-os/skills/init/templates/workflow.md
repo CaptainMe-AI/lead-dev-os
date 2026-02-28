@@ -30,14 +30,14 @@ These skills drive the spec-to-implementation pipeline. Run them sequentially fo
 **What it does:** Interactive Q&A to deeply understand what needs to be built, then formalizes into a structured specification.
 
 **Inputs:** Your feature idea (1-3 sentences)
-**Outputs:** `specs/YYYY-MM-DD-<name>/planning/requirements.md` + `specs/YYYY-MM-DD-<name>/spec.md`
+**Outputs:** `lead-dev-os/specs/YYYY-MM-DD-<name>/planning/requirements.md` + `lead-dev-os/specs/YYYY-MM-DD-<name>/spec.md`
 
 ### Step 2: Scope Tasks (`/lead-dev-os:step2-scope-tasks`)
 
 **What it does:** Breaks the spec into ordered task groups with explicit context directives.
 
 **Inputs:** Spec from Step 1 + project standards and concepts
-**Outputs:** `specs/YYYY-MM-DD-<name>/tasks.md`
+**Outputs:** `lead-dev-os/specs/YYYY-MM-DD-<name>/tasks.md`
 
 ### Step 3: Implement Tasks (`/lead-dev-os:step3-implement-tasks`)
 

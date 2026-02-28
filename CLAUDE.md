@@ -65,7 +65,7 @@ lead-dev-os/                                   # Repository root
 - All skill cross-references use the `/lead-dev-os:` namespace (e.g., `/lead-dev-os:step1-write-spec`)
 - Standards files are bundled inside `lead-dev-os/skills/init/` (no separate content/ directory)
 - Templates are co-located with their skills (e.g., `step1-write-spec/template.md`)
-- Specs go into `specs/` directory in the target project
+- Specs go into `lead-dev-os/specs/` directory in the target project
 - No `config.yml` in the plugin — stack selection is handled interactively by `/lead-dev-os:init`
 - `app/` and `scripts/` are deprecated but still functional for backwards compatibility
 

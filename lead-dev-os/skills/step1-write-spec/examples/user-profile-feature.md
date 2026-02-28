@@ -29,7 +29,7 @@
 **Q7:** I found these existing patterns that may be relevant: `agents-context/concepts/auth-system.md` references the auth middleware at `src/middleware/auth.ts`, and `agents-context/concepts/file-uploads.md` references the S3 upload service at `src/services/upload.ts`. Should we reuse these?
 **Answer:** Yes, reuse both. The upload service already handles S3 presigned URLs — extend it for avatar-specific validation (dimensions, file type).
 
-**Q8:** Do you have any mockups or wireframes? Drop them into `specs/2026-02-25-user-profile/planning/visuals/`.
+**Q8:** Do you have any mockups or wireframes? Drop them into `lead-dev-os/specs/2026-02-25-user-profile/planning/visuals/`.
 **Answer:** Added `profile-mockup.png` to the visuals folder.
 
 ### Existing Code to Reference
