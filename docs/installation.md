@@ -11,162 +11,99 @@ nav_order: 2
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI installed
 - A git repository for your target project
 
-## Install into a project
+## Install as a Claude Code Plugin
 
-Clone this repo somewhere on your machine, then run the install script from inside your target project:
+Clone this repo somewhere on your machine, then start Claude Code with the plugin:
 
 ```bash
 # Clone lead-dev-os (one-time)
 git clone https://github.com/CaptainMe-AI/lead-dev-os.git ~/lead-dev-os
 
-# Navigate to your project
+# Start Claude Code with the plugin
+claude --plugin-dir ~/lead-dev-os/lead-dev-os
+```
+
+## Initialize your project
+
+Navigate to your project and run the init skill:
+
+```bash
 cd /path/to/your-project
-
-# Run the installer
-~/lead-dev-os/scripts/install.sh
+/lead-dev-os:init
 ```
 
-## Profiles configuration (prerequisite to installation)
+The init skill will:
 
-The installer uses a YAML config to control what gets installed. The default config (`config.default.yml`) ships with a single `default` profile. To customize, copy it to `config.local.yml`:
+1. Check for existing lead-dev-os artifacts
+2. Ask about your technology stacks (languages, frameworks, databases, infrastructure)
+3. Create the `agents-context/` directory structure with standards and guides
+4. Create the `specs/` directory
+5. Update your `CLAUDE.md` with framework instructions
 
-```bash
-cp ~/lead-dev-os/config.default.yml ~/lead-dev-os/config.local.yml
-```
-
-A profile has two sections:
-
-**`stack`** — Controls which coding standards are installed. Only standards matching enabled stacks are copied to `agents-context/standards/`. Set a stack to `false` or remove it to exclude its standards.
-Add or change any stack types based on your preferences.
-
-**`plan_mode`** — Controls whether tactical skills activate Claude Code's plan mode before executing. When enabled for a step, the installed skill includes an instruction to present a plan and get user approval before proceeding. All steps default to `true`.
-
-```yaml
-version: 1.0
-current_profile: default
-
-profiles:
-  default:
-    stack:
-      python: true
-      fastapi: true
-      react: true
-      postgresql: true
-    plan_mode:
-      step1_write_spec: true
-      step2_scope_tasks: true
-      step3_implement_tasks: false   # skip planning for implementation
-```
-
-You can define multiple profiles and switch between them via `current_profile`:
-
-```yaml
-current_profile: backend
-
-profiles:
-  backend:
-    stack:
-      python: true
-      fastapi: true
-    plan_mode:
-      step1_write_spec: true
-      step2_scope_tasks: true
-      step3_implement_tasks: true
-  frontend:
-    stack:
-      react: true
-      typescript: true
-    plan_mode:
-      step1_write_spec: false
-      step2_scope_tasks: true
-      step3_implement_tasks: true
-```
-
-Select a profile at install time with `--profile`:
-
-```bash
-~/lead-dev-os/scripts/install.sh --profile backend
-```
-
-If `--profile` is omitted, the installer prompts interactively.
-
-## Installer options
-
-```bash
-# Full install (skills + context)
-~/lead-dev-os/scripts/install.sh
-
-# Update skills only (preserves your context and standards)
-~/lead-dev-os/scripts/install.sh --skills-only
-
-# Verbose output for debugging
-~/lead-dev-os/scripts/install.sh --verbose
-```
-
-The installer is idempotent — safe to re-run. It will:
-
-- Overwrite skills and guides (framework-managed files)
-- Preserve your `agents-context/concepts/` and `agents-context/standards/` content
-- Append to your existing `CLAUDE.md` without duplicating if the section already exists
-
-## What gets installed
+## What gets created
 
 ```
 your-project/
 │
-├── .claude/
-│   └── skills/                                # Skills available in Claude Code
-│       ├── strategic/
-│       │   ├── plan-product/                  # /plan-product
-│       │   │   ├── SKILL.md
-│       │   │   ├── template.md
-│       │   │   └── examples/
-│       │   ├── plan-roadmap/                  # /plan-roadmap
-│       │   │   ├── SKILL.md
-│       │   │   ├── template.md
-│       │   │   └── examples/
-│       │   └── define-standards/              # /define-standards
-│       │       ├── SKILL.md
-│       │       ├── template.md
-│       │       └── examples/
-│       └── tactical/
-│           ├── step1-write-spec/              # /step1-write-spec
-│           │   ├── SKILL.md
-│           │   ├── template.md
-│           │   └── examples/
-│           ├── step2-scope-tasks/             # /step2-scope-tasks
-│           │   ├── SKILL.md
-│           │   ├── template.md
-│           │   └── examples/
-│           └── step3-implement-tasks/         # /step3-implement-tasks
-│               └── SKILL.md
-│
 ├── agents-context/                            # Top-level knowledge base
+│   ├── README.md                              # Index of concepts and standards
 │   ├── concepts/                              # Project-specific domain guidance
 │   ├── standards/                             # Coding style, architecture, testing conventions
+│   │   ├── coding-style.md                    # Global standard (always included)
+│   │   ├── commenting.md                      # Global standard (always included)
+│   │   ├── conventions.md                     # Global standard (always included)
+│   │   ├── error-handling.md                  # Global standard (always included)
+│   │   ├── validation.md                      # Global standard (always included)
+│   │   ├── test-writing.md                    # Testing standard (always included)
+│   │   └── {stack}/                           # Stack-specific dirs (based on selection)
 │   └── guides/
 │       └── workflow.md                        # Workflow overview
 │
-├── lead-dev-os/
-│   └── specs/                                 # Generated specs live here
+├── specs/                                     # Generated specs live here
 │
 └── CLAUDE.md                                  # Updated with framework instructions
 ```
+
+## Available skills
+
+All skills are accessed via the `/lead-dev-os:` namespace:
+
+| Skill | Purpose |
+|-------|---------|
+| `/lead-dev-os:init` | Initialize framework in your project |
+| `/lead-dev-os:plan-product` | Define product mission, vision, tech stack |
+| `/lead-dev-os:plan-roadmap` | Create phased feature roadmap |
+| `/lead-dev-os:define-standards` | Establish coding and architecture standards |
+| `/lead-dev-os:step1-write-spec` | Interactive Q&A + formalize into spec |
+| `/lead-dev-os:step2-scope-tasks` | Break spec into context-aware task groups |
+| `/lead-dev-os:step3-implement-tasks` | Context-aware implementation of task groups |
 
 ## Directory purposes
 
 | Directory | Purpose | Managed by |
 |-----------|---------|------------|
-| **.claude/skills/** | Skills in Claude Code | Installer (overwritten on update) |
 | **agents-context/concepts/** | Domain knowledge and general guidance | You + skills + implementation |
-| **agents-context/standards/** | Coding standards, conventions, patterns | /define-standards skill |
-| **agents-context/guides/** | Workflow documentation | Installer (overwritten on update) |
-| **lead-dev-os/specs/** | Dated spec folders from the workflow | /step1-write-spec and subsequent steps |
+| **agents-context/standards/** | Coding standards, conventions, patterns | `/lead-dev-os:define-standards` skill |
+| **agents-context/guides/** | Workflow documentation | `/lead-dev-os:init` skill |
+| **specs/** | Dated spec folders from the workflow | `/lead-dev-os:step1-write-spec` and subsequent steps |
 
-## Updating skills
+## Updating
 
-When lead-dev-os releases new skill versions, update without touching your project's context:
+When lead-dev-os releases updates, pull the latest and restart Claude Code with the plugin:
 
 ```bash
-~/lead-dev-os/scripts/install.sh --skills-only
+cd ~/lead-dev-os
+git pull
+claude --plugin-dir ~/lead-dev-os/lead-dev-os
 ```
+
+Skills are loaded from the plugin directory — no need to re-run init.
+
+## Migration from install.sh
+
+If you previously used `scripts/install.sh`:
+
+1. Start Claude Code with the plugin: `claude --plugin-dir ~/lead-dev-os/lead-dev-os`
+2. All skills now use the `/lead-dev-os:` namespace (e.g., `/lead-dev-os:step1-write-spec`)
+3. Your existing `agents-context/` and `specs/` directories are fully compatible
+4. Config profiles (`config.local.yml`) are replaced by interactive prompts in `/lead-dev-os:init`

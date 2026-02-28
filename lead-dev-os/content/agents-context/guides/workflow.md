@@ -12,20 +12,20 @@ These skills establish the project foundation. Run them when starting a new proj
 
 | Skill | Purpose | When to Run |
 |-------|---------|-------------|
-| `/plan-product` | Define product mission, vision, users, tech stack | Project kickoff |
-| `/plan-roadmap` | Create phased feature roadmap | After product mission, or when priorities shift |
-| `/define-standards` | Establish coding and architecture standards | Project kickoff, or when conventions evolve |
+| `/lead-dev-os:plan-product` | Define product mission, vision, users, tech stack | Project kickoff |
+| `/lead-dev-os:plan-roadmap` | Create phased feature roadmap | After product mission, or when priorities shift |
+| `/lead-dev-os:define-standards` | Establish coding and architecture standards | Project kickoff, or when conventions evolve |
 
 ### Recommended order:
-1. `/plan-product` — Establish what you're building and why
-2. `/define-standards` — Establish how you build
-3. `/plan-roadmap` — Plan what to build and when
+1. `/lead-dev-os:plan-product` — Establish what you're building and why
+2. `/lead-dev-os:define-standards` — Establish how you build
+3. `/lead-dev-os:plan-roadmap` — Plan what to build and when
 
 ## Tactical Skills (Run Per Feature)
 
 These skills drive the spec-to-implementation pipeline. Run them sequentially for each feature.
 
-### Step 1: Write Spec (`/step1-write-spec`)
+### Step 1: Write Spec (`/lead-dev-os:step1-write-spec`)
 
 **What it does:** Interactive Q&A to deeply understand what needs to be built, then formalizes into a structured specification.
 
@@ -41,7 +41,7 @@ These skills drive the spec-to-implementation pipeline. Run them sequentially fo
 - Generates formal spec with user stories, numbered requirements (FR-###), and success criteria
 - Presents for review before saving
 
-### Step 2: Scope Tasks (`/step2-scope-tasks`)
+### Step 2: Scope Tasks (`/lead-dev-os:step2-scope-tasks`)
 
 **What it does:** Breaks the spec into ordered task groups with explicit context directives.
 
@@ -55,7 +55,7 @@ These skills drive the spec-to-implementation pipeline. Run them sequentially fo
 - Test-first approach: tests come before implementation tasks
 - Sequential dependency flow between groups
 
-### Step 3: Implement Tasks (`/step3-implement-tasks`)
+### Step 3: Implement Tasks (`/lead-dev-os:step3-implement-tasks`)
 
 **What it does:** Context-aware execution of task groups from Step 2.
 
@@ -76,7 +76,7 @@ The `agents-context/` directory is a modular knowledge base that grows with your
 Project-specific domain knowledge and general guidance. Captures approaches, conventions, and decision rationale — never code snippets or implementation details. Created by strategic skills and updated during implementation.
 
 ### `agents-context/standards/`
-Coding style, architecture patterns, and testing conventions. Created by `/define-standards`.
+Coding style, architecture patterns, and testing conventions. Created by `/lead-dev-os:define-standards`.
 
 ### `agents-context/guides/`
 How-to guides for common workflows (like this one).

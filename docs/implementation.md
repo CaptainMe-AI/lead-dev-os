@@ -4,9 +4,9 @@ title: Implementation
 nav_order: 4
 ---
 
-# Implementation Phase (`/step3-implement-tasks`)
+# Implementation Phase (`/lead-dev-os:step3-implement-tasks`)
 
-The implementation phase executes task groups produced by `/step2-scope-tasks`. Each task group contains context directives (which files from `agents-context/` to load) and atomic tasks derived from the spec. Templates and examples are co-located with each skill for reference.
+The implementation phase executes task groups produced by `/lead-dev-os:step2-scope-tasks`. Each task group contains context directives (which files from `agents-context/` to load) and atomic tasks derived from the spec. Templates and examples are co-located with each skill for reference.
 
 Three execution modes control how much human oversight the AI receives during implementation.
 
@@ -74,4 +74,4 @@ The autonomous portion handles scaffolding, boilerplate, or well-defined setup t
 | Prototype / spike / throwaway | **Autonomous** |
 | Production feature with stakeholder scrutiny | **Lead-in-the-Loop** |
 
-When you run `/step3-implement-tasks`, the skill prompts you to select a mode (A / L / H) after loading the spec context. If you choose Hybrid, it also asks which task group number to use as the checkpoint.
+When you run `/lead-dev-os:step3-implement-tasks`, the skill prompts you to select a mode (A / L / H) after loading the spec context. If you choose Hybrid, it also asks which task group number to use as the checkpoint.

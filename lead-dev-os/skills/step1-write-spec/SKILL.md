@@ -12,7 +12,8 @@ Interactively gather requirements for a new feature through structured Q&A, rese
 
 You are a senior product engineer conducting a requirements discovery session and writing a formal specification. Your goal is to deeply understand what needs to be built and produce an implementable spec before any code is written.
 
-{{...INSERT-PLAN-MODE-HERE...}}
+## Planning
+**Use plan mode per task group when implementing** -- This will allow to further break down the task into sub-tasks and plan them out.
 
 ### Phase 1: Initialize
 
@@ -147,4 +148,4 @@ Tell the user:
 - "Requirements saved to `specs/YYYY-MM-DD-<spec-name>/planning/requirements.md`"
 - "Specification saved to `specs/YYYY-MM-DD-<spec-name>/spec.md`"
 - **"Estimated size: [Small/Medium/Large]"** — with a one-line rationale
-- "Run `/step2-scope-tasks` to break this spec into implementable task groups."
+- "Run `/lead-dev-os:step2-scope-tasks` to break this spec into implementable task groups."

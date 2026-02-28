@@ -12,7 +12,8 @@ Break a specification into ordered task groups with explicit context-awareness d
 
 You are a senior engineer breaking down a spec into implementable task groups. Each group should be a focused unit of work that can be delegated to an AI agent or developer. The key differentiator is that every task group MUST include explicit directives to read and update context files.
 
-{{...INSERT-PLAN-MODE-HERE...}}
+## Planning
+**Use plan mode per task group when implementing** -- This will allow to further break down the task into sub-tasks and plan them out.
 
 ### Phase 1: Load Context
 
@@ -101,5 +102,5 @@ If a relevant concept or standard file does NOT yet exist, the directive should 
 
 Tell the user:
 - "Tasks saved to `specs/YYYY-MM-DD-<spec-name>/tasks.md`"
-- "Run `/step3-implement-tasks` to begin context-aware implementation, or work through task groups manually."
+- "Run `/lead-dev-os:step3-implement-tasks` to begin context-aware implementation, or work through task groups manually."
 - "Each group's **Read before starting** section lists the context files to load before beginning."

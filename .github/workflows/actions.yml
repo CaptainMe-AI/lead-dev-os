@@ -10,17 +10,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run unit tests
-        run: ./tests/test_common_functions.sh
+      - name: Test plugin structure
+        run: ./tests/test_plugin_structure.sh
 
-      - name: Run integration tests (fresh install)
-        run: ./tests/test_install_creates.sh
+      - name: Test skill content
+        run: ./tests/test_skill_content.sh
 
-      - name: Run integration tests (overwrite behavior)
-        run: ./tests/test_install_overwrites.sh
-
-      - name: Run integration tests (help flag)
-        run: ./tests/test_install_help.sh
-
-      - name: Run integration tests (stack config & plan mode)
-        run: ./tests/test_stack_config.sh
+      - name: Test content bundle
+        run: ./tests/test_content_bundle.sh

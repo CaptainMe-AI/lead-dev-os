@@ -13,9 +13,9 @@ lead-dev-os uses a 3-step tactical workflow to go from idea to shipped feature. 
 Run the strategic skills once to establish your project foundation:
 
 ```
-/plan-product          → Defines mission, vision, users, tech stack
-/define-standards      → Establishes coding style, architecture, testing conventions
-/plan-roadmap          → Creates prioritized feature roadmap with phases
+/lead-dev-os:plan-product          → Defines mission, vision, users, tech stack
+/lead-dev-os:define-standards      → Establishes coding style, architecture, testing conventions
+/lead-dev-os:plan-roadmap          → Creates prioritized feature roadmap with phases
 ```
 
 These are one-time setup skills. They populate `agents-context/` with the standards and domain knowledge that all future specs will reference.
@@ -26,15 +26,15 @@ These are one-time setup skills. They populate `agents-context/` with the standa
 
 Run the tactical skills sequentially for each feature:
 
-### Step 1: Write Spec (`/step1-write-spec`)
+### Step 1: Write Spec (`/lead-dev-os:step1-write-spec`)
 
 Interactive Q&A session to gather requirements, then formalizes into a structured spec with numbered requirements (`FR-001`, `FR-002`, etc.). Produces `requirements.md` and `spec.md` — the contract that implementation executes against.
 
-### Step 2: Scope (`/step2-scope-tasks`)
+### Step 2: Scope (`/lead-dev-os:step2-scope-tasks`)
 
 Breaks the spec into task groups with explicit context directives. Each task group declares which files from `agents-context/` to load before executing. Produces `tasks.md` with atomic, implementable work items.
 
-### Step 3: Implement (`/step3-implement-tasks`)
+### Step 3: Implement (`/lead-dev-os:step3-implement-tasks`)
 
 Context-aware execution of task groups. The agent loads only the context it needs for each task group, implements the code, and runs tests. See [Implementation]({{ site.baseurl }}/implementation) for the three execution modes.
 
@@ -42,10 +42,10 @@ Context-aware execution of task groups. The agent loads only the context it need
 
 ## Spec folder structure
 
-Each feature produces a dated folder in `lead-dev-os/specs/`:
+Each feature produces a dated folder in `specs/`:
 
 ```
-lead-dev-os/specs/
+specs/
 └── 2026-02-25-user-auth/
     ├── planning/
     │   ├── initialization.md       # Raw idea captured in Step 1

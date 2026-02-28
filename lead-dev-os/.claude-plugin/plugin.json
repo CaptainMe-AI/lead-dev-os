@@ -1,0 +1,13 @@
+{
+  "name": "lead-dev-os",
+  "version": "1.0.0",
+  "description": "Spec & context-driven framework for Claude Code development. Structured skills for product planning, spec writing, task scoping, and context-aware implementation.",
+  "author": {
+    "name": "CaptainMe-AI",
+    "url": "https://github.com/CaptainMe-AI"
+  },
+  "homepage": "https://captainme-ai.github.io/lead-dev-os/",
+  "repository": "https://github.com/CaptainMe-AI/lead-dev-os",
+  "license": "MIT",
+  "keywords": ["spec-driven", "context-aware", "planning", "implementation", "workflow"]
+}

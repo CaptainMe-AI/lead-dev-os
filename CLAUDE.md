@@ -4,7 +4,7 @@ Dev instructions for the lead-dev-os repository itself.
 
 ## Project
 
-lead-dev-os is a spec & context-driven framework for Claude Code development on large projects. It provides structured skills for product planning, spec writing, task scoping, and context-aware implementation.
+lead-dev-os is a spec & context-driven framework for Claude Code development on large projects. It provides structured skills for product planning, spec writing, task scoping, and context-aware implementation. Distributed as a Claude Code plugin.
 
 ## License
 
@@ -12,70 +12,55 @@ MIT License
 
 ## Terminology
 
-- **target project** — the project where `lead-dev-os` is installed
+- **target project** — the project where `lead-dev-os` plugin is used
 - **spec** — a feature specification
 - **task** — a task to be executed by the AI agent
+- **plugin** — the `lead-dev-os/` directory containing `.claude-plugin/`, `skills/`, and `content/`
 
 ## Repository Structure
 
 ```
-lead-dev-os/
-├── app/                               # Everything installed into target projects
-│   ├── skills/                        # Skills (Claude Code)
-│   │   ├── strategic/                 # High-level planning skills
-│   │   │   ├── plan-product/
-│   │   │   │   ├── SKILL.md
-│   │   │   │   ├── template.md
-│   │   │   │   └── examples/
-│   │   │   ├── plan-roadmap/
-│   │   │   │   ├── SKILL.md
-│   │   │   │   ├── template.md
-│   │   │   │   └── examples/
-│   │   │   └── define-standards/
-│   │   │       ├── SKILL.md
-│   │   │       ├── template.md
-│   │   │       └── examples/
-│   │   └── tactical/                  # Spec-driven implementation skills
-│   │       ├── step1-write-spec/
-│   │       │   ├── SKILL.md
-│   │       │   ├── template.md
-│   │       │   └── examples/
-│   │       ├── step2-scope-tasks/
-│   │       │   ├── SKILL.md
-│   │       │   ├── template.md
-│   │       │   └── examples/
-│   │       └── step3-implement-tasks/
-│   │           └── SKILL.md
-│   ├── agents-context/                # Modular knowledge base (installed top-level)
-│   │   ├── concepts/                  # Project-specific domain knowledge
-│   │   ├── standards/                 # Coding standards and conventions
-│   │   └── guides/                    # How-to guides for workflows
-│   ├── specs/                         # Generated specs output directory
-│   └── CLAUDE.md                      # Framework instructions injected into target project
-├── scripts/                           # Installation & setup scripts
-│   ├── install.sh                     # Install lead-dev-os into a target project
-│   └── common-functions.sh            # Shared shell utilities
-├── tests/                             # Tests for the framework itself
-├── CLAUDE.md                          # This file — dev instructions for this repo
-├── INITIAL_PLAN.md                    # Detailed design plan
+lead-dev-os/                                   # Repository root
+├── lead-dev-os/                               # THE PLUGIN
+│   ├── .claude-plugin/
+│   │   └── plugin.json                        # Plugin metadata
+│   ├── skills/                                # Flat skill directories (no nesting)
+│   │   ├── init/                              # Project initialization (replaces install.sh)
+│   │   ├── plan-product/                      # Strategic: product mission
+│   │   ├── plan-roadmap/                      # Strategic: feature roadmap
+│   │   ├── define-standards/                  # Strategic: coding standards
+│   │   ├── step1-write-spec/                  # Tactical: requirements → spec
+│   │   ├── step2-scope-tasks/                 # Tactical: spec → task groups
+│   │   └── step3-implement-tasks/             # Tactical: task execution
+│   └── content/                               # Bundled content for init skill to copy
+│       ├── agents-context/                    # Standards, guides, README template
+│       └── CLAUDE.md                          # Framework instructions template
+├── app/                                       # DEPRECATED (legacy installer source)
+├── scripts/                                   # DEPRECATED (legacy installer scripts)
+├── tests/                                     # Plugin + legacy tests
+├── docs/                                      # GitHub Pages documentation
+├── CLAUDE.md                                  # This file — dev instructions for this repo
+├── INITIAL_PLAN.md                            # Detailed design plan
 ├── LICENSE
 └── README.md
 ```
 
 ## Key Conventions
 
-- `app/` contains everything that gets copied into target projects via `scripts/install.sh`
-- Skills in `app/skills/` are installed as `.claude/skills/<category>/<skill-name>/SKILL.md` in the target project, preserving directory structure
-- `app/agents-context/` is installed as top-level `agents-context/` in the target project
+- `lead-dev-os/` is the plugin directory — this is what users point `--plugin-dir` at
+- Skills are flat under `lead-dev-os/skills/` (no strategic/tactical nesting — plugin requirement)
+- All skill cross-references use the `/lead-dev-os:` namespace (e.g., `/lead-dev-os:step1-write-spec`)
+- `lead-dev-os/content/` contains bundled files that `/lead-dev-os:init` copies into target projects
 - Templates are co-located with their skills (e.g., `step1-write-spec/template.md`)
-- Specs go into `lead-dev-os/specs/` directory in the target project
-- `app/CLAUDE.md` gets appended to the target project's CLAUDE.md
+- Specs go into `specs/` directory in the target project
+- No `config.yml` in the plugin — stack selection is handled interactively by `/lead-dev-os:init`
+- `app/` and `scripts/` are deprecated but still functional for backwards compatibility
 
 ## Workflow (3 steps)
 
-1. `/step1-write-spec` — Interactive Q&A to gather requirements, then formalize into structured spec
-2. `/step2-scope-tasks` — Break into task groups with explicit context directives
-3. `/step3-implement-tasks` — Context-aware execution of task groups
+1. `/lead-dev-os:step1-write-spec` — Interactive Q&A to gather requirements, then formalize into structured spec
+2. `/lead-dev-os:step2-scope-tasks` — Break into task groups with explicit context directives
+3. `/lead-dev-os:step3-implement-tasks` — Context-aware execution of task groups
 
 ## Context Philosophy
 

@@ -1,3 +1,8 @@
+# DEPRECATED: This config file is no longer used.
+# lead-dev-os is now a Claude Code plugin. Stack selection is handled
+# interactively by the /lead-dev-os:init skill.
+# See README.md for migration instructions.
+
 version: 1.0
 current_profile: default
 

@@ -8,25 +8,56 @@ nav_order: 5
 
 We are open to contributions. Please open an issue or a pull request on [GitHub](https://github.com/CaptainMe-AI/lead-dev-os).
 
+## Project Structure
+
+lead-dev-os is distributed as a Claude Code plugin. The plugin lives at `lead-dev-os/` in the repository root:
+
+```
+lead-dev-os/                          # The plugin
+├── .claude-plugin/
+│   └── plugin.json                   # Plugin metadata
+├── skills/                           # Flat skill directories (no nesting)
+│   ├── init/                         # Project initialization
+│   ├── plan-product/                 # Strategic: product mission
+│   ├── plan-roadmap/                 # Strategic: feature roadmap
+│   ├── define-standards/             # Strategic: coding standards
+│   ├── step1-write-spec/             # Tactical: requirements → spec
+│   ├── step2-scope-tasks/            # Tactical: spec → task groups
+│   └── step3-implement-tasks/        # Tactical: task execution
+└── content/                          # Bundled content for init skill
+    ├── agents-context/               # Standards, guides, README template
+    └── CLAUDE.md                     # Framework instructions template
+```
+
 ## Testing
 
-Tests live in `tests/` and cover both unit and integration behavior of the install script.
+Tests live in `tests/` and cover both the plugin structure and legacy install behavior.
 
 ### Run all tests
 
 ```bash
-./tests/test_common_functions.sh && ./tests/test_install_creates.sh && ./tests/test_install_overwrites.sh
+./tests/run_all.sh
 ```
 
 ### Test suites
 
 | Suite | File | What it tests |
 |-------|------|---------------|
+| Plugin structure | `tests/test_plugin_structure.sh` | plugin.json valid, all 7 skill dirs exist, content/ structure correct |
+| Skill content | `tests/test_skill_content.sh` | No placeholders, all cross-refs namespaced, no config.yml refs, valid frontmatter |
+| Content bundle | `tests/test_content_bundle.sh` | All global standards present, CLAUDE.md namespaced, README updated |
 | Unit | `tests/test_common_functions.sh` | `ensure_dir`, `ensure_gitkeep`, `copy_if_not_exists`, `copy_with_warning`, `print_verbose` |
-| Integration: creates | `tests/test_install_creates.sh` | Fresh install produces all expected files, `--skills-only` flag, append to existing CLAUDE.md, install without .git |
-| Integration: overwrites | `tests/test_install_overwrites.sh` | Re-install overwrites skills/guides, preserves concepts/standards/specs/CLAUDE.md, `--skills-only` only touches skills |
+| Integration: creates | `tests/test_install_creates.sh` | Fresh install produces all expected files (legacy installer) |
+| Integration: overwrites | `tests/test_install_overwrites.sh` | Re-install overwrites skills/guides, preserves concepts/standards (legacy installer) |
+| Integration: help | `tests/test_install_help.sh` | --help flag behavior (legacy installer) |
+| Integration: stack config | `tests/test_stack_config.sh` | Stack config, profiles, plan mode (legacy installer) |
 
-Each test suite creates a temporary directory, runs `install.sh` against it, asserts outcomes, and cleans up. No side effects on your working directory.
+### Conventions
+
+- Plugin skills use flat directories (no `strategic/` or `tactical/` nesting)
+- All skill cross-references use the `/lead-dev-os:` namespace
+- Templates and examples are co-located with their skills
+- No `config.yml` references in plugin skills — stack selection is interactive
 
 ## Support
 

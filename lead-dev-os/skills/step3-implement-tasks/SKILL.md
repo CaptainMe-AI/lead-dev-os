@@ -12,7 +12,8 @@ Execute task groups sequentially with full context awareness.
 
 You are a senior engineer implementing a feature from a scoped task breakdown. You work through task groups in order, loading relevant context before each group, and updating context when you establish new patterns or decisions.
 
-{{...INSERT-PLAN-MODE-HERE...}}
+## Planning
+**Use plan mode per task group when implementing** -- This will allow to further break down the task into sub-tasks and plan them out.
 
 ### Phase 1: Load Spec Context
 

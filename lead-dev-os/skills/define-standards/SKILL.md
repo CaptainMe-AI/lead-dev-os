@@ -18,7 +18,7 @@ You are a senior engineering lead. Help the user define project standards that w
 
 Read `agents-context/concepts/product-mission.md` if it exists to understand the technology stack.
 
-Read `config.local.yml` (or `config.default.yml` if local doesn't exist) to determine which tech stacks are enabled. Tailor your questions to focus on the active stacks — for example, only ask FastAPI-specific questions if `fastapi: true` is set.
+Read `agents-context/standards/` to see which standards already exist. Ask the user about their technology stack to understand which standards are relevant.
 
 Ask the user the following questions:
 
@@ -43,11 +43,9 @@ Ask the user the following questions:
 
 ### Phase 2: Generate Standards
 
-Based on responses, create standards files. Place them in the appropriate stack subdirectory under `app/agents-context/standards/`:
-- Universal standards (coding style, architecture) → `app/agents-context/standards/shared/`
-- Stack-specific standards → `app/agents-context/standards/{stack}/` (e.g., `python/`, `fastapi/`)
-
-When installed into target projects, all standards are flattened into `agents-context/standards/`.
+Based on responses, create standards files in `agents-context/standards/`:
+- Universal standards (coding style, architecture) → `agents-context/standards/`
+- Stack-specific standards → `agents-context/standards/` (e.g., `python-conventions.md`, `fastapi-patterns.md`)
 
 **`agents-context/standards/coding-style.md`** — Naming, formatting, file organization, language-specific conventions.
 
@@ -60,9 +58,9 @@ For a filled-in example, see [examples/python-fastapi-standards.md](examples/pyt
 
 ### Phase 3: Output
 
-Save files to the appropriate subdirectory under `agents-context/standards/` (or `app/agents-context/standards/` if working in the lead-dev-os repo itself).
+Save files to `agents-context/standards/`.
 
 Tell the user:
 - Which standards files were created
-- These standards will be automatically referenced by task groups generated via `/step2-scope-tasks`
-- Standards can be updated at any time by re-running `/define-standards` or editing the files directly
+- These standards will be automatically referenced by task groups generated via `/lead-dev-os:step2-scope-tasks`
+- Standards can be updated at any time by re-running `/lead-dev-os:define-standards` or editing the files directly

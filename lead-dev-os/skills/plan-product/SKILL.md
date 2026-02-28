@@ -42,4 +42,4 @@ Save the document to `agents-context/concepts/product-mission.md`.
 
 Tell the user:
 - "Product mission saved to `agents-context/concepts/product-mission.md`"
-- Suggest running `/plan-roadmap` next to create a feature roadmap based on this mission.
+- Suggest running `/lead-dev-os:plan-roadmap` next to create a feature roadmap based on this mission.
