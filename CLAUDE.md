@@ -15,7 +15,7 @@ MIT License
 - **target project** — the project where `lead-dev-os` plugin is used
 - **spec** — a feature specification
 - **task** — a task to be executed by the AI agent
-- **plugin** — the `lead-dev-os/` directory containing `.claude-plugin/`, `skills/`, and `content/`
+- **plugin** — the `lead-dev-os/` directory containing `.claude-plugin/` and `skills/`
 
 ## Repository Structure
 
@@ -32,9 +32,6 @@ lead-dev-os/                                   # Repository root
 │   │   ├── step1-write-spec/                  # Tactical: requirements → spec
 │   │   ├── step2-scope-tasks/                 # Tactical: spec → task groups
 │   │   └── step3-implement-tasks/             # Tactical: task execution
-│   └── content/                               # Bundled content for init skill to copy
-│       ├── agents-context/                    # Standards, guides, README template
-│       └── CLAUDE.md                          # Framework instructions template
 ├── app/                                       # DEPRECATED (legacy installer source)
 ├── scripts/                                   # DEPRECATED (legacy installer scripts)
 ├── tests/                                     # Plugin + legacy tests
@@ -50,7 +47,7 @@ lead-dev-os/                                   # Repository root
 - `lead-dev-os/` is the plugin directory — this is what users point `--plugin-dir` at
 - Skills are flat under `lead-dev-os/skills/` (no strategic/tactical nesting — plugin requirement)
 - All skill cross-references use the `/lead-dev-os:` namespace (e.g., `/lead-dev-os:step1-write-spec`)
-- `lead-dev-os/content/` contains bundled files that `/lead-dev-os:init` copies into target projects
+- Standards files are bundled inside `lead-dev-os/skills/init/` (no separate content/ directory)
 - Templates are co-located with their skills (e.g., `step1-write-spec/template.md`)
 - Specs go into `specs/` directory in the target project
 - No `config.yml` in the plugin — stack selection is handled interactively by `/lead-dev-os:init`

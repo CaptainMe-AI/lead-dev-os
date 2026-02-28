@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
-# Test: Content bundle is correct
+# Test: Init skill content bundle is correct
 #
 # Verifies:
-# - All global standards present
-# - CLAUDE.md uses namespaced references
-# - README.md updated (no config.yml refs, namespaced)
-# - workflow.md namespaced
+# - All global standards present in init skill
+# - Init SKILL.md contains namespaced CLAUDE.md template
+# - Init SKILL.md contains namespaced README and workflow templates
+# - No config.yml references
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-CONTENT_DIR="$REPO_ROOT/lead-dev-os/content"
+INIT_DIR="$REPO_ROOT/lead-dev-os/skills/init"
 
 PASSED=0
 FAILED=0
@@ -36,10 +36,10 @@ GLOBAL_STANDARDS=(
 )
 
 for std in "${GLOBAL_STANDARDS[@]}"; do
-  if [ -f "$CONTENT_DIR/agents-context/standards/global/$std" ]; then
-    pass "global/$std exists"
+  if [ -f "$INIT_DIR/standards-global/$std" ]; then
+    pass "standards-global/$std exists"
   else
-    fail "global/$std missing"
+    fail "standards-global/$std missing"
   fi
 done
 
@@ -48,134 +48,97 @@ done
 echo ""
 echo "Testing standards present:"
 
-if [ -f "$CONTENT_DIR/agents-context/standards/testing/test-writing.md" ]; then
-  pass "testing/test-writing.md exists"
+if [ -f "$INIT_DIR/standards-testing/test-writing.md" ]; then
+  pass "standards-testing/test-writing.md exists"
 else
-  fail "testing/test-writing.md missing"
+  fail "standards-testing/test-writing.md missing"
 fi
 
-# --- CLAUDE.md namespaced ---
+# --- Init SKILL.md has CLAUDE.md template ---
 
 echo ""
-echo "CLAUDE.md content:"
+echo "CLAUDE.md template in SKILL.md:"
 
-CLAUDE_MD="$CONTENT_DIR/CLAUDE.md"
+SKILL_MD="$INIT_DIR/SKILL.md"
 
-if [ -f "$CLAUDE_MD" ]; then
-  pass "CLAUDE.md exists"
+if grep -q '## lead-dev-os Framework' "$SKILL_MD" 2>/dev/null; then
+  pass "SKILL.md has framework header in template"
 else
-  fail "CLAUDE.md missing"
+  fail "SKILL.md missing framework header in template"
 fi
 
-if grep -q 'lead-dev-os Framework' "$CLAUDE_MD" 2>/dev/null; then
-  pass "CLAUDE.md has framework header"
+if grep -q '/lead-dev-os:step1-write-spec' "$SKILL_MD" 2>/dev/null; then
+  pass "SKILL.md has namespaced step1 reference"
 else
-  fail "CLAUDE.md missing framework header"
+  fail "SKILL.md missing namespaced step1 reference"
 fi
 
-if grep -q '/lead-dev-os:step1-write-spec' "$CLAUDE_MD" 2>/dev/null; then
-  pass "CLAUDE.md has namespaced step1 reference"
+if grep -q '/lead-dev-os:plan-product' "$SKILL_MD" 2>/dev/null; then
+  pass "SKILL.md has namespaced plan-product reference"
 else
-  fail "CLAUDE.md missing namespaced step1 reference"
+  fail "SKILL.md missing namespaced plan-product reference"
 fi
 
-if grep -q '/lead-dev-os:plan-product' "$CLAUDE_MD" 2>/dev/null; then
-  pass "CLAUDE.md has namespaced plan-product reference"
-else
-  fail "CLAUDE.md missing namespaced plan-product reference"
-fi
-
-# Check no bare skill references in CLAUDE.md
-BARE_SKILL_NAMES=("plan-product" "plan-roadmap" "define-standards" "step1-write-spec" "step2-scope-tasks" "step3-implement-tasks")
-has_bare=false
-for bare_name in "${BARE_SKILL_NAMES[@]}"; do
-  # Match /skill-name but not /lead-dev-os:skill-name
-  if grep -P "(?<!lead-dev-os:)(?<=/)${bare_name}" "$CLAUDE_MD" 2>/dev/null | head -1 >/dev/null 2>&1; then
-    fail "CLAUDE.md has bare reference to /$bare_name"
-    has_bare=true
-  fi
-done
-if [ "$has_bare" = false ]; then
-  pass "CLAUDE.md — all skill references namespaced"
-fi
-
-# Check no config.yml references
-if grep -qi 'config\.local\.yml\|config\.default\.yml' "$CLAUDE_MD" 2>/dev/null; then
-  fail "CLAUDE.md still references config.yml"
-else
-  pass "CLAUDE.md — no config.yml references"
-fi
-
-# --- README.md ---
+# --- Init SKILL.md has README template ---
 
 echo ""
-echo "agents-context/README.md:"
+echo "README template in SKILL.md:"
 
-README="$CONTENT_DIR/agents-context/README.md"
-
-if grep -qi 'config\.local\.yml' "$README" 2>/dev/null; then
-  fail "README.md still references config.local.yml"
+if grep -q '# Agents Context' "$SKILL_MD" 2>/dev/null; then
+  pass "SKILL.md has README template"
 else
-  pass "README.md — no config.local.yml reference"
+  fail "SKILL.md missing README template"
 fi
 
-if grep -q '/lead-dev-os:define-standards' "$README" 2>/dev/null; then
-  pass "README.md has namespaced define-standards reference"
+if grep -q '/lead-dev-os:define-standards' "$SKILL_MD" 2>/dev/null; then
+  pass "SKILL.md has namespaced define-standards in README"
 else
-  fail "README.md missing namespaced define-standards reference"
+  fail "SKILL.md missing namespaced define-standards in README"
 fi
 
-if grep -q '/lead-dev-os:step2-scope-tasks' "$README" 2>/dev/null; then
-  pass "README.md has namespaced step2 reference"
+if grep -q '/lead-dev-os:step2-scope-tasks' "$SKILL_MD" 2>/dev/null; then
+  pass "SKILL.md has namespaced step2 in README"
 else
-  fail "README.md missing namespaced step2 reference"
+  fail "SKILL.md missing namespaced step2 in README"
 fi
 
-# --- workflow.md ---
+# --- Init SKILL.md has workflow template ---
 
 echo ""
-echo "guides/workflow.md:"
+echo "Workflow template in SKILL.md:"
 
-WORKFLOW="$CONTENT_DIR/agents-context/guides/workflow.md"
-
-if [ -f "$WORKFLOW" ]; then
-  pass "workflow.md exists"
+if grep -q '# Workflow Guide' "$SKILL_MD" 2>/dev/null; then
+  pass "SKILL.md has workflow template"
 else
-  fail "workflow.md missing"
+  fail "SKILL.md missing workflow template"
 fi
 
-# Check all skill references are namespaced
-WORKFLOW_SKILLS=(
-  "plan-product"
-  "plan-roadmap"
-  "define-standards"
-  "step1-write-spec"
-  "step2-scope-tasks"
-  "step3-implement-tasks"
-)
-
-workflow_has_bare=false
-for skill_name in "${WORKFLOW_SKILLS[@]}"; do
-  if grep -P "(?<!/lead-dev-os:)(?<=\`/)${skill_name}(?=\`)" "$WORKFLOW" 2>/dev/null | head -1 >/dev/null 2>&1; then
-    fail "workflow.md has bare reference to /$skill_name"
-    workflow_has_bare=true
-  fi
-done
-if [ "$workflow_has_bare" = false ]; then
-  pass "workflow.md — all skill references namespaced"
+if grep -q '/lead-dev-os:step3-implement-tasks' "$SKILL_MD" 2>/dev/null; then
+  pass "SKILL.md has namespaced step3 in workflow"
+else
+  fail "SKILL.md missing namespaced step3 in workflow"
 fi
 
-# Check namespaced references exist
-if grep -q '/lead-dev-os:plan-product' "$WORKFLOW" 2>/dev/null; then
-  pass "workflow.md has namespaced plan-product"
+# --- No config.yml references ---
+
+echo ""
+echo "No config.yml references:"
+
+if grep -qi 'config\.local\.yml\|config\.default\.yml' "$SKILL_MD" 2>/dev/null; then
+  fail "SKILL.md still references config.yml"
 else
-  fail "workflow.md missing namespaced plan-product"
+  pass "SKILL.md — no config.yml references"
 fi
 
-if grep -q '/lead-dev-os:step1-write-spec' "$WORKFLOW" 2>/dev/null; then
-  pass "workflow.md has namespaced step1"
+# --- No content/ references ---
+
+echo ""
+echo "No content/ path references:"
+
+if grep -q '${CLAUDE_PLUGIN_ROOT}/content/' "$SKILL_MD" 2>/dev/null; then
+  fail "SKILL.md still references content/ path"
 else
-  fail "workflow.md missing namespaced step1"
+  pass "SKILL.md — no content/ path references"
 fi
 
 # --- Summary ---

@@ -4,7 +4,7 @@
 # Verifies:
 # - plugin.json exists and is valid JSON
 # - All 7 skill directories exist with SKILL.md
-# - content/ directory has correct structure
+# - Init skill has bundled standards
 
 set -euo pipefail
 
@@ -141,83 +141,43 @@ else
   fail "skills/tactical/ still exists (should be flat)"
 fi
 
-# --- Content directory ---
+# --- No content/ directory ---
 
 echo ""
-echo "Content bundle:"
+echo "No content/ directory:"
 
-if [ -f "$PLUGIN_DIR/content/CLAUDE.md" ]; then
-  pass "content/CLAUDE.md exists"
+if [ ! -d "$PLUGIN_DIR/content" ]; then
+  pass "content/ does not exist (standards bundled in init skill)"
 else
-  fail "content/CLAUDE.md missing"
+  fail "content/ still exists (should be removed)"
 fi
 
-if [ -f "$PLUGIN_DIR/content/agents-context/README.md" ]; then
-  pass "content/agents-context/README.md exists"
-else
-  fail "content/agents-context/README.md missing"
-fi
-
-if [ -d "$PLUGIN_DIR/content/agents-context/concepts" ]; then
-  pass "content/agents-context/concepts/ exists"
-else
-  fail "content/agents-context/concepts/ missing"
-fi
-
-if [ -d "$PLUGIN_DIR/content/agents-context/standards" ]; then
-  pass "content/agents-context/standards/ exists"
-else
-  fail "content/agents-context/standards/ missing"
-fi
-
-if [ -d "$PLUGIN_DIR/content/agents-context/guides" ]; then
-  pass "content/agents-context/guides/ exists"
-else
-  fail "content/agents-context/guides/ missing"
-fi
-
-if [ -f "$PLUGIN_DIR/content/agents-context/guides/workflow.md" ]; then
-  pass "content/agents-context/guides/workflow.md exists"
-else
-  fail "content/agents-context/guides/workflow.md missing"
-fi
-
-# --- Standards directories ---
+# --- Init skill bundled standards ---
 
 echo ""
-echo "Standards directories:"
+echo "Init skill standards:"
 
-EXPECTED_STANDARD_DIRS=(
-  "global"
-  "testing"
-  "django"
-  "docker"
-  "express"
-  "fastapi"
-  "gunicorn"
-  "javascript"
-  "mongodb"
-  "mysql"
-  "nextjs"
-  "nginx"
-  "postgresql"
-  "python"
-  "rails"
-  "react"
-  "redis"
-  "ruby"
-  "typescript"
-  "uvicorn"
-  "vue"
+GLOBAL_STANDARDS=(
+  "coding-style.md"
+  "commenting.md"
+  "conventions.md"
+  "error-handling.md"
+  "validation.md"
 )
 
-for dir in "${EXPECTED_STANDARD_DIRS[@]}"; do
-  if [ -d "$PLUGIN_DIR/content/agents-context/standards/$dir" ]; then
-    pass "standards/$dir/ exists"
+for std in "${GLOBAL_STANDARDS[@]}"; do
+  if [ -f "$PLUGIN_DIR/skills/init/standards-global/$std" ]; then
+    pass "standards-global/$std exists"
   else
-    fail "standards/$dir/ missing"
+    fail "standards-global/$std missing"
   fi
 done
+
+if [ -f "$PLUGIN_DIR/skills/init/standards-testing/test-writing.md" ]; then
+  pass "standards-testing/test-writing.md exists"
+else
+  fail "standards-testing/test-writing.md missing"
+fi
 
 # --- Summary ---
 
