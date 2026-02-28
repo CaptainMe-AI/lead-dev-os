@@ -31,6 +31,7 @@ lead-dev-os/                          # The plugin
 │   ├── plan-product/                 # Strategic: product mission
 │   ├── plan-roadmap/                 # Strategic: feature roadmap
 │   ├── define-standards/             # Strategic: coding standards
+│   ├── create-or-update-concepts/   # Strategic: codebase → concept files
 │   ├── step1-write-spec/             # Tactical: requirements → spec
 │   ├── step2-scope-tasks/            # Tactical: spec → task groups
 │   └── step3-implement-tasks/        # Tactical: task execution
@@ -50,7 +51,7 @@ Tests live in `tests/` and cover both the plugin structure and legacy install be
 
 | Suite | File | What it tests |
 |-------|------|---------------|
-| Plugin structure | `tests/test_plugin_structure.sh` | plugin.json valid, all 7 skill dirs exist, init skill has bundled standards |
+| Plugin structure | `tests/test_plugin_structure.sh` | plugin.json valid, all 8 skill dirs exist, init skill has bundled standards |
 | Skill content | `tests/test_skill_content.sh` | No placeholders, all cross-refs namespaced, no config.yml refs, valid frontmatter |
 | Content bundle | `tests/test_content_bundle.sh` | All global standards present, CLAUDE.md namespaced, README updated |
 | Unit | `tests/test_common_functions.sh` | `ensure_dir`, `ensure_gitkeep`, `copy_if_not_exists`, `copy_with_warning`, `print_verbose` |

@@ -45,6 +45,7 @@ lead-dev-os/                                   # Repository root
 │   │   ├── plan-product/                      # Strategic: product mission
 │   │   ├── plan-roadmap/                      # Strategic: feature roadmap
 │   │   ├── define-standards/                  # Strategic: coding standards
+│   │   ├── create-or-update-concepts/         # Strategic: codebase → concept files
 │   │   ├── step1-write-spec/                  # Tactical: requirements → spec
 │   │   ├── step2-scope-tasks/                 # Tactical: spec → task groups
 │   │   └── step3-implement-tasks/             # Tactical: task execution

@@ -3,7 +3,7 @@
 #
 # Verifies:
 # - plugin.json exists and is valid JSON
-# - All 7 skill directories exist with SKILL.md
+# - All 8 skill directories exist with SKILL.md
 # - Init skill has bundled standards
 
 set -euo pipefail
@@ -66,6 +66,7 @@ EXPECTED_SKILLS=(
   "plan-product"
   "plan-roadmap"
   "define-standards"
+  "create-or-update-concepts"
   "step1-write-spec"
   "step2-scope-tasks"
   "step3-implement-tasks"

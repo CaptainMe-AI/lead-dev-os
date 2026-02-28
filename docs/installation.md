@@ -78,6 +78,7 @@ All skills are accessed via the `/lead-dev-os:` namespace:
 | `/lead-dev-os:plan-product` | Define product mission, vision, tech stack |
 | `/lead-dev-os:plan-roadmap` | Create phased feature roadmap |
 | `/lead-dev-os:define-standards` | Establish coding and architecture standards |
+| `/lead-dev-os:create-or-update-concepts` | Scan codebase to create/update concept files |
 | `/lead-dev-os:step1-write-spec` | Interactive Q&A + formalize into spec |
 | `/lead-dev-os:step2-scope-tasks` | Break spec into context-aware task groups |
 | `/lead-dev-os:step3-implement-tasks` | Context-aware implementation of task groups |

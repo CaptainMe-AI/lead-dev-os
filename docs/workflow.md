@@ -13,12 +13,13 @@ lead-dev-os uses a 3-step tactical workflow to go from idea to shipped feature. 
 Run the strategic skills once to establish your project foundation:
 
 ```
-/lead-dev-os:plan-product          → Defines mission, vision, users, tech stack
-/lead-dev-os:define-standards      → Establishes coding style, architecture, testing conventions
-/lead-dev-os:plan-roadmap          → Creates prioritized feature roadmap with phases
+/lead-dev-os:plan-product                  → Defines mission, vision, users, tech stack
+/lead-dev-os:define-standards              → Establishes coding style, architecture, testing conventions
+/lead-dev-os:plan-roadmap                  → Creates prioritized feature roadmap with phases
+/lead-dev-os:create-or-update-concepts     → Scans codebase to create/update concept files
 ```
 
-These are one-time setup skills. They populate `agents-context/` with the standards and domain knowledge that all future specs will reference.
+These are one-time setup skills. They populate `agents-context/` with the standards and domain knowledge that all future specs will reference. You can also re-run `/lead-dev-os:create-or-update-concepts` at any time to refresh concept files after major codebase changes.
 
 ---
 

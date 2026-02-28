@@ -75,9 +75,10 @@ See the [Installation Guide](https://captainme-ai.github.io/lead-dev-os/installa
 ### Strategic (run once to set up your project)
 
 ```
-/lead-dev-os:plan-product            → Define product mission, vision, users, tech stack
-/lead-dev-os:define-standards        → Establish coding style, architecture, testing conventions
-/lead-dev-os:plan-roadmap            → Create prioritized feature roadmap with phases
+/lead-dev-os:plan-product                  → Define product mission, vision, users, tech stack
+/lead-dev-os:define-standards              → Establish coding style, architecture, testing conventions
+/lead-dev-os:plan-roadmap                  → Create prioritized feature roadmap with phases
+/lead-dev-os:create-or-update-concepts     → Scan codebase to create/update concept files
 ```
 
 ### Tactical (run per feature)
