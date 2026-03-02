@@ -4,7 +4,7 @@ set -euo pipefail
 # setup.sh — Scaffold the lead-dev-os framework in a target project.
 #
 # Usage:
-#   setup.sh --project <name> --stacks <csv> --plugin-root <path> [--overwrite]
+#   setup.sh --project <name> [--stacks <csv>] --plugin-root <path> [--overwrite]
 #
 # This script runs from the TARGET PROJECT directory (cwd).
 
@@ -158,7 +158,7 @@ if [[ -f "$README_DEST" && "$OVERWRITE" == false ]]; then
   SKIPPED_FILES+=("agents-context/README.md (already exists)")
 else
   # Use bash parameter expansion for safe replacement (handles &, \, etc.)
-  while IFS= read -r line; do
+  while IFS= read -r line || [[ -n "$line" ]]; do
     printf '%s\n' "${line//\{Project Name\}/$PROJECT_NAME}"
   done < "${TEMPLATES_DIR}/readme.md" > "$README_DEST"
   RENDERED_TEMPLATES+=("agents-context/README.md")
