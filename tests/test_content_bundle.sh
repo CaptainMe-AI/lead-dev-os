@@ -76,18 +76,22 @@ for tmpl in "${TEMPLATES[@]}"; do
   fi
 done
 
-# --- SKILL.md references templates ---
+# --- SKILL.md references ---
 
 echo ""
-echo "SKILL.md references templates:"
+echo "SKILL.md references:"
 
-for tmpl in "${TEMPLATES[@]}"; do
-  if grep -q "$tmpl" "$SKILL_MD" 2>/dev/null; then
-    pass "SKILL.md references $tmpl"
-  else
-    fail "SKILL.md missing reference to $tmpl"
-  fi
-done
+if grep -q "templates/claude.md" "$SKILL_MD" 2>/dev/null; then
+  pass "SKILL.md references templates/claude.md"
+else
+  fail "SKILL.md missing reference to templates/claude.md"
+fi
+
+if grep -q "scripts/setup.sh" "$SKILL_MD" 2>/dev/null; then
+  pass "SKILL.md references scripts/setup.sh"
+else
+  fail "SKILL.md missing reference to scripts/setup.sh"
+fi
 
 # --- templates/claude.md content ---
 

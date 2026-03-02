@@ -181,6 +181,23 @@ else
   fail "standards-testing/test-writing.md missing"
 fi
 
+# --- Init skill setup script ---
+
+echo ""
+echo "Init skill setup script:"
+
+if [ -f "$PLUGIN_DIR/skills/init/scripts/setup.sh" ]; then
+  pass "scripts/setup.sh exists"
+else
+  fail "scripts/setup.sh missing"
+fi
+
+if [ -x "$PLUGIN_DIR/skills/init/scripts/setup.sh" ]; then
+  pass "scripts/setup.sh is executable"
+else
+  fail "scripts/setup.sh is not executable"
+fi
+
 # --- Summary ---
 
 echo ""
