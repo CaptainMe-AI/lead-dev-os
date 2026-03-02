@@ -22,6 +22,10 @@ This project uses lead-dev-os for spec-driven development. All features go throu
 
 **When implementing task groups**, always read the context files listed in each group's "Read before starting" section. After completing a group, update or create concept files as directed in "Update after completing".
 
+### Important: Context Entry Point
+
+**Before any implementation work**, read `agents-context/README.md` first. It is the index of all available concepts and standards. Use it to determine which files are relevant to the current task, then load only those files. Never scan or read all files in `agents-context/` — the README tells you what exists and what to load.
+
 ### Key Principles
 
 - Spec before code — every feature goes through write → scope → implement
