@@ -2,6 +2,7 @@
 name: init
 description: Initialize lead-dev-os framework in your project — sets up agents-context, specs directory, and CLAUDE.md.
 disable-model-invocation: true
+allowed-tools: Bash, Read, Edit, Write
 ---
 
 # Initialize lead-dev-os
@@ -10,7 +11,7 @@ Set up the lead-dev-os framework in the current project.
 
 ## Instructions
 
-You are a project setup assistant. Initialize the lead-dev-os framework by creating the required directory structure, copying standards from this skill's bundled files, generating guides and config, and configuring the project's CLAUDE.md.
+You are a project setup assistant. Initialize the lead-dev-os framework by running the bundled setup script, then configuring the project's CLAUDE.md.
 
 ### Phase 1: Check Existing Setup
 
@@ -20,6 +21,8 @@ Check if any lead-dev-os artifacts already exist:
 - `CLAUDE.md` with `## lead-dev-os Framework` section
 
 If any exist, inform the user what was found and ask: **"Some lead-dev-os artifacts already exist. Should I skip existing files (preserve your changes) or overwrite them with fresh defaults?"**
+
+Remember their choice — you will pass it to the setup script.
 
 ### Phase 2: Ask About Technology Stack
 
@@ -34,56 +37,31 @@ Present these categories:
 
 This determines which stack-specific standard directories to create. Global standards (coding style, conventions, error handling, commenting, validation) and testing standards are always included.
 
-### Phase 3: Create Directory Structure
+### Phase 3: Run Setup Script
 
-Create the following directories:
-
-```bash
-mkdir -p agents-context/concepts
-mkdir -p agents-context/standards
-mkdir -p agents-context/guides
-mkdir -p lead-dev-os/specs
-```
-
-### Phase 4: Copy Standards
-
-Locate the skill's bundled standards using the `CLAUDE_PLUGIN_ROOT` environment variable:
+Resolve the plugin root path:
 
 ```bash
 echo ${CLAUDE_PLUGIN_ROOT}
 ```
 
-**Always copy global standards** from `${CLAUDE_PLUGIN_ROOT}/skills/init/standards-global/` into `agents-context/standards/`:
-- `coding-style.md`
-- `commenting.md`
-- `conventions.md`
-- `error-handling.md`
-- `validation.md`
+Determine the project name from the current directory name or ask the user.
 
-**Always copy testing standards** from `${CLAUDE_PLUGIN_ROOT}/skills/init/standards-testing/` into `agents-context/standards/`:
-- `test-writing.md`
+Run the setup script with the collected arguments:
 
-**For each stack the user selected**, create an empty directory at `agents-context/standards/{stack}/` with a `.gitkeep` file. These directories are placeholders where `/lead-dev-os:define-standards` will generate stack-specific standards.
+```bash
+bash ${CLAUDE_PLUGIN_ROOT}/skills/init/scripts/setup.sh \
+  --project "<project-name>" \
+  --stacks "<comma-separated-stacks>" \
+  --plugin-root "${CLAUDE_PLUGIN_ROOT}" \
+  [--overwrite]
+```
 
-When copying, use the Read tool to read each file from the skill's standards directory, then use the Write tool to create the file in the project. **Do not overwrite existing files** unless the user chose to overwrite in Phase 1.
+Add `--overwrite` only if the user chose to overwrite in Phase 1. If the user selected no stacks, pass `--stacks ""`.
 
-### Phase 5: Generate Guides, AGENTS.md, and README
+Save the script output — you will parse it in Phase 5.
 
-Use the templates co-located with this skill to generate the project files. For each template, read the template file, fill in any placeholders, then write it to the target location.
-
-**Templates and their destinations:**
-
-| Template | Destination | Notes |
-|----------|-------------|-------|
-| [templates/workflow.md](templates/workflow.md) | `agents-context/guides/workflow.md` | Copy as-is |
-| [templates/agents.md](templates/agents.md) | `agents-context/AGENTS.md` | Copy as-is |
-| [templates/readme.md](templates/readme.md) | `agents-context/README.md` | Replace `{Project Name}` with the actual project name |
-
-For the README, determine the project name from the project directory name or ask the user. Replace all occurrences of `{Project Name}` with the actual name.
-
-For a filled-in example of what a mature README.md looks like, see [examples/readme-filled.md](examples/readme-filled.md).
-
-### Phase 6: Update CLAUDE.md
+### Phase 4: Update CLAUDE.md
 
 Read the [templates/claude.md](templates/claude.md) template to get the framework instructions.
 
@@ -91,34 +69,42 @@ Read the [templates/claude.md](templates/claude.md) template to get the framewor
 - If `CLAUDE.md` exists but does NOT contain `## lead-dev-os Framework`, append the template content to the end of the file.
 - If `CLAUDE.md` exists and already contains `## lead-dev-os Framework`, skip this step (unless the user chose to overwrite).
 
-### Phase 7: Summary
+### Phase 5: Summary
 
-Print a summary of what was created:
+Parse the setup script output (delimited by `===SECTION===` markers) and present a grouped summary. Only show sections that have entries.
+
+Format the output exactly like this:
 
 ```
-lead-dev-os initialized successfully!
+📁 Directories created (N)
+   dir1/
+   dir2/
 
-Created:
-  agents-context/
-    AGENTS.md
-    README.md
-    concepts/
-    standards/
-      coding-style.md
-      commenting.md
-      conventions.md
-      error-handling.md
-      validation.md
-      test-writing.md
-      {stack dirs based on selection}
-    guides/
-      workflow.md
-  lead-dev-os/specs/
-  CLAUDE.md (updated)
+📄 Standards copied (N)
+   file1.md
+   file2.md
 
-Next steps:
-  1. Run /lead-dev-os:plan-product to define your product mission
-  2. Run /lead-dev-os:define-standards to establish coding standards
-  3. Run /lead-dev-os:plan-roadmap to create your feature roadmap
-  4. Pick a feature and run /lead-dev-os:step1-write-spec to start building!
+📝 Templates generated (N)
+   path/to/file1.md
+   path/to/file2.md
+
+📦 Stack directories created (N)
+   agents-context/standards/stack1/
+   agents-context/standards/stack2/
+
+⏭️  Skipped (N)
+   file.md (already exists)
+
+📋 CLAUDE.md — <created | updated | skipped (already configured)>
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ lead-dev-os initialized successfully!
+
+👉 Next step: Run /lead-dev-os:create-or-update-concepts to scan your
+   codebase and populate concept files.
 ```
+
+For the CLAUDE.md line, report what actually happened in Phase 4 (created, updated, or skipped).
+
+Omit any section with zero entries (e.g., don't show "Skipped" if nothing was skipped, don't show "Stack directories" if no stacks were selected).
