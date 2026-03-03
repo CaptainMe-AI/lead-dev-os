@@ -1,0 +1,16 @@
+// Fix blurry inline code in dark theme tables
+code {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #e6e6e6 !important;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.1em 0.4em;
+  font-size: 0.85em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Ensure table code stands out clearly
+td code,
+th code {
+  white-space: nowrap;
+}

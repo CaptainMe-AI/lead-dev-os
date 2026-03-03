@@ -14,8 +14,6 @@ The context of the project is stored under `agents-context/` directory, it is do
 Think about it as a lead developer's main tool for guiding a team of AI agents.
 A Lead Developer's primary responsibility is to ensure their team of engineers consistently moves in the right direction, making strategic decisions that benefit the entire project. By closely reviewing each engineer's progress before a feature is completed, the lead developer can identify potential issues early, address them proactively, and guarantee that the final product meets the highest standards of quality and reliability.
 
-See [Recomendations for Development with `lead-dev-os`](#recomendations-for-development-with-lead-dev-os) for more details.
-
 ## Key Principles & Concepts
 
 ### Spec-Driven Development
