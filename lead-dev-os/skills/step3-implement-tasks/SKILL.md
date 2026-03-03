@@ -126,10 +126,10 @@ After completing each task group, behavior depends on the execution mode:
    > - [Brief summary of changes]
    >
    > You can now:
-   > - **Review the diff** — inspect changes via your git GUI (GitLens, GitHub Desktop, `lazygit`, or `git diff`)
-   > - **Request changes** — tell me what to modify, fix, or adjust
-   > - **Commit** — say "commit" and I'll create a descriptive commit, or commit manually yourself
-   > - **Continue** — say "continue" to proceed to the next task group
+   > - 🔍 **Review the diff** — inspect changes via your git GUI (GitLens, GitHub Desktop, `lazygit`, or `git diff`)
+   > - ✏️ **Request changes** — tell me what to modify, fix, or adjust
+   > - ✅ **Commit** — say "commit" and I'll create a descriptive commit, or commit manually yourself
+   > - ➡️ **Continue** — say "continue" to proceed to the next task group
 3. **Wait for explicit instruction** before proceeding. Do NOT continue to the next group until the user says to continue.
 
 #### Mode H (Hybrid)
