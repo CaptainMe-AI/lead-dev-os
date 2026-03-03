@@ -15,6 +15,8 @@ You are a senior engineer implementing a feature from a scoped task breakdown. Y
 ## Planning
 **Use plan mode per task group when implementing** -- This will allow to further break down the task into sub-tasks and plan them out.
 
+**IMPORTANT: When entering plan mode, ALWAYS include in the plan header that you are running as part of and as the last step of the plan to check the file for refference`/lead-dev-os:step3-implement-tasks` for task file `lead-dev-os/specs/.../tasks.md` and task group `[N]`.** Clearing the context to execute the plan takes the agent out of scope — without this identifier, the agent loses awareness that it is operating within the lead-dev-os workflow and may not follow the correct phases, context loading, or completion protocols.
+
 ### Phase 1: Load Spec Context
 
 1. **Find the spec folder.** Look for the most recent `lead-dev-os/specs/YYYY-MM-DD-*/` directory, or ask the user which spec to implement.
@@ -143,6 +145,7 @@ Regardless of mode:
 - Confirm all completion criteria from `tasks.md` are met
 - List any concept files that were created or updated during implementation
 - Summarize what was built
+- Suggest running `/lead-dev-os:step4-archive-spec` to archive the completed spec
 
 ### Error Handling
 
