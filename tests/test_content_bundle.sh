@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Test: Init skill content bundle is correct
+# Test: configure-project skill content bundle is correct
 #
 # Verifies:
-# - All global standards present in init skill
+# - All global standards present in configure-project skill
 # - Template files exist and contain correct content
 # - Example file exists
 # - No config.yml references
@@ -11,7 +11,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-INIT_DIR="$REPO_ROOT/lead-dev-os/skills/init"
+INIT_DIR="$REPO_ROOT/lead-dev-os/skills/configure-project"
 
 PASSED=0
 FAILED=0

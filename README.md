@@ -56,20 +56,20 @@ git clone https://github.com/CaptainMe-AI/lead-dev-os.git ~/lead-dev-os
 # Start Claude Code with the plugin
 claude --plugin-dir ~/lead-dev-os/lead-dev-os
 
-# Initialize in your project
-/lead-dev-os:init
+# Configure your project
+/lead-dev-os:configure-project
 ```
 
-The `/lead-dev-os:init` skill will interactively set up your project — creating `agents-context/` (with AGENTS.md, README.md, standards, and guides), `lead-dev-os/specs/`, and updating your `CLAUDE.md`.
+The `/lead-dev-os:configure-project` skill will interactively set up your project — creating `agents-context/` (with AGENTS.md, README.md, standards, and guides), `lead-dev-os/specs/`, and updating your `CLAUDE.md`.
 
 See the [Installation Guide](https://captainme-ai.github.io/lead-dev-os/installation) for full details.
 
 ## 🚀 Usage
 
-### Initialize
+### Configure Project
 
 ```
-/lead-dev-os:init                    → Set up agents-context, specs, standards, and CLAUDE.md
+/lead-dev-os:configure-project       → Set up agents-context, specs, standards, and CLAUDE.md
 ```
 
 ### Strategic (run once to set up your project)

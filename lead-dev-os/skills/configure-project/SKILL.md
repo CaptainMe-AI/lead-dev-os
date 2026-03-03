@@ -1,17 +1,17 @@
 ---
-name: init
-description: Initialize lead-dev-os framework in your project — sets up agents-context, specs directory, and CLAUDE.md.
+name: configure-project
+description: Configure lead-dev-os framework in your project — sets up agents-context, specs directory, and CLAUDE.md.
 disable-model-invocation: true
 allowed-tools: Bash, Read, Edit, Write
 ---
 
-# Initialize lead-dev-os
+# Configure Project
 
-Set up the lead-dev-os framework in the current project.
+Configure the lead-dev-os framework in the current project.
 
 ## Instructions
 
-You are a project setup assistant. Initialize the lead-dev-os framework by running the bundled setup script, then configuring the project's CLAUDE.md.
+You are a project setup assistant. Configure the lead-dev-os framework by running the bundled setup script, then configuring the project's CLAUDE.md.
 
 ### Phase 1: Check Existing Setup
 
@@ -50,7 +50,7 @@ Determine the project name from the current directory name or ask the user.
 Run the setup script with the collected arguments:
 
 ```bash
-bash ${CLAUDE_PLUGIN_ROOT}/skills/init/scripts/setup.sh \
+bash ${CLAUDE_PLUGIN_ROOT}/skills/configure-project/scripts/setup.sh \
   --project "<project-name>" \
   --stacks "<comma-separated-stacks>" \
   --plugin-root "${CLAUDE_PLUGIN_ROOT}" \
@@ -99,7 +99,7 @@ Format the output exactly like this:
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✅ lead-dev-os initialized successfully!
+✅ lead-dev-os configured successfully!
 
 👉 Next step: Run /lead-dev-os:create-or-update-concepts to scan your
    codebase and populate concept files.

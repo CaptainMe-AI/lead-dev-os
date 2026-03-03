@@ -25,14 +25,14 @@ claude --plugin-dir ~/lead-dev-os/lead-dev-os
 
 ## Initialize your project
 
-Navigate to your project and run the init skill:
+Navigate to your project and run the configure-project skill:
 
 ```bash
 cd /path/to/your-project
-/lead-dev-os:init
+/lead-dev-os:configure-project
 ```
 
-The init skill will:
+The configure-project skill will:
 
 1. Check for existing lead-dev-os artifacts
 2. Ask about your technology stacks (languages, frameworks, databases, infrastructure)
@@ -40,7 +40,7 @@ The init skill will:
 4. Create the `lead-dev-os/specs/` directory
 5. Update your `CLAUDE.md` with framework instructions
 
-The init skill uses bundled templates (for AGENTS.md, README.md, workflow guide, CLAUDE.md) and copies global and testing standards from the plugin into your project.
+The configure-project skill uses bundled templates (for AGENTS.md, README.md, workflow guide, CLAUDE.md) and copies global and testing standards from the plugin into your project.
 
 ## What gets created
 
@@ -74,7 +74,7 @@ All skills are accessed via the `/lead-dev-os:` namespace:
 
 | Skill | Purpose |
 |-------|---------|
-| `/lead-dev-os:init` | Initialize framework in your project |
+| `/lead-dev-os:configure-project` | Configure framework in your project |
 | `/lead-dev-os:plan-product` | Define product mission, vision, tech stack |
 | `/lead-dev-os:plan-roadmap` | Create phased feature roadmap |
 | `/lead-dev-os:define-standards` | Establish coding and architecture standards |
@@ -89,7 +89,7 @@ All skills are accessed via the `/lead-dev-os:` namespace:
 |-----------|---------|------------|
 | **agents-context/concepts/** | Domain knowledge and general guidance | You + skills + implementation |
 | **agents-context/standards/** | Coding standards, conventions, patterns | `/lead-dev-os:define-standards` skill |
-| **agents-context/guides/** | Workflow documentation | `/lead-dev-os:init` skill |
+| **agents-context/guides/** | Workflow documentation | `/lead-dev-os:configure-project` skill |
 | **lead-dev-os/specs/** | Dated spec folders from the workflow | `/lead-dev-os:step1-write-spec` and subsequent steps |
 
 ## Updating

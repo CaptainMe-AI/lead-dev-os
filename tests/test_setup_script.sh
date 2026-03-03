@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Test: Init skill setup.sh script
+# Test: configure-project skill setup.sh script
 #
 # Functionally tests setup.sh by running it in a temporary directory
 # and verifying the scaffolded output.
@@ -19,7 +19,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 PLUGIN_DIR="$REPO_ROOT/lead-dev-os"
-SETUP_SH="$PLUGIN_DIR/skills/init/scripts/setup.sh"
+SETUP_SH="$PLUGIN_DIR/skills/configure-project/scripts/setup.sh"
 
 PASSED=0
 FAILED=0
@@ -132,7 +132,7 @@ for std in "${EXPECTED_STANDARDS[@]}"; do
 done
 
 # Verify copied content matches source
-SAMPLE_SRC="$PLUGIN_DIR/skills/init/standards-global/coding-style.md"
+SAMPLE_SRC="$PLUGIN_DIR/skills/configure-project/standards-global/coding-style.md"
 SAMPLE_DEST="$TARGET1/agents-context/standards/coding-style.md"
 if diff -q "$SAMPLE_SRC" "$SAMPLE_DEST" &>/dev/null; then
   pass "copied standards match source content"

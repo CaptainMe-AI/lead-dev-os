@@ -20,7 +20,7 @@ You are a senior engineer analyzing a codebase to capture its architecture, patt
 2. Read any standards files that exist in `agents-context/standards/`.
 3. Build a mental map of current coverage — what areas of the codebase are already documented as concepts and what gaps exist.
 
-If `agents-context/README.md` does not exist, tell the user to run `/lead-dev-os:init` first and stop.
+If `agents-context/README.md` does not exist, tell the user to run `/lead-dev-os:configure-project` first and stop.
 
 ### Phase 2: Scan Project Structure
 

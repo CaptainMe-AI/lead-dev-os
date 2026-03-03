@@ -4,7 +4,7 @@
 # Verifies:
 # - plugin.json exists and is valid JSON
 # - All 8 skill directories exist with SKILL.md
-# - Init skill has bundled standards
+# - configure-project skill has bundled standards
 
 set -euo pipefail
 
@@ -62,7 +62,7 @@ echo ""
 echo "Skills:"
 
 EXPECTED_SKILLS=(
-  "init"
+  "configure-project"
   "plan-product"
   "plan-roadmap"
   "define-standards"
@@ -108,7 +108,7 @@ done
 
 # Skills with examples
 SKILLS_WITH_EXAMPLES=(
-  "init"
+  "configure-project"
   "plan-product"
   "plan-roadmap"
   "define-standards"
@@ -149,15 +149,15 @@ echo ""
 echo "No content/ directory:"
 
 if [ ! -d "$PLUGIN_DIR/content" ]; then
-  pass "content/ does not exist (standards bundled in init skill)"
+  pass "content/ does not exist (standards bundled in configure-project skill)"
 else
   fail "content/ still exists (should be removed)"
 fi
 
-# --- Init skill bundled standards ---
+# --- configure-project skill bundled standards ---
 
 echo ""
-echo "Init skill standards:"
+echo "configure-project skill standards:"
 
 GLOBAL_STANDARDS=(
   "coding-style.md"
@@ -168,31 +168,31 @@ GLOBAL_STANDARDS=(
 )
 
 for std in "${GLOBAL_STANDARDS[@]}"; do
-  if [ -f "$PLUGIN_DIR/skills/init/standards-global/$std" ]; then
+  if [ -f "$PLUGIN_DIR/skills/configure-project/standards-global/$std" ]; then
     pass "standards-global/$std exists"
   else
     fail "standards-global/$std missing"
   fi
 done
 
-if [ -f "$PLUGIN_DIR/skills/init/standards-testing/test-writing.md" ]; then
+if [ -f "$PLUGIN_DIR/skills/configure-project/standards-testing/test-writing.md" ]; then
   pass "standards-testing/test-writing.md exists"
 else
   fail "standards-testing/test-writing.md missing"
 fi
 
-# --- Init skill setup script ---
+# --- configure-project skill setup script ---
 
 echo ""
-echo "Init skill setup script:"
+echo "configure-project skill setup script:"
 
-if [ -f "$PLUGIN_DIR/skills/init/scripts/setup.sh" ]; then
+if [ -f "$PLUGIN_DIR/skills/configure-project/scripts/setup.sh" ]; then
   pass "scripts/setup.sh exists"
 else
   fail "scripts/setup.sh missing"
 fi
 
-if [ -x "$PLUGIN_DIR/skills/init/scripts/setup.sh" ]; then
+if [ -x "$PLUGIN_DIR/skills/configure-project/scripts/setup.sh" ]; then
   pass "scripts/setup.sh is executable"
 else
   fail "scripts/setup.sh is not executable"

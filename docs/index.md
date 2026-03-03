@@ -47,8 +47,8 @@ git clone https://github.com/CaptainMe-AI/lead-dev-os.git ~/lead-dev-os
 # Start Claude Code with the plugin
 claude --plugin-dir ~/lead-dev-os/lead-dev-os
 
-# Initialize in your project
-/lead-dev-os:init
+# Configure your project
+/lead-dev-os:configure-project
 ```
 
 See [Installation]({{ site.baseurl }}/installation) for full details.

@@ -17,7 +17,7 @@ lead-dev-os/                          # The plugin
 ├── .claude-plugin/
 │   └── plugin.json                   # Plugin metadata
 ├── skills/                           # Flat skill directories (no nesting)
-│   ├── init/                         # Project initialization
+│   ├── configure-project/             # Project configuration
 │   │   ├── SKILL.md
 │   │   ├── templates/                # Templates for target project files
 │   │   │   ├── agents.md             # → agents-context/AGENTS.md
@@ -51,7 +51,7 @@ Tests live in `tests/` and cover both the plugin structure and legacy install be
 
 | Suite | File | What it tests |
 |-------|------|---------------|
-| Plugin structure | `tests/test_plugin_structure.sh` | plugin.json valid, all 8 skill dirs exist, init skill has bundled standards |
+| Plugin structure | `tests/test_plugin_structure.sh` | plugin.json valid, all 8 skill dirs exist, configure-project skill has bundled standards |
 | Skill content | `tests/test_skill_content.sh` | No placeholders, all cross-refs namespaced, no config.yml refs, valid frontmatter |
 | Content bundle | `tests/test_content_bundle.sh` | All global standards present, CLAUDE.md namespaced, README updated |
 | Unit | `tests/test_common_functions.sh` | `ensure_dir`, `ensure_gitkeep`, `copy_if_not_exists`, `copy_with_warning`, `print_verbose` |

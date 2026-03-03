@@ -52,10 +52,10 @@ fi
 
 # --- Paths ----------------------------------------------------------------------
 
-INIT_DIR="${PLUGIN_ROOT}/skills/init"
-STANDARDS_GLOBAL_DIR="${INIT_DIR}/standards-global"
-STANDARDS_TESTING_DIR="${INIT_DIR}/standards-testing"
-TEMPLATES_DIR="${INIT_DIR}/templates"
+SKILL_DIR="${PLUGIN_ROOT}/skills/configure-project"
+STANDARDS_GLOBAL_DIR="${SKILL_DIR}/standards-global"
+STANDARDS_TESTING_DIR="${SKILL_DIR}/standards-testing"
+TEMPLATES_DIR="${SKILL_DIR}/templates"
 
 # --- Collectors for output sections --------------------------------------------
 

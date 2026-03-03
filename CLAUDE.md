@@ -43,7 +43,7 @@ lead-dev-os/                                   # Repository root
 │   ├── .claude-plugin/
 │   │   └── plugin.json                        # Plugin manifest (name, version, author, etc.)
 │   └── skills/                                # Flat skill directories (plugin requirement)
-│       ├── init/                              # Project initialization
+│       ├── configure-project/                  # Project configuration
 │       │   ├── SKILL.md
 │       │   ├── templates/                     # Templates for target project files
 │       │   │   ├── agents.md                  # → agents-context/AGENTS.md
@@ -86,11 +86,11 @@ lead-dev-os/                                   # Repository root
 - All skill cross-references use the `/lead-dev-os:` namespace (e.g., `/lead-dev-os:step1-write-spec`). The namespace comes from the `name` field in `plugin.json`.
 - Each skill is a directory with a `SKILL.md` entrypoint and optional supporting files (templates, examples, scripts). See [Skills docs](https://code.claude.com/docs/en/skills.md).
 - Templates are co-located with their skills (e.g., `step1-write-spec/template.md`)
-- Standards files are bundled inside `lead-dev-os/skills/init/` (no separate content/ directory)
+- Standards files are bundled inside `lead-dev-os/skills/configure-project/` (no separate content/ directory)
 
 ### Target project conventions
 - Specs go into `lead-dev-os/specs/` directory in the target project
-- No `config.yml` in the plugin — stack selection is handled interactively by `/lead-dev-os:init`
+- No `config.yml` in the plugin — stack selection is handled interactively by `/lead-dev-os:configure-project`
 
 ### Legacy
 - `app/` and `scripts/` are deprecated but still functional for backwards compatibility
