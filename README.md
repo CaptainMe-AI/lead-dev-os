@@ -47,7 +47,9 @@ Full documentation is available at [captainme-ai.github.io/lead-dev-os](https://
 
 ## 📦 Installation
 
-`lead-dev-os` is distributed as a **Claude Code plugin**.
+`lead-dev-os` is a **Claude Code plugin**.
+
+> **Note:** Official Claude Plugin Marketplace support is a work in progress. For now, install by cloning the repository.
 
 ```bash
 # Clone the repo (one-time)

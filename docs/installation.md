@@ -13,6 +13,8 @@ nav_order: 2
 
 ## Install as a Claude Code Plugin
 
+> **Note:** Official Claude Plugin Marketplace support is a work in progress. For now, install by cloning the repository.
+
 Clone this repo somewhere on your machine, then start Claude Code with the plugin:
 
 ```bash
