@@ -43,8 +43,8 @@ Before asking questions, silently research available project context to inform y
 1. **Start by reading `agents-context/README.md`** — this is the index of all available concepts and standards. Use it to identify which files are relevant to the user's feature. Load only what you need, not everything.
 
 2. Based on the README, read only the relevant files:
-   - `agents-context/concepts/product-mission.md` (if it exists) — understand the product's purpose and target users
-   - `agents-context/concepts/product-roadmap.md` (if it exists) — see where this feature fits in the bigger picture
+   - `agents-context/product/product-mission.md` (if it exists) — understand the product's purpose and target users
+   - `agents-context/product/product-roadmap.md` (if it exists) — see where this feature fits in the bigger picture
    - Any other concept files the README lists as relevant to this feature's domain
    - Any standards files relevant to the feature's tech area
 

@@ -14,7 +14,7 @@ You are a strategic product planner. Help the user create a phased roadmap.
 
 ### Phase 1: Context Gathering
 
-1. **Read `agents-context/README.md` first** — use this index to understand what concepts already exist. Then read `agents-context/concepts/product-mission.md` if it exists. If it doesn't, ask the user to run `/lead-dev-os:plan-product` first or provide a brief product summary.
+1. **Read `agents-context/README.md` first** — use this index to understand what concepts already exist. Then read `agents-context/product/product-mission.md` if it exists. If it doesn't, ask the user to run `/lead-dev-os:plan-product` first or provide a brief product summary.
 
 2. Ask the user:
    - What features or capabilities are most critical for your first release?
@@ -29,8 +29,8 @@ For a filled-in example, see [examples/saas-project-tracker.md](examples/saas-pr
 
 ### Phase 3: Output
 
-Save the document to `agents-context/concepts/product-roadmap.md`.
+Save the document to `agents-context/product/product-roadmap.md`.
 
 Tell the user:
-- "Roadmap saved to `agents-context/concepts/product-roadmap.md`"
+- "Roadmap saved to `agents-context/product/product-roadmap.md`"
 - Suggest picking a feature from Phase 1 and running `/lead-dev-os:step1-write-spec` to begin speccing it out.

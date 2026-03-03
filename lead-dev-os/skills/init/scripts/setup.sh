@@ -85,6 +85,7 @@ copy_or_skip() {
 # --- 1. Create directories ------------------------------------------------------
 
 DIRS=(
+  "agents-context/product"
   "agents-context/concepts"
   "agents-context/standards"
   "agents-context/guides"

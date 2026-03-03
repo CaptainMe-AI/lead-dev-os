@@ -1,7 +1,7 @@
 # Product Roadmap
 
 > Last updated: 2026-02-27
-> Based on: [product-mission.md](../../agents-context/concepts/product-mission.md)
+> Based on: [product-mission.md](../../agents-context/product/product-mission.md)
 
 ## Phase 1: Foundation
 **Goal:** Core data model, auth, and basic task management — enough for internal dogfooding

@@ -38,8 +38,8 @@ For a filled-in example, see [examples/saas-project-tracker.md](examples/saas-pr
 
 ### Phase 3: Output
 
-Save the document to `agents-context/concepts/product-mission.md`.
+Save the document to `agents-context/product/product-mission.md`.
 
 Tell the user:
-- "Product mission saved to `agents-context/concepts/product-mission.md`"
+- "Product mission saved to `agents-context/product/product-mission.md`"
 - Suggest running `/lead-dev-os:plan-roadmap` next to create a feature roadmap based on this mission.

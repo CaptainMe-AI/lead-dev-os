@@ -1,7 +1,7 @@
 # Product Roadmap
 
 > Last updated: YYYY-MM-DD
-> Based on: [product-mission.md](../../agents-context/concepts/product-mission.md)
+> Based on: [product-mission.md](../../agents-context/product/product-mission.md)
 
 ## Phase 1: Foundation
 **Goal:** [What this phase achieves]

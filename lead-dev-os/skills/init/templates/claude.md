@@ -5,8 +5,8 @@ This project uses lead-dev-os for spec-driven development. All features go throu
 ### Skills
 
 **Strategic (run once or occasionally):**
-- `/lead-dev-os:plan-product` — Define product mission, vision, tech stack → `agents-context/concepts/product-mission.md`
-- `/lead-dev-os:plan-roadmap` — Create phased feature roadmap → `agents-context/concepts/product-roadmap.md`
+- `/lead-dev-os:plan-product` — Define product mission, vision, tech stack → `agents-context/product/product-mission.md`
+- `/lead-dev-os:plan-roadmap` — Create phased feature roadmap → `agents-context/product/product-roadmap.md`
 - `/lead-dev-os:define-standards` — Establish coding & architecture standards → `agents-context/standards/`
 
 **Tactical (run per feature):**
@@ -16,6 +16,7 @@ This project uses lead-dev-os for spec-driven development. All features go throu
 
 ### Context System
 
+- `agents-context/product/` — Product mission, roadmap, and strategic planning documents
 - `agents-context/concepts/` — Project-specific domain knowledge and general guidance (not code)
 - `agents-context/standards/` — Coding style, architecture, and testing conventions
 - `agents-context/guides/` — Workflow guides
