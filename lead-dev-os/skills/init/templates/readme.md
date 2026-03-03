@@ -7,6 +7,15 @@ This directory contains modular knowledge files that document {Project Name}'s c
 - **Version-controlled** - Track evolution of ideas over time
 - **AI-friendly** - Agents can load specific concepts as context
 
+## Product
+
+> Strategic product documents created by `/lead-dev-os:plan-product` and `/lead-dev-os:plan-roadmap`.
+
+<!-- Entries are added automatically by the skills that create these files:
+- **[product-mission.md](product/product-mission.md)** — Product mission, vision, target users, and technology stack
+- **[product-roadmap.md](product/product-roadmap.md)** — Prioritized feature roadmap with phased milestones
+-->
+
 ## Available Concepts
 
 > This section is populated as you build your project. Add entries here when creating new concept files.

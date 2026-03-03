@@ -31,6 +31,17 @@ For a filled-in example, see [examples/saas-project-tracker.md](examples/saas-pr
 
 Save the document to `agents-context/product/product-roadmap.md`.
 
+### Phase 4: Update README
+
+Read `agents-context/README.md`. Under the `## Product` section, ensure there is an uncommented entry for `product-roadmap.md`. If the entry is inside an HTML comment block, uncomment it. If no entry exists, add one:
+
+```markdown
+- **[product-roadmap.md](product/product-roadmap.md)** — Prioritized feature roadmap with phased milestones
+```
+
+### Phase 5: Summary
+
 Tell the user:
 - "Roadmap saved to `agents-context/product/product-roadmap.md`"
+- "Updated `agents-context/README.md` index"
 - Suggest picking a feature from Phase 1 and running `/lead-dev-os:step1-write-spec` to begin speccing it out.

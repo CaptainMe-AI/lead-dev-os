@@ -40,6 +40,17 @@ For a filled-in example, see [examples/saas-project-tracker.md](examples/saas-pr
 
 Save the document to `agents-context/product/product-mission.md`.
 
+### Phase 4: Update README
+
+Read `agents-context/README.md`. Under the `## Product` section, ensure there is an uncommented entry for `product-mission.md`. If the entry is inside an HTML comment block, uncomment it. If no entry exists, add one:
+
+```markdown
+- **[product-mission.md](product/product-mission.md)** — Product mission, vision, target users, and technology stack
+```
+
+### Phase 5: Summary
+
 Tell the user:
 - "Product mission saved to `agents-context/product/product-mission.md`"
+- "Updated `agents-context/README.md` index"
 - Suggest running `/lead-dev-os:plan-roadmap` next to create a feature roadmap based on this mission.

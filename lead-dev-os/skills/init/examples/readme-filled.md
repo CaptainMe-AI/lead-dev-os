@@ -7,6 +7,11 @@ This directory contains modular knowledge files that document Active Snap AI's c
 - **Version-controlled** - Track evolution of ideas over time
 - **AI-friendly** - Agents can load specific concepts as context
 
+## Product
+
+- **[product-mission.md](product/product-mission.md)** — Product mission, vision, target users, and technology stack
+- **[product-roadmap.md](product/product-roadmap.md)** — Prioritized feature roadmap with phased milestones
+
 ## Available Concepts
 
 ### Core Concepts
