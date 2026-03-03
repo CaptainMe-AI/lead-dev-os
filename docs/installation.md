@@ -96,6 +96,7 @@ All skills are accessed via the `/lead-dev-os:` namespace:
 | `/lead-dev-os:step1-write-spec` | Interactive Q&A + formalize into spec |
 | `/lead-dev-os:step2-scope-tasks` | Break spec into context-aware task groups |
 | `/lead-dev-os:step3-implement-tasks` | Context-aware implementation of task groups |
+| `/lead-dev-os:step4-archive-spec` | Archive completed spec and block agent access |
 
 ## Directory purposes
 

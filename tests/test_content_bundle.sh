@@ -112,6 +112,12 @@ else
   fail "template-claude.md missing namespaced step1"
 fi
 
+if grep -q '/lead-dev-os:step4-archive-spec' "$CLAUDE_TMPL" 2>/dev/null; then
+  pass "template-claude.md has namespaced step4"
+else
+  fail "template-claude.md missing namespaced step4"
+fi
+
 if grep -q '/lead-dev-os:plan-product' "$CLAUDE_TMPL" 2>/dev/null; then
   pass "template-claude.md has namespaced plan-product"
 else
@@ -185,6 +191,12 @@ if grep -q '/lead-dev-os:step3-implement-tasks' "$WORKFLOW_TMPL" 2>/dev/null; th
   pass "template-workflow.md has namespaced step3"
 else
   fail "template-workflow.md missing namespaced step3"
+fi
+
+if grep -q '/lead-dev-os:step4-archive-spec' "$WORKFLOW_TMPL" 2>/dev/null; then
+  pass "template-workflow.md has namespaced step4"
+else
+  fail "template-workflow.md missing namespaced step4"
 fi
 
 # --- Example file ---

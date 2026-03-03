@@ -4,7 +4,7 @@ How to use lead-dev-os for spec-driven development.
 
 ## Overview
 
-lead-dev-os follows a **write → scope → implement** workflow for building features. This ensures every feature is well-understood before implementation begins, and that implementation stays aligned with project conventions through context files.
+lead-dev-os follows a **write → scope → implement → archive** workflow for building features. This ensures every feature is well-understood before implementation begins, that implementation stays aligned with project conventions through context files, and that completed specs are archived to keep the workspace clean.
 
 ## Strategic Skills (Run Once or Occasionally)
 
@@ -45,6 +45,13 @@ These skills drive the spec-to-implementation pipeline. Run them sequentially fo
 
 **Inputs:** Tasks from Step 2 + all referenced context files
 **Outputs:** Implemented feature + updated/new concept files
+
+### Step 4: Archive Spec (`/lead-dev-os:step4-archive-spec`)
+
+**What it does:** Archives a completed spec to prevent it from being accidentally loaded in future sessions.
+
+**Inputs:** Completed spec in `lead-dev-os/specs/`
+**Outputs:** Spec moved to `lead-dev-os/specs-archived/` + deny rule in `.claude/settings.json`
 
 ## Context System
 

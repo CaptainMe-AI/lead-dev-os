@@ -6,7 +6,7 @@ nav_order: 3
 
 # Workflow
 
-lead-dev-os uses a 3-step tactical workflow to go from idea to shipped feature. Each step produces an artifact that feeds into the next.
+lead-dev-os uses a 4-step tactical workflow to go from idea to shipped feature. Each step produces an artifact that feeds into the next.
 
 ## Getting started (new project)
 
@@ -38,6 +38,10 @@ Breaks the spec into task groups with explicit context directives. Each task gro
 ### Step 3: Implement (`/lead-dev-os:step3-implement-tasks`)
 
 Context-aware execution of task groups. The agent loads only the context it needs for each task group, implements the code, and runs tests. See [Implementation]({{ site.baseurl }}/implementation) for the three execution modes.
+
+### Step 4: Archive (`/lead-dev-os:step4-archive-spec`)
+
+After implementation is complete, archive the spec to keep the workspace clean. Moves the spec folder from `lead-dev-os/specs/` to `lead-dev-os/specs-archived/` and adds a deny rule to `.claude/settings.json` so the agent won't accidentally load stale specs in future sessions.
 
 ---
 

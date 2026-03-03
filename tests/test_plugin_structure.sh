@@ -3,7 +3,7 @@
 #
 # Verifies:
 # - plugin.json exists and is valid JSON
-# - All 8 skill directories exist with SKILL.md
+# - All 9 skill directories exist with SKILL.md
 # - configure-project skill has bundled standards
 
 set -euo pipefail
@@ -70,6 +70,7 @@ EXPECTED_SKILLS=(
   "step1-write-spec"
   "step2-scope-tasks"
   "step3-implement-tasks"
+  "step4-archive-spec"
 )
 
 for skill in "${EXPECTED_SKILLS[@]}"; do
@@ -196,6 +197,23 @@ if [ -x "$PLUGIN_DIR/skills/configure-project/scripts/setup.sh" ]; then
   pass "scripts/setup.sh is executable"
 else
   fail "scripts/setup.sh is not executable"
+fi
+
+# --- step4-archive-spec skill script ---
+
+echo ""
+echo "step4-archive-spec skill script:"
+
+if [ -f "$PLUGIN_DIR/skills/step4-archive-spec/scripts/update-settings.sh" ]; then
+  pass "scripts/update-settings.sh exists"
+else
+  fail "scripts/update-settings.sh missing"
+fi
+
+if [ -x "$PLUGIN_DIR/skills/step4-archive-spec/scripts/update-settings.sh" ]; then
+  pass "scripts/update-settings.sh is executable"
+else
+  fail "scripts/update-settings.sh is not executable"
 fi
 
 # --- Summary ---

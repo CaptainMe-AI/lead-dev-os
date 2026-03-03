@@ -66,7 +66,8 @@ lead-dev-os/                                   # Repository root
 │       ├── create-or-update-concepts/         # Strategic: codebase → concept files
 │       ├── step1-write-spec/                  # Tactical: requirements → spec
 │       ├── step2-scope-tasks/                 # Tactical: spec → task groups
-│       └── step3-implement-tasks/             # Tactical: task execution
+│       ├── step3-implement-tasks/             # Tactical: task execution
+│       └── step4-archive-spec/               # Tactical: archive completed spec
 │
 ├── tests/                                     # Test suites for the plugin
 ├── docs/                                      # GitHub Pages documentation
@@ -95,11 +96,12 @@ lead-dev-os/                                   # Repository root
 ### Legacy
 - `app/` and `scripts/` are deprecated but still functional for backwards compatibility
 
-## Workflow (3 steps)
+## Workflow (4 steps)
 
 1. `/lead-dev-os:step1-write-spec` — Interactive Q&A to gather requirements, then formalize into structured spec
 2. `/lead-dev-os:step2-scope-tasks` — Break into task groups with explicit context directives
 3. `/lead-dev-os:step3-implement-tasks` — Context-aware execution of task groups
+4. `/lead-dev-os:step4-archive-spec` — Archive completed spec to `specs-archived/` and block agent access
 
 ## Context Philosophy
 

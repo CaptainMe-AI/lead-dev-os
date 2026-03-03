@@ -13,6 +13,7 @@ This project uses lead-dev-os for spec-driven development. All features go throu
 1. `/lead-dev-os:step1-write-spec` — Interactive Q&A + formalize into spec → `lead-dev-os/specs/YYYY-MM-DD-name/spec.md`
 2. `/lead-dev-os:step2-scope-tasks` — Break into context-aware task groups → `lead-dev-os/specs/YYYY-MM-DD-name/tasks.md`
 3. `/lead-dev-os:step3-implement-tasks` — Context-aware implementation of task groups
+4. `/lead-dev-os:step4-archive-spec` — Archive completed spec to `lead-dev-os/specs-archived/`
 
 ### Context System
 
@@ -29,7 +30,7 @@ This project uses lead-dev-os for spec-driven development. All features go throu
 
 ### Key Principles
 
-- Spec before code — every feature goes through write → scope → implement
+- Spec before code — every feature goes through write → scope → implement → archive
 - Context-aware — task groups reference concept and standard files for guidance
 - Test-first — task groups list test tasks before implementation tasks
 - Concept files are general guidance, not code — they describe approaches, conventions, and decision rationale

@@ -75,3 +75,9 @@ The autonomous portion handles scaffolding, boilerplate, or well-defined setup t
 | Production feature with stakeholder scrutiny | **Lead-in-the-Loop** |
 
 When you run `/lead-dev-os:step3-implement-tasks`, the skill prompts you to select a mode (A / L / H) after loading the spec context. If you choose Hybrid, it also asks which task group number to use as the checkpoint.
+
+---
+
+## After Implementation
+
+Once all task groups are complete and the feature is shipped, run `/lead-dev-os:step4-archive-spec` to archive the completed spec. This moves it to `lead-dev-os/specs-archived/` and blocks agent access so stale specs don't get loaded in future sessions.

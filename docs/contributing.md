@@ -34,7 +34,8 @@ lead-dev-os/                          # The plugin
 │   ├── create-or-update-concepts/   # Strategic: codebase → concept files
 │   ├── step1-write-spec/             # Tactical: requirements → spec
 │   ├── step2-scope-tasks/            # Tactical: spec → task groups
-│   └── step3-implement-tasks/        # Tactical: task execution
+│   ├── step3-implement-tasks/        # Tactical: task execution
+│   └── step4-archive-spec/          # Tactical: archive completed spec
 ```
 
 ## Testing
@@ -51,9 +52,10 @@ Tests live in `tests/` and cover both the plugin structure and legacy install be
 
 | Suite | File | What it tests |
 |-------|------|---------------|
-| Plugin structure | `tests/test_plugin_structure.sh` | plugin.json valid, all 8 skill dirs exist, configure-project skill has bundled standards |
+| Plugin structure | `tests/test_plugin_structure.sh` | plugin.json valid, all 9 skill dirs exist, configure-project skill has bundled standards |
 | Skill content | `tests/test_skill_content.sh` | No placeholders, all cross-refs namespaced, no config.yml refs, valid frontmatter |
 | Content bundle | `tests/test_content_bundle.sh` | All global standards present, CLAUDE.md namespaced, README updated |
+| Update settings | `tests/test_update_settings.sh` | update-settings.sh creates/appends deny rules, idempotent |
 | Unit | `tests/test_common_functions.sh` | `ensure_dir`, `ensure_gitkeep`, `copy_if_not_exists`, `copy_with_warning`, `print_verbose` |
 | Integration: creates | `tests/test_install_creates.sh` | Fresh install produces all expected files (legacy installer) |
 | Integration: overwrites | `tests/test_install_overwrites.sh` | Re-install overwrites skills/guides, preserves concepts/standards (legacy installer) |

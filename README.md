@@ -39,7 +39,7 @@ A Lead Developer's primary responsibility is to ensure their team of engineers c
 Full documentation is available at [captainme-ai.github.io/lead-dev-os](https://captainme-ai.github.io/lead-dev-os/).
 
 - [Installation](https://captainme-ai.github.io/lead-dev-os/installation) — Plugin setup, initialization, what gets created
-- [Workflow](https://captainme-ai.github.io/lead-dev-os/workflow) — The 3-step write → scope → implement process
+- [Workflow](https://captainme-ai.github.io/lead-dev-os/workflow) — The 4-step write → scope → implement → archive process
 - [Implementation](https://captainme-ai.github.io/lead-dev-os/implementation) — Autonomous, lead-in-the-loop, and hybrid execution modes
 - [Contributing](https://captainme-ai.github.io/lead-dev-os/contributing) — Testing and how to contribute
 
@@ -87,6 +87,7 @@ See the [Installation Guide](https://captainme-ai.github.io/lead-dev-os/installa
 /lead-dev-os:step1-write-spec        → Interactive Q&A + formalize into spec with numbered requirements (FR-###)
 /lead-dev-os:step2-scope-tasks       → Break into task groups with context directives
 /lead-dev-os:step3-implement-tasks   → Context-aware implementation of task groups
+/lead-dev-os:step4-archive-spec      → Archive completed spec and block agent access
 ```
 
 See the [Workflow Guide](https://captainme-ai.github.io/lead-dev-os/workflow) for the full process, and [Implementation Modes](https://captainme-ai.github.io/lead-dev-os/implementation) for autonomous, lead-in-the-loop, and hybrid execution.

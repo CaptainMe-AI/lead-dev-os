@@ -62,5 +62,6 @@ See [Installation]({{ site.baseurl }}/installation) for full details.
 | Write | `/lead-dev-os:step1-write-spec` | Interactive Q&A + formalize into spec with numbered requirements (FR-###) |
 | Scope | `/lead-dev-os:step2-scope-tasks` | Break into task groups with context directives |
 | Implement | `/lead-dev-os:step3-implement-tasks` | Context-aware execution of task groups |
+| Archive | `/lead-dev-os:step4-archive-spec` | Archive completed spec and block agent access |
 
-See [Workflow]({{ site.baseurl }}/workflow) for the full 3-step process, and [Implementation]({{ site.baseurl }}/implementation) for execution modes.
+See [Workflow]({{ site.baseurl }}/workflow) for the full 4-step process, and [Implementation]({{ site.baseurl }}/implementation) for execution modes.

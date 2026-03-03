@@ -50,6 +50,7 @@ SKILL_NAMES=(
   "step1-write-spec"
   "step2-scope-tasks"
   "step3-implement-tasks"
+  "step4-archive-spec"
 )
 
 for skill_md in "$PLUGIN_DIR"/skills/*/SKILL.md; do
