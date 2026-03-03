@@ -6,11 +6,12 @@ disable-model-invocation: true
 
 # Step 2: Scope Tasks
 
-Break a specification into ordered task groups with explicit context-awareness directives.
+Break a specification into ordered task groups with explicit context-awareness directives. **Run this command while in plan mode.**
+
 
 ## Instructions
 
-You are a senior engineer breaking down a spec into implementable task groups. Each group should be a focused unit of work that can be delegated to an AI agent or developer. The key differentiator is that every task group MUST include explicit directives to read and update context files.
+You are a senior engineer breaking down a spec into implementable task groups. Each group should be an atomic focused unit of work organized by layer (database, API, frontend, etc.) with hierarchical numbered subtasks. Every task group MUST include explicit directives to read and update context files.
 
 ## Planning
 **Use plan mode per task group when implementing** -- This will allow to further break down the task into sub-tasks and plan them out.
@@ -34,17 +35,22 @@ You are a senior engineer breaking down a spec into implementable task groups. E
 
 ### Phase 2: Create Task Groups
 
-Organize tasks into **sequential groups by specialization**. Each group builds on the previous one.
+Organize tasks into **sequential groups by layer**. Each group builds on the previous one.
 
-Common group ordering (adapt based on the feature):
-1. **Data Layer** — Schema, models, migrations
-2. **Business Logic** — Services, domain logic, validations
-3. **API / Interface** — Endpoints, controllers, routes
-4. **Frontend / UI** — Components, pages, styling
-5. **Integration** — Connecting pieces, end-to-end flows
-6. **Testing & Polish** — Edge cases, error handling, documentation
+Common layer ordering (adapt based on the feature):
+1. **Database Layer** — Schema, models, migrations
+2. **API Layer** — Endpoints, controllers, services
+3. **Frontend Components** — Components, pages, styling
+4. **Testing** — Test review & gap analysis (always last)
 
-For each task group, follow a **test-first approach**: write tests before implementation.
+Each task group uses **hierarchical numbered subtasks**. The parent task (N.0) is the group's completion goal. Subtasks (N.1, N.2, ...) are the steps to achieve it.
+
+For each task group (except the final Testing group), follow a **test-first approach**:
+- Subtask N.1 is ALWAYS writing 2-8 focused tests
+- The final subtask is ALWAYS ensuring those tests pass
+- Tests should cover only critical behaviors, not exhaustive scenarios
+
+The **final task group is always "Test Review & Gap Analysis"**. This group reviews all tests from previous groups, identifies critical gaps, and adds up to 10 additional strategic tests. It does NOT run the entire application test suite — only feature-specific tests.
 
 ### Phase 3: Generate Tasks Document
 
@@ -58,23 +64,36 @@ Every task group MUST include explicit context directives in its header. These d
 Example format:
 
 ```markdown
-## Task Group 1: API Development
+### Database Layer
+
+#### Task Group 1: Data Models and Migrations
 
 **Read before starting:**
-- `agents-context/concepts/api-design.md` — understand our API conventions and patterns
-- `agents-context/standards/rest-conventions.md` — follow REST naming and response format standards
-- `agents-context/standards/testing.md` — follow testing conventions for API specs
+- `agents-context/concepts/[concept].md` — [why this is relevant]
+- `agents-context/standards/[standard].md` — [why this is relevant]
 
 **Update after completing:**
-- `agents-context/concepts/api-design.md` — if new API patterns or conventions were established
-- Create `agents-context/concepts/[new-concept].md` — if a new domain pattern emerged
+- `agents-context/concepts/[concept].md` — if [condition for when to update]
+- Create `agents-context/concepts/[new-concept].md` — if [condition for when to create]
 
-**Depends on:** None
-**Modifies:** [List of files/directories this group touches]
+**Dependencies:** None
 
-- [ ] **Test:** [Write test for specific behavior]
-- [ ] **Implement:** [Implementation task with clear scope]
-- [ ] **Verify:** Run tests, confirm all pass
+- [ ] 1.0 Complete database layer
+  - [ ] 1.1 Write 2-8 focused tests for [Model] functionality
+    - Limit to 2-8 highly focused tests maximum
+    - Test only critical model behaviors
+    - Skip exhaustive coverage of all methods and edge cases
+  - [ ] 1.2 Create [Model] with validations
+    - Fields: [list]
+    - Validations: [list]
+    - Reuse pattern from: [existing model if applicable]
+  - [ ] 1.3 Ensure tests pass
+    - Run ONLY the 2-8 tests written in 1.1
+    - Do NOT run the entire test suite at this stage
+
+**Acceptance Criteria:**
+- The 2-8 tests written in 1.1 pass
+- [Criterion specific to this group]
 ```
 
 If a relevant concept or standard file does NOT yet exist, the directive should say:
@@ -82,25 +101,29 @@ If a relevant concept or standard file does NOT yet exist, the directive should 
 
 ### Rules for Task Groups
 
-- Each group should have **2-8 tasks** (focused, not sprawling)
-- Every group starts with **test tasks** before implementation tasks
+- Organize groups under **layer sections** (### headings) with task groups as #### headings
+- Use **hierarchical numbered subtasks** (N.0 parent, N.1, N.2, ... children)
+- Subtask N.1 is always **writing 2-8 focused tests** — test only critical behaviors, not exhaustive scenarios
+- The final subtask in each group is always **ensuring those specific tests pass** — never run the full test suite
+- Each group ends with **Acceptance Criteria** specific to that group
 - Each task should be **completable in one focused session**
 - Tasks must reference **specific files** to create or modify where possible
 - The **"Read before starting"** section MUST list all relevant context files — concept files for domain guidance, standard files for conventions
 - The **"Update after completing"** section MUST specify which concept files to update or create when new patterns are established
 - Groups must have explicit **dependency ordering**
 - Context directives reference **general guidance, not code** — concept files describe approaches, conventions, and decision rationale, never code snippets
+- The **final group is always "Test Review & Gap Analysis"** — reviews previous tests, fills critical gaps (up to 10 additional tests), runs only feature-specific tests
+- Include an **Execution Order** section at the end listing the recommended implementation sequence
+- Include an **Overview** section at the top with total task count
 
 ### Phase 4: Review & Save
 
-1. Present the task breakdown to the user.
-2. Ask: "Does this task breakdown look right? Any groups to add, remove, or reorder?"
-3. Incorporate feedback.
-4. Save to `lead-dev-os/specs/YYYY-MM-DD-<spec-name>/tasks.md`.
+Display the following message to the user:
 
-### Phase 5: Handoff
+```
+The tasks list has created at `lead-dev-os/specs/YYYY-MM-DD-<spec-name>/tasks.md`.
 
-Tell the user:
-- "Tasks saved to `lead-dev-os/specs/YYYY-MM-DD-<spec-name>/tasks.md`"
-- "Run `/lead-dev-os:step3-implement-tasks` to begin context-aware implementation, or work through task groups manually."
-- "Each group's **Read before starting** section lists the context files to load before beginning."
+Review it closely to make sure it all looks good.
+
+NEXT STEP 👉 Run `/lead-dev-os:step3-implement-tasks` with the preferred mode 
+```
