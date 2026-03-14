@@ -28,6 +28,9 @@ Update relevant concepts in `agents-context/README.md` if applicable:
 ### Data & API Layer
 
 #### Task Group 1: Profile API Endpoints
+
+Expose authenticated endpoints for reading and updating user profile data including display name, bio, and timezone.
+
 **Read before starting:**
 - `agents-context/concepts/auth-system.md` — understand authentication middleware and user model
 - `agents-context/standards/coding-style.md` — follow naming and file organization conventions
@@ -64,6 +67,9 @@ Update relevant concepts in `agents-context/README.md` if applicable:
 ### File Upload Layer
 
 #### Task Group 2: Avatar Upload Service
+
+Enable users to upload and store profile avatars with file type and size validation.
+
 **Read before starting:**
 - `agents-context/concepts/file-uploads.md` — understand existing S3 upload patterns
 - `agents-context/standards/testing.md` — follow testing conventions
@@ -98,6 +104,9 @@ Update relevant concepts in `agents-context/README.md` if applicable:
 ### Frontend Components
 
 #### Task Group 3: Profile Page UI
+
+Build the user-facing profile settings page with view/edit modes and avatar upload support.
+
 **Read before starting:**
 - `agents-context/standards/coding-style.md` — follow component naming and file organization
 - `agents-context/concepts/auth-system.md` — understand route protection patterns
@@ -141,6 +150,9 @@ Update relevant concepts in `agents-context/README.md` if applicable:
 ### Testing
 
 #### Task Group 4: Test Review & Gap Analysis
+
+Review all profile feature tests and fill critical coverage gaps for end-to-end workflows.
+
 **Read before starting:**
 - `agents-context/concepts/auth-system.md` — review auth patterns tested
 - `agents-context/concepts/file-uploads.md` — review upload patterns tested

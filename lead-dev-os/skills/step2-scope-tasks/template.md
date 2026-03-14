@@ -31,6 +31,8 @@ Update relevant concepts in `agents-context/README.md` if applicable:
 
 #### Task Group 1: [Group Name — e.g., Data Models and Migrations]
 
+[1-2 sentence description of WHAT this task group delivers. Focus on the outcome, not implementation details.]
+
 **Read before starting:**
 - `agents-context/standards/[relevant-standard].md` — [why this is relevant]
 - `agents-context/concepts/[relevant-concept].md` — [why this is relevant]
@@ -64,6 +66,8 @@ Update relevant concepts in `agents-context/README.md` if applicable:
 
 #### Task Group 2: [Group Name — e.g., API Endpoints]
 
+[1-2 sentence description of WHAT this task group delivers. Focus on the outcome, not implementation details.]
+
 **Read before starting:**
 - `agents-context/standards/[relevant-standard].md` — [why this is relevant]
 - `agents-context/concepts/[relevant-concept].md` — [why this is relevant]
@@ -95,6 +99,8 @@ Update relevant concepts in `agents-context/README.md` if applicable:
 
 #### Task Group 3: [Group Name — e.g., UI Design]
 
+[1-2 sentence description of WHAT this task group delivers. Focus on the outcome, not implementation details.]
+
 **Read before starting:**
 - `agents-context/standards/[relevant-standard].md` — [why this is relevant]
 
@@ -124,6 +130,8 @@ Update relevant concepts in `agents-context/README.md` if applicable:
 ### Testing
 
 #### Task Group 4: Test Review & Gap Analysis
+
+[1-2 sentence description of WHAT this task group delivers. Focus on the outcome, not implementation details.]
 
 **Read before starting:**
 - All context files referenced by Task Groups 1-3

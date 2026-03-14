@@ -68,6 +68,8 @@ Example format:
 
 #### Task Group 1: Data Models and Migrations
 
+Set up the database schema and model validations needed to persist user profile data.
+
 **Read before starting:**
 - `agents-context/concepts/[concept].md` — [why this is relevant]
 - `agents-context/standards/[standard].md` — [why this is relevant]
@@ -106,6 +108,7 @@ If a relevant concept or standard file does NOT yet exist, the directive should 
 - Subtask N.1 is always **writing 2-8 focused tests** — test only critical behaviors, not exhaustive scenarios
 - The final subtask in each group is always **ensuring those specific tests pass** — never run the full test suite
 - Each group ends with **Acceptance Criteria** specific to that group
+- Each task group MUST have a **1-2 sentence description** immediately after the title — describe WHAT will be delivered, not HOW
 - Each task should be **completable in one focused session**
 - Tasks must reference **specific files** to create or modify where possible
 - The **"Read before starting"** section MUST list all relevant context files — concept files for domain guidance, standard files for conventions
