@@ -22,7 +22,7 @@ Update relevant concepts in `agents-context/README.md` if applicable:
 
 ## Planning
 **Use plan mode per task group when implementing** - This will allow further breakdown of each task into sub-tasks and plan them out.
-
+**When using plan mode, always include a final plan step to return to this tasks.md and check off completed tasks** (per project CLAUDE.md rule).
 ## Task List
 
 ### Data & API Layer
