@@ -27,12 +27,44 @@ For each flat file, read it and provisionally classify it under the folder decis
 
 ## Lay down HOW_TO_CREATE_A_CONCEPT.md if missing
 
+The plugin ships the canonical template at `<plugin-root>/skills/configure-project/templates/how-to-create-a-concept.md`. Resolve `<plugin-root>` in this order — stop at the first one that succeeds:
+
+**1. Try `${CLAUDE_PLUGIN_ROOT}`.** Claude Code sets this env var for marketplace-installed plugins:
+
 ```bash
-cp "${CLAUDE_PLUGIN_ROOT}/skills/configure-project/templates/how-to-create-a-concept.md" \
+TEMPLATE="${CLAUDE_PLUGIN_ROOT:-}/skills/configure-project/templates/how-to-create-a-concept.md"
+[[ -n "${CLAUDE_PLUGIN_ROOT:-}" && -f "$TEMPLATE" ]] && \
+  cp "$TEMPLATE" agents-context/HOW_TO_CREATE_A_CONCEPT.md
+```
+
+**2. Try common dev paths.** When the user runs `claude --plugin-dir <path>`, `CLAUDE_PLUGIN_ROOT` is often unset. Probe likely checkout locations:
+
+```bash
+for guess in \
+  "$HOME/lead-dev-os/lead-dev-os" \
+  "$HOME/development/lead-dev-os/lead-dev-os" \
+  "$HOME/dev/lead-dev-os/lead-dev-os" \
+  "$HOME/.claude/plugins/lead-dev-os/lead-dev-os" \
+  "$HOME/.claude/plugins/cache/lead-dev-os"; do
+  candidate="$guess/skills/configure-project/templates/how-to-create-a-concept.md"
+  [[ -f "$candidate" ]] && { cp "$candidate" agents-context/HOW_TO_CREATE_A_CONCEPT.md; break; }
+done
+```
+
+**3. Ask the user.** If neither of the above finds the file, prompt:
+
+> *"I couldn't auto-resolve the lead-dev-os plugin path. Paste the absolute path to your plugin checkout (the directory containing `.claude-plugin/plugin.json`) and I'll copy the template. Example: `/Users/you/development/lead-dev-os/lead-dev-os`"*
+
+Then use that path:
+
+```bash
+cp "$USER_PROVIDED_PATH/skills/configure-project/templates/how-to-create-a-concept.md" \
    agents-context/HOW_TO_CREATE_A_CONCEPT.md
 ```
 
-If `${CLAUDE_PLUGIN_ROOT}` isn't set or the template isn't accessible, tell the user to re-run `/lead-dev-os:configure-project` (which will skip existing files and only add the missing ones).
+**4. Last resort.** If the user doesn't have the plugin checked out locally (rare), tell them to re-run `/lead-dev-os:configure-project` once the plugin is reachable. It will skip existing files and only add `HOW_TO_CREATE_A_CONCEPT.md`.
+
+After copying, confirm the file is in place: `ls agents-context/HOW_TO_CREATE_A_CONCEPT.md`.
 
 ## Coverage map: include MOVE rows
 
