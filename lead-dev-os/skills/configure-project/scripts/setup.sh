@@ -87,6 +87,9 @@ copy_or_skip() {
 DIRS=(
   "agents-context/product"
   "agents-context/concepts"
+  "agents-context/concepts/domains"
+  "agents-context/concepts/source"
+  "agents-context/concepts/shared"
   "agents-context/standards"
   "agents-context/guides"
   "lead-dev-os/specs"
@@ -151,6 +154,11 @@ fi
 # Template: agents.md -> agents-context/AGENTS.md (copy as-is)
 if copy_or_skip "${TEMPLATES_DIR}/agents.md" "agents-context/AGENTS.md" "agents-context/AGENTS.md"; then
   RENDERED_TEMPLATES+=("agents-context/AGENTS.md")
+fi
+
+# Template: how-to-create-a-concept.md -> agents-context/HOW_TO_CREATE_A_CONCEPT.md (copy as-is)
+if copy_or_skip "${TEMPLATES_DIR}/how-to-create-a-concept.md" "agents-context/HOW_TO_CREATE_A_CONCEPT.md" "agents-context/HOW_TO_CREATE_A_CONCEPT.md"; then
+  RENDERED_TEMPLATES+=("agents-context/HOW_TO_CREATE_A_CONCEPT.md")
 fi
 
 # Template: readme.md -> agents-context/README.md (replace {Project Name})
