@@ -80,6 +80,10 @@ Then gather both sides of the existing context:
 
 Build a mental map: existing concepts and their bucket placement, what areas the handcrafted docs describe, where the obvious gaps are. A topic that appears in `CLAUDE.md` but not in any concept file is a near-certain gap.
 
+#### Detect layout migration needs
+
+Check for any of: flat concept files at `agents-context/concepts/*.md` (not in a bucket), missing `agents-context/HOW_TO_CREATE_A_CONCEPT.md`, or concept files without YAML frontmatter. If any apply, **read [`references/migration.md`](references/migration.md) and follow it** before proceeding to Phase 2 — migration influences both the coverage map (Phase 3) and the file operations (Phase 4).
+
 ### Phase 2: Map the territory
 
 **2a. List top-level structure and identify source apps.**
@@ -209,6 +213,7 @@ Present the map as a table:
 - If one area warrants split files (e.g. `source/active_snap/` → `frontend.md` + `frontend-styling.md` + `frontend-components.md`), propose the split here, not later.
 - Cross-cutting concerns named in handcrafted docs propose `shared/` or `domains/<domain>/` placement.
 - "No action needed" for a substantive area requires a written reason ("already fully covered by existing concept X").
+- **Migration mode:** the coverage map also includes one MOVE row per existing flat file. See [`references/migration.md`](references/migration.md) for the row format and rules.
 
 Wait for the user to approve, modify, or narrow scope before writing any files.
 
@@ -253,37 +258,15 @@ source files instead of reproducing them.}
 - Don't include the folder name in the basename (`auth/auth.md`, not `auth/auth-domain.md`).
 - The slug should be what other concepts will use in their frontmatter `related:` list.
 
-#### Frontmatter fields
+#### Authoring rules — defer to HOW_TO_CREATE_A_CONCEPT.md
 
-Every field is **required** unless explicitly noted as optional.
+For frontmatter field semantics, body rules ("no source-file copies", H1-matches-title, wire-format examples), and cross-link conventions (relative-path rules, `related:` basenames), **read `agents-context/HOW_TO_CREATE_A_CONCEPT.md`** — it is the canonical authoring reference for the target project, laid down by `/lead-dev-os:configure-project` (or by Phase 1 in migration mode). Don't duplicate its rules here; if this skill ever diverges from HOW_TO, defer to HOW_TO.
 
-- **`title`** (string, **always double-quoted**) — human-readable concept name. Quoting is required even with no special characters; consistency makes the files predictable for tooling.
-- **`source_app`** (array) — which source applications this concept documents. Always an array, even with one entry. Use multiple values when the concept genuinely spans apps (e.g. a DDB layer touched by both Rails and Python); use a single value when one app owns the surface and other apps merely interact with it.
-- **`domain`** (single string from the approved enum) — the single best-fit business-logic domain. Pick exactly one.
-- **`scope`** (array from the approved enum) — which implementation surfaces this concept covers. Answers "if I'm working on backend only, which files matter?".
-- **`related`** (array of basenames) — other concept files that cross-reference this one. Basenames only — no paths, no `.md` extension. Stay in sync with the body's "Related concepts" section.
-- **`load_when`** (array of plain-language tasks, 2–5 entries) — the canonical "when to load this file" triggers. Action-oriented, no fluff. Avoid vague triggers ("Working with the system" — everything is "working with the system"). Avoid triggers that overlap heavily with another file (decide which file owns the trigger). The README's Load-When Cheatsheet aggregates these across files.
-- **`status`** (`current` | `draft` | `deprecated`) — defaults to `current`. Mark `deprecated` only when an architecture has been retired but the file is kept for historical context (link to its replacement).
-- **`last_reviewed`** (ISO date `YYYY-MM-DD`) — the date the file was last verified against the codebase. Bump on every meaningful edit. Use today's date from your environment context.
-- **`notes`** (optional, free-text) — caveat that doesn't fit the structured fields. Use sparingly; usually a TODO comment in the body is better.
+**Strict enums (runtime invariant).** Values for `source_app`, `domain`, and `scope` must come from the enums approved in Phase 3. If a concept genuinely needs a new value, **stop and ask the user to extend the enum first** — don't silently invent values. Drift kills the index, and HOW_TO points readers at the README's Concept Index for the project's current vocabulary, so out-of-band values become invisible.
 
-**Strict enums.** Values for `source_app`, `domain`, and `scope` must come from the approved enums. If a concept genuinely needs a new value, **stop and ask the user to extend the enum first** — don't silently invent values. Drift kills the index.
+#### Migrating from flat layout
 
-#### Body rules
-
-- H1 matches `title` (without quotes). First sentence states what the concept covers.
-- **No source-file copies.** If you find yourself pasting a class body, function body, route table, or factory, replace it with a `**Source:** [path](relative/link)` reference and a one-paragraph behavior summary. Pattern-teaching snippets (10–20 lines that *show a pattern*) are different from copying source — keep those.
-- **Wire-format examples are encouraged.** Request/response JSON, SSE events, error envelopes — those *are* the contract, not implementation.
-- **Don't copy text from another concept file.** Cross-link instead.
-
-#### Cross-link conventions
-
-- Markdown links between concept files use **relative paths** from the file's location:
-  - Same folder: `(other-file.md)`
-  - Sibling folder under `domains/`: `(../other-folder/other-file.md)`
-  - Across the tree from `domains/X/` to `source/Y/`: `(../../source/Y/other-file.md)`
-- For source-code references, use enough `../` to escape `concepts/<folder>/<file>.md` to repo root. Files at depth 2 (`shared/X.md`) need 3 `../`; files at depth 3 (`domains/X/Y.md` or `source/X/Y.md`) need 4 `../`.
-- Frontmatter `related:` uses **basenames only** (no path, no `.md`). The body's "Related concepts" section uses full markdown links — keep both in sync.
+If the coverage map contains MOVE rows, **read [`references/migration.md`](references/migration.md) and follow it** for the per-file migration steps (git mv, frontmatter back-fill, cross-link rewrite, back-references, link audit).
 
 #### When updating an existing file
 
@@ -299,6 +282,8 @@ Every field is **required** unless explicitly noted as optional.
 ### Phase 5: Update README.md
 
 Re-read `agents-context/README.md` and update it:
+
+**Migration note:** if you ran in migration mode, the README's existing Concept Index and Load-When Cheatsheet are stale. See [`references/migration.md`](references/migration.md) for what to rewrite vs. patch.
 
 1. **Concept Index — grouped by bucket.** Mirror the directory layout:
 
@@ -351,8 +336,9 @@ Report back:
 1. **Enums established / extended** — the final `source_app`, `domain`, `scope` values. Note any new values added in this run.
 2. **Concepts created** — list with bucket placement and one-line summary: `domains/billing/subscription-plans.md — Stripe subscription lifecycle, webhooks, plan resolution`.
 3. **Concepts updated** — list with bucket placement and what changed.
-4. **Coverage map recap** — top-level areas now covered, areas explicitly skipped (and the reason).
-5. **README updates** — Concept Index entries added, Load-When Cheatsheet rows added or merged.
+4. **Concepts migrated** (only when migration mode ran) — list each MOVE: `concepts/auth.md → concepts/domains/auth/auth.md` plus a count of cross-links rewritten and back-references updated.
+5. **Coverage map recap** — top-level areas now covered, areas explicitly skipped (and the reason).
+6. **README updates** — Concept Index entries added (or fully rewritten in migration mode), Load-When Cheatsheet rows added or merged.
 6. **Suggested next steps:**
    - Review concept files and refine prose / `load_when` triggers
    - Run `/lead-dev-os:define-standards` if standards coverage is sparse
