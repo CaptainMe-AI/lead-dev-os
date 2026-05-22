@@ -90,6 +90,12 @@ See the [Installation Guide](https://captainme-ai.github.io/lead-dev-os/installa
 /lead-dev-os:step4-archive-spec      → Archive completed spec and block agent access
 ```
 
+### Utility (run anytime)
+
+```
+/lead-dev-os:create-pr               → Open a GitHub PR for the current branch with a WHAT-focused description and emoji-prefixed title
+```
+
 See the [Workflow Guide](https://captainme-ai.github.io/lead-dev-os/workflow) for the full process, and [Implementation Modes](https://captainme-ai.github.io/lead-dev-os/implementation) for autonomous, lead-in-the-loop, and hybrid execution.
 
 ## 🤝 Contributing

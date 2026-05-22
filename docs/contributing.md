@@ -35,7 +35,8 @@ lead-dev-os/                          # The plugin
 │   ├── step1-write-spec/             # Tactical: requirements → spec
 │   ├── step2-scope-tasks/            # Tactical: spec → task groups
 │   ├── step3-implement-tasks/        # Tactical: task execution
-│   └── step4-archive-spec/          # Tactical: archive completed spec
+│   ├── step4-archive-spec/          # Tactical: archive completed spec
+│   └── create-pr/                   # Utility: open a GitHub PR for current branch
 ```
 
 ## Testing

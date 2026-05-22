@@ -98,6 +98,12 @@ All skills are accessed via the `/lead-dev-os:` namespace:
 | `/lead-dev-os:step3-implement-tasks` | Context-aware implementation of task groups |
 | `/lead-dev-os:step4-archive-spec` | Archive completed spec and block agent access |
 
+### Utility (run anytime)
+
+| Skill | Purpose |
+|-------|---------|
+| `/lead-dev-os:create-pr` | Open a GitHub PR for the current branch with a WHAT-focused description and emoji-prefixed title |
+
 ## Directory purposes
 
 | Directory | Purpose | Managed by |
