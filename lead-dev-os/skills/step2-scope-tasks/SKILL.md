@@ -13,6 +13,8 @@ Break a specification into ordered task groups with explicit context-awareness d
 
 You are a senior engineer breaking down a spec into implementable task groups. Each group should be an atomic focused unit of work organized by layer (database, API, frontend, etc.) with hierarchical numbered subtasks. Every task group MUST include explicit directives to read and update context files.
 
+Every task group MUST also stand on its own as a **complete user story** — a non-technical stakeholder who understands the feature's goal should be able to read the group and know (a) what value it delivers and (b) what "done" looks like, without reading any code or technical acceptance criteria.
+
 ## Planning
 **Use plan mode per task group when implementing** -- This will allow to further break down the task into sub-tasks and plan them out.
 
@@ -70,6 +72,14 @@ Example format:
 
 Set up the database schema and model validations needed to persist user profile data.
 
+**User Story:**
+As a registered user, I want my profile details to be saved reliably so that the information I enter is still there when I come back.
+
+**Done when (plain language):**
+- The system can store a user's profile information.
+- Invalid information (e.g., a blank name) is rejected instead of being saved.
+- Saved information can be loaded back exactly as it was entered.
+
 **Read before starting:**
 - `agents-context/concepts/[concept].md` — [why this is relevant]
 - `agents-context/standards/[standard].md` — [why this is relevant]
@@ -109,6 +119,9 @@ If a relevant concept or standard file does NOT yet exist, the directive should 
 - The final subtask in each group is always **ensuring those specific tests pass** — never run the full test suite
 - Each group ends with **Acceptance Criteria** specific to that group
 - Each task group MUST have a **1-2 sentence description** immediately after the title — describe WHAT will be delivered, not HOW
+- Each task group MUST include a **User Story** and a **Done when (plain language)** block immediately after the description (before "Read before starting"):
+  - The **User Story** uses the form *"As a [persona], I want [outcome] so that [benefit]."* It must be written for a non-technical reader and framed around end-user value — even for backend layers (database, API, services), express the value the layer ultimately enables for a person, not the technical artifact
+  - **Done when (plain language)** is a short bulleted list of observable, jargon-free outcomes a non-technical stakeholder could confirm. It is the human-readable counterpart to the technical Acceptance Criteria, not a duplicate of it (no test counts, file names, or framework terms)
 - Each task should be **completable in one focused session**
 - Tasks must reference **specific files** to create or modify where possible
 - The **"Read before starting"** section MUST list all relevant context files — concept files for domain guidance, standard files for conventions

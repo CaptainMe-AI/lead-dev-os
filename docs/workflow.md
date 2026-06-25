@@ -33,7 +33,7 @@ Interactive Q&A session to gather requirements, then formalizes into a structure
 
 ### Step 2: Scope (`/lead-dev-os:step2-scope-tasks`)
 
-Breaks the spec into task groups with explicit context directives. Each task group declares which files from `agents-context/` to load before executing. Produces `tasks.md` with atomic, implementable work items.
+Breaks the spec into task groups with explicit context directives. Each task group declares which files from `agents-context/` to load before executing, and reads as a complete user story — a plain-language goal and "done when" definition that a non-technical stakeholder can understand and verify. Produces `tasks.md` with atomic, implementable work items.
 
 ### Step 3: Implement (`/lead-dev-os:step3-implement-tasks`)
 

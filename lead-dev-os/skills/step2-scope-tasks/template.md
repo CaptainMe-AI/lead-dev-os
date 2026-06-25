@@ -34,6 +34,14 @@ Update relevant concepts in `agents-context/README.md` if applicable:
 
 [1-2 sentence description of WHAT this task group delivers. Focus on the outcome, not implementation details.]
 
+**User Story:**
+As a [persona], I want [outcome in plain language] so that [benefit]. [For backend/data layers, describe the value this enables for a real person, not the technical artifact.]
+
+**Done when (plain language):**
+- [Observable, jargon-free outcome a non-technical stakeholder could confirm]
+- [Observable outcome]
+- [Observable outcome]
+
 **Read before starting:**
 - `agents-context/standards/[relevant-standard].md` — [why this is relevant]
 - `agents-context/concepts/[relevant-concept].md` — [why this is relevant]
@@ -69,6 +77,14 @@ Update relevant concepts in `agents-context/README.md` if applicable:
 
 [1-2 sentence description of WHAT this task group delivers. Focus on the outcome, not implementation details.]
 
+**User Story:**
+As a [persona], I want [outcome in plain language] so that [benefit]. [For backend/data layers, describe the value this enables for a real person, not the technical artifact.]
+
+**Done when (plain language):**
+- [Observable, jargon-free outcome a non-technical stakeholder could confirm]
+- [Observable outcome]
+- [Observable outcome]
+
 **Read before starting:**
 - `agents-context/standards/[relevant-standard].md` — [why this is relevant]
 - `agents-context/concepts/[relevant-concept].md` — [why this is relevant]
@@ -102,6 +118,14 @@ Update relevant concepts in `agents-context/README.md` if applicable:
 
 [1-2 sentence description of WHAT this task group delivers. Focus on the outcome, not implementation details.]
 
+**User Story:**
+As a [persona], I want [outcome in plain language] so that [benefit].
+
+**Done when (plain language):**
+- [Observable, jargon-free outcome a non-technical stakeholder could confirm]
+- [Observable outcome]
+- [Observable outcome]
+
 **Read before starting:**
 - `agents-context/standards/[relevant-standard].md` — [why this is relevant]
 
@@ -133,6 +157,14 @@ Update relevant concepts in `agents-context/README.md` if applicable:
 #### Task Group 4: Test Review & Gap Analysis
 
 [1-2 sentence description of WHAT this task group delivers. Focus on the outcome, not implementation details.]
+
+**User Story:**
+As a [product owner / the team], I want confidence that the whole feature works end-to-end so that we can ship it knowing the key things a user does actually succeed.
+
+**Done when (plain language):**
+- The main things a user would do with this feature have been checked and work start-to-finish.
+- Any important gaps found earlier are now covered.
+- Nothing critical to this feature is left untested.
 
 **Read before starting:**
 - All context files referenced by Task Groups 1-3

@@ -31,6 +31,15 @@ Update relevant concepts in `agents-context/README.md` if applicable:
 
 Expose authenticated endpoints for reading and updating user profile data including display name, bio, and timezone.
 
+**User Story:**
+As a signed-in user, I want to view my profile details and save changes to my name, bio, and timezone so that my account reflects who I am and shows times correctly for me.
+
+**Done when (plain language):**
+- I can see my current profile details (name, email, bio, timezone, picture).
+- I can change my name, bio, and timezone and have those changes saved.
+- If I try to save something invalid (like a blank name or a fake timezone), the change is refused.
+- Only I (when signed in) can see and change my own profile.
+
 **Read before starting:**
 - `agents-context/concepts/auth-system.md` — understand authentication middleware and user model
 - `agents-context/standards/coding-style.md` — follow naming and file organization conventions
@@ -70,6 +79,14 @@ Expose authenticated endpoints for reading and updating user profile data includ
 
 Enable users to upload and store profile avatars with file type and size validation.
 
+**User Story:**
+As a signed-in user, I want to upload a profile picture so that my account feels personal and others can recognize me.
+
+**Done when (plain language):**
+- I can upload a JPEG or PNG image as my profile picture.
+- If I pick a file that's too large or the wrong type, I'm stopped with a clear reason instead of a broken upload.
+- My uploaded picture is stored and shows up on my profile.
+
 **Read before starting:**
 - `agents-context/concepts/file-uploads.md` — understand existing S3 upload patterns
 - `agents-context/standards/testing.md` — follow testing conventions
@@ -106,6 +123,16 @@ Enable users to upload and store profile avatars with file type and size validat
 #### Task Group 3: Profile Page UI
 
 Build the user-facing profile settings page with view/edit modes and avatar upload support.
+
+**User Story:**
+As a signed-in user, I want a profile settings page where I can review my details, edit them, and upload a picture so that I can manage my account in one simple place.
+
+**Done when (plain language):**
+- I can open a profile page that shows my current details.
+- I can switch to edit mode, make changes, and save them — and the page shows the updated details.
+- I can upload a picture and see a preview before it's saved.
+- If a save fails, I see a clear message and don't lose what I typed; if it succeeds, I get a confirmation.
+- The page works on my phone as well as my computer.
 
 **Read before starting:**
 - `agents-context/standards/coding-style.md` — follow component naming and file organization
@@ -152,6 +179,15 @@ Build the user-facing profile settings page with view/edit modes and avatar uplo
 #### Task Group 4: Test Review & Gap Analysis
 
 Review all profile feature tests and fill critical coverage gaps for end-to-end workflows.
+
+**User Story:**
+As the product owner, I want confidence that the whole profile feature works from start to finish so that we can ship it knowing users can actually view, edit, and personalize their profile without surprises.
+
+**Done when (plain language):**
+- The full "edit my profile and save" journey has been checked and works start-to-finish.
+- The "upload a profile picture" journey has been checked end-to-end.
+- Any important gaps found while reviewing earlier work are now covered.
+- Nothing critical to the profile feature is left unchecked.
 
 **Read before starting:**
 - `agents-context/concepts/auth-system.md` — review auth patterns tested
