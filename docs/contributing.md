@@ -41,27 +41,27 @@ lead-dev-os/                          # The plugin
 
 ## Testing
 
-Tests live in `tests/` and cover both the plugin structure and legacy install behavior.
-
-### Run all tests
+Tests live in `tests/`. Each suite is a standalone bash script; run them individually:
 
 ```bash
-./tests/run_all.sh
+bash tests/test_plugin_structure.sh
+bash tests/test_skill_content.sh
+bash tests/test_content_bundle.sh
+bash tests/test_update_settings.sh
+bash tests/test_setup_script.sh
 ```
+
+CI (`.github/workflows/actions.yml`) runs all suites on every push.
 
 ### Test suites
 
 | Suite | File | What it tests |
 |-------|------|---------------|
-| Plugin structure | `tests/test_plugin_structure.sh` | plugin.json valid, all 9 skill dirs exist, configure-project skill has bundled standards |
-| Skill content | `tests/test_skill_content.sh` | No placeholders, all cross-refs namespaced, no config.yml refs, valid frontmatter |
+| Plugin structure | `tests/test_plugin_structure.sh` | plugin.json valid, all 9 skill dirs exist, flat layout, executable scripts |
+| Skill content | `tests/test_skill_content.sh` | No placeholders, cross-refs namespaced, valid frontmatter, planning content placement, orchestrated execution and full-suite gate present |
 | Content bundle | `tests/test_content_bundle.sh` | All global standards present, CLAUDE.md namespaced, README updated |
-| Update settings | `tests/test_update_settings.sh` | update-settings.sh creates/appends deny rules, idempotent |
-| Unit | `tests/test_common_functions.sh` | `ensure_dir`, `ensure_gitkeep`, `copy_if_not_exists`, `copy_with_warning`, `print_verbose` |
-| Integration: creates | `tests/test_install_creates.sh` | Fresh install produces all expected files (legacy installer) |
-| Integration: overwrites | `tests/test_install_overwrites.sh` | Re-install overwrites skills/guides, preserves concepts/standards (legacy installer) |
-| Integration: help | `tests/test_install_help.sh` | --help flag behavior (legacy installer) |
-| Integration: stack config | `tests/test_stack_config.sh` | Stack config, profiles, plan mode (legacy installer) |
+| Update settings | `tests/test_update_settings.sh` | update-settings.sh writes the archive deny rule under `permissions.deny`, migrates the legacy top-level rule, idempotent |
+| Setup script | `tests/test_setup_script.sh` | configure-project's setup.sh scaffolds directories, copies standards, renders templates, handles `--stacks`/`--overwrite` |
 
 ### Conventions
 
