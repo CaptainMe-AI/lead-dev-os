@@ -20,13 +20,13 @@ Check if any lead-dev-os artifacts already exist:
 - `lead-dev-os/specs/` directory
 - `CLAUDE.md` with `## lead-dev-os Framework` section
 
-If any exist, inform the user what was found and ask: **"Some lead-dev-os artifacts already exist. Should I skip existing files (preserve your changes) or overwrite them with fresh defaults?"**
+If any exist, inform the user what was found and ask: **"Some lead-dev-os artifacts already exist. Should I skip existing files (preserve your changes) or overwrite them with fresh defaults?"** Use the `AskUserQuestion` tool when available — two options: "Skip existing (Recommended)" and "Overwrite with defaults" — falling back to a plain-text question otherwise.
 
 Remember their choice — you will pass it to the setup script.
 
 ### Phase 2: Ask About Technology Stack
 
-Ask the user: **"What technology stacks does your project use? Select all that apply:"**
+Ask the user: **"What technology stacks does your project use? Select all that apply:"** Use the `AskUserQuestion` tool when available with `multiSelect: true` (one question per category below, or grouped sensibly); fall back to a plain-text list otherwise.
 
 Present these categories:
 - **Languages:** Python, Ruby, TypeScript, JavaScript

@@ -37,9 +37,9 @@ Present the three modes with your recommendation first, and ask which to use —
 | **L — Lead-in-the-Loop** | Per-group cycle in the main conversation: plan (native plan mode) → user approves → execute → review gate → repeat. | Complex features, new domains, high visibility. |
 | **H — Hybrid** | Pre-plan all groups in parallel → user approves batch → orchestrated executor-subagent execution up to the checkpoint → at and after the checkpoint, switch to L behavior. | Boilerplate setup followed by tricky logic. |
 
-Ask: **"Which execution mode? (A / L / H)"**
+Ask **"Which execution mode?"** using the `AskUserQuestion` tool when available (options A / L / H with one-line descriptions, the recommended mode listed first and labeled "(Recommended)"); fall back to a plain-text question otherwise.
 
-If the user picks **H**, also ask: **"Which group is the checkpoint?"** Autonomous execution runs up to but not including that group; L behavior begins at that group.
+If the user picks **H**, also ask: **"Which group is the checkpoint?"** — again via `AskUserQuestion`, offering the task groups as options. Autonomous execution runs up to but not including that group; L behavior begins at that group.
 
 Store the mode (and checkpoint) for the rest of the session.
 
