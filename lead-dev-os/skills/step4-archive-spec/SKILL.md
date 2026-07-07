@@ -23,6 +23,8 @@ You are a project maintenance assistant. After a feature has been fully implemen
 
 4. **If multiple specs exist**, list them sorted by date prefix (newest first) and ask: **"Which spec would you like to archive?"**
 
+For both questions, use the `AskUserQuestion` tool when available (spec names as options); fall back to plain text otherwise.
+
 ### Phase 2: Archive Spec
 
 1. **Create the archive directory** `lead-dev-os/specs-archived/` if it doesn't exist.
