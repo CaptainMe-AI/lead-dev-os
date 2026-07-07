@@ -215,17 +215,20 @@ As the product owner, I want confidence that the whole profile feature works fro
     - Focus on: full profile edit flow (load → edit → save → reload → verify), avatar upload end-to-end
     - Do NOT write comprehensive coverage for all scenarios
     - Skip edge cases, performance tests, and accessibility tests unless business-critical
-  - [ ] 4.4 Run feature-specific tests only
-    - Run ONLY tests related to the profile feature (tests from 1.1, 2.1, 3.1, and 4.3)
+  - [ ] 4.4 Run feature-specific tests
+    - Run tests related to the profile feature (tests from 1.1, 2.1, 3.1, and 4.3)
     - Expected total: approximately 16-34 tests maximum
-    - Do NOT run the entire application test suite
     - Verify critical workflows pass
+  - [ ] 4.5 Run the full test suite once as a final backstop
+    - This is the ONLY full-suite run in the workflow — it catches regressions the profile feature introduced elsewhere in the app
+    - Fix any NEW failures caused by the profile feature
+    - Report pre-existing failures without fixing them (out of scope for this spec)
 
 **Acceptance Criteria:**
 - All feature-specific tests pass (approximately 16-34 tests total)
 - Critical user workflows for profile feature are covered
 - No more than 10 additional tests added when filling gaps
-- Testing focused exclusively on profile feature requirements
+- The full-suite backstop run introduces no new failures (pre-existing failures are reported, not fixed)
 
 ## Execution Order
 
