@@ -130,25 +130,34 @@ for skill_md in "$PLUGIN_DIR"/skills/*/SKILL.md; do
   fi
 done
 
-# --- Plan mode content present in tactical skills ---
+# --- Plan mode content lives where it belongs ---
 
 echo ""
 echo "Plan mode content:"
 
-TACTICAL_SKILLS=(
-  "step1-write-spec"
-  "step2-scope-tasks"
-  "step3-implement-tasks"
-)
+# step3 owns implementation planning: pre-generated plan files + native plan mode
+step3_md="$PLUGIN_DIR/skills/step3-implement-tasks/SKILL.md"
+if grep -q 'plans/group-' "$step3_md" 2>/dev/null && grep -qi 'plan mode' "$step3_md" 2>/dev/null; then
+  pass "step3-implement-tasks/SKILL.md has per-group planning (plan files + plan mode)"
+else
+  fail "step3-implement-tasks/SKILL.md missing per-group planning instructions"
+fi
 
-for skill in "${TACTICAL_SKILLS[@]}"; do
-  skill_md="$PLUGIN_DIR/skills/$skill/SKILL.md"
-  if grep -q 'Use plan mode per task group' "$skill_md" 2>/dev/null; then
-    pass "$skill/SKILL.md has plan mode instructions"
-  else
-    fail "$skill/SKILL.md missing plan mode instructions"
-  fi
-done
+# step1 is spec-writing only — must NOT carry implementation plan-mode boilerplate
+step1_md="$PLUGIN_DIR/skills/step1-write-spec/SKILL.md"
+if grep -q 'Use plan mode per task group' "$step1_md" 2>/dev/null; then
+  fail "step1-write-spec/SKILL.md carries step3's plan-mode boilerplate"
+else
+  pass "step1-write-spec/SKILL.md free of misplaced plan-mode boilerplate"
+fi
+
+# step2 explains plan-mode-optional invocation (writes tasks.md after plan approval)
+step2_md="$PLUGIN_DIR/skills/step2-scope-tasks/SKILL.md"
+if grep -q 'plan mode is optional' "$step2_md" 2>/dev/null; then
+  pass "step2-scope-tasks/SKILL.md documents plan-mode-optional invocation"
+else
+  fail "step2-scope-tasks/SKILL.md missing plan-mode-optional note"
+fi
 
 # --- step3: orchestrated execution via executor subagents ---
 

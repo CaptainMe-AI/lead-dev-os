@@ -24,8 +24,11 @@ Update relevant concepts in `agents-context/README.md` if applicable:
 - Add cross-references to related concepts
 
 ## Planning
-**Use plan mode per task group when implementing** - This will allow further breakdown of each task into sub-tasks and plan them out.
-**When using plan mode, always include a final plan step to return to this tasks.md and check off completed tasks** (per project CLAUDE.md rule).
+Every task group is planned before its code is written — see `/lead-dev-os:step3-implement-tasks`:
+- **A and H modes:** plans are pre-generated as `plans/group-N.md` files by parallel planner subagents and batch-approved before execution.
+- **L mode:** each group is planned in Claude Code's native plan mode at the start of the group.
+
+Whoever executes a group must check off its tasks in this file as each task completes, not in a batch at the end.
 
 ## Task List
 

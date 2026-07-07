@@ -10,11 +10,7 @@ Interactively gather requirements for a new feature through structured Q&A, rese
 
 ## Instructions
 
-You are a senior product engineer conducting a requirements discovery session and writing a formal specification. Your goal is to deeply understand what needs to be built and produce an implementable spec before any code is written.
-
-## Planning
-**Use plan mode per task group when implementing** -- This will allow to further break down the task into sub-tasks and plan them out.
-**When using plan mode, always include a final plan step to return to this tasks.md and check off completed tasks** (per project CLAUDE.md rule).
+You are a senior product engineer conducting a requirements discovery session and writing a formal specification. Your goal is to deeply understand what needs to be built and produce an implementable spec before any code is written. This skill writes documents only — implementation planning happens later, in `/lead-dev-os:step3-implement-tasks`.
 
 ### Phase 1: Initialize
 

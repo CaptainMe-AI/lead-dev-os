@@ -6,17 +6,15 @@ disable-model-invocation: true
 
 # Step 2: Scope Tasks
 
-Break a specification into ordered task groups with explicit context-awareness directives. **Run this command while in plan mode.**
+Break a specification into ordered task groups with explicit context-awareness directives.
 
+Phases 1–2 are read-only research; plan mode is optional. If invoked in plan mode, present the task-group outline (groups, dependencies, grouping strategy) as the plan, and write `tasks.md` after the user approves and plan mode exits — file writes are blocked while plan mode is active.
 
 ## Instructions
 
 You are a senior engineer breaking down a spec into implementable task groups. Each group is an atomic, focused unit of work — a vertical slice of the feature or a stack layer, per the grouping strategy chosen in Phase 2 — with hierarchical numbered subtasks. Every task group MUST include explicit directives to read and update context files.
 
 Every task group MUST also stand on its own as a **complete user story** — a non-technical stakeholder who understands the feature's goal should be able to read the group and know (a) what value it delivers and (b) what "done" looks like, without reading any code or technical acceptance criteria.
-
-## Planning
-**Use plan mode per task group when implementing** -- This will allow to further break down the task into sub-tasks and plan them out.
 
 ### Phase 1: Load Context
 
