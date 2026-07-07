@@ -31,9 +31,9 @@ Present the three modes and ask which to use.
 
 | Mode | Behavior | Best for |
 |------|----------|----------|
-| **A — Autonomous** | Pre-plan all groups in parallel → user approves batch → execute all groups sequentially with auto-commit per group. No pauses during execution. | Small features, well-understood domains, low risk. |
-| **L — Lead-in-the-Loop** | Per-group cycle: plan (native plan mode) → user approves → execute → review gate → repeat. | Complex features, new domains, high visibility. |
-| **H — Hybrid** | Pre-plan all groups in parallel → user approves batch → auto-execute up to the checkpoint → at and after the checkpoint, switch to L behavior. | Boilerplate setup followed by tricky logic. |
+| **A — Autonomous** | Pre-plan all groups in parallel → user approves batch → each group is executed by a fresh executor subagent; the orchestrator verifies and commits per group. Independent groups may run in parallel. No pauses during execution. | Small features, well-understood domains, low risk. |
+| **L — Lead-in-the-Loop** | Per-group cycle in the main conversation: plan (native plan mode) → user approves → execute → review gate → repeat. | Complex features, new domains, high visibility. |
+| **H — Hybrid** | Pre-plan all groups in parallel → user approves batch → orchestrated executor-subagent execution up to the checkpoint → at and after the checkpoint, switch to L behavior. | Boilerplate setup followed by tricky logic. |
 
 Ask: **"Which execution mode? (A / L / H)"**
 
@@ -97,7 +97,82 @@ Wait for explicit "go" before proceeding to Phase 4. Do not start executing on y
 
 ### Phase 4: Execute Task Groups
 
-For each incomplete task group, in dependency order, run this sub-cycle.
+There are two execution paths:
+
+- **Orchestrated — A mode, and H before the checkpoint.** The main conversation acts as an orchestrator: each group is executed by a fresh executor subagent, then the orchestrator verifies and commits. This keeps the main context small regardless of how many groups the feature has — group 6 gets the same quality of attention as group 1. Follow **4-O**.
+- **Direct — L mode, and H at/after the checkpoint.** The main conversation executes the group itself so the user can watch and steer. Follow **4a–4g**.
+
+#### 4-O. Orchestrated execution (A, and H pre-checkpoint)
+
+Work through incomplete groups in dependency order:
+
+1. **Dispatch an executor subagent per group** (`subagent_type: "general-purpose"`) using the prompt template below. Each executor starts with a fresh context and reads everything it needs from disk — never assume it inherits knowledge from this conversation.
+
+2. **Parallel dispatch (optional).** Two or more groups may be dispatched in the same batch only when BOTH hold: (a) neither depends on the other, directly or transitively, per the `Dependencies:` headers, and (b) their plans' "File operations" lists don't overlap. When in doubt, dispatch sequentially — a serialized group is cheaper than a merge conflict.
+
+3. **Verify — trust but verify.** When an executor returns, run the group's verification command from `plans/group-<N>.md` yourself. Do not take the executor's report at face value.
+
+4. **Review the diff** briefly for scope creep, deleted tests, or weakened assertions.
+
+5. **Commit.** Executors never commit — the orchestrator commits after verifying, per 4f. When groups ran in parallel, stage each group's files separately (use the plan's "File operations" list) so each group still gets its own atomic commit.
+
+6. **Report and continue** (A-mode gate):
+   - Group N complete
+   - Tests written / passing
+   - Concept files created or updated
+   - Next group(s) queued
+   Then dispatch the next group(s). In H mode, when the checkpoint group is reached, switch to the direct path (4a–4g) with L behavior.
+
+If an executor reports a blocker, plan-invalidating drift, or exhausted retries, stop and apply the Error Handling section — surface it to the user; don't redispatch blindly.
+
+**Executor prompt template:**
+
+```
+You are executing Task Group <N> of <spec-path>/tasks.md as part of
+/lead-dev-os:step3-implement-tasks.
+
+Read first, in this order:
+- <spec-path>/plans/group-<N>.md — your working plan
+- <spec-path>/tasks.md — Group N's section (subtasks + acceptance criteria)
+- agents-context/README.md, then every file Group N's "Read before
+  starting" header names
+- Every file the plan's "File operations" section says you'll modify
+
+Reconcile before you code: earlier groups may have changed the code since
+this plan was written. If reality has drifted (files moved, signatures
+changed, patterns replaced), update plans/group-<N>.md to match reality
+first and note the drift in your final report. If the drift invalidates
+the group's goal, stop and report instead of improvising.
+
+Then execute the group:
+1. Tests first — write the group's tests before implementation; they
+   should fail before the code that satisfies them exists.
+2. Implement to make them pass, following the conventions from the loaded
+   context files. Stay within Group N's scope — no scope creep.
+3. Verify with the plan's verification command. Run ONLY this group's
+   tests, not the entire suite.
+4. If a test fails: diagnose, fix the most likely cause, re-run. Retry
+   limit: 2 attempts. Never delete tests, weaken assertions, or skip
+   behavior to get green — report the failure instead.
+5. Check off completed tasks in tasks.md as each one finishes, not in a
+   batch at the end.
+6. Update context: create or update the concept files named in the
+   group's "Update after completing" header; keep agents-context/README.md
+   in sync (index entry, Load-When Cheatsheet, cross-references).
+
+Do NOT commit — the orchestrator commits after verifying your work.
+
+Final report (structured):
+- Tests written / passing (counts and file paths)
+- Files created / modified / deleted
+- Concept files created or updated
+- Plan drift found and how the plan was amended (if any)
+- Blockers or open questions (if any)
+```
+
+#### Direct execution (L, and H at/after checkpoint)
+
+For each incomplete task group, in dependency order, run the 4a–4g sub-cycle in the main conversation.
 
 #### 4a. Load Context
 
@@ -107,7 +182,7 @@ For each incomplete task group, in dependency order, run this sub-cycle.
 
 #### 4b. Plan
 
-- **A and H modes:** read `plans/group-<N>.md`. Treat it as the working plan. The user approved the batch in Phase 3, but they may also have edited the file — read it fresh.
+- **H mode (at/after the checkpoint):** read `plans/group-<N>.md`. Treat it as the working plan. The user approved the batch in Phase 3, but they may also have edited the file — read it fresh. If earlier groups changed the code in ways the plan didn't anticipate, update the plan file to match reality before executing, and tell the user what drifted.
 - **L mode:** enter Claude Code's native plan mode and produce a plan with the same structure as Phase 3 (Goal, Sub-tasks, File ops, Test approach, Verification, Risks). In the plan header, include this identifier so the agent stays aware of its workflow context after `ExitPlanMode` clears the conversation: "Running as part of `/lead-dev-os:step3-implement-tasks` for `<spec-path>/tasks.md`, task group N. Final step: return to tasks.md and check off completed tasks." Wait for the user to approve via `ExitPlanMode` before continuing.
 
 #### 4c. Execute
@@ -155,20 +230,10 @@ Atomic-commit policy:
 
 In **L** mode you may skip the auto-commit and let the user commit manually after the review gate (4g).
 
-#### 4g. Mode-specific Gate
+#### 4g. Review Gate
 
-After the group is complete:
+After the group is complete (this gate applies to the direct path — L mode, and H at/after the checkpoint; A mode's gate is 4-O step 6):
 
-**A (Autonomous)**
-1. Auto-commit per 4f.
-2. Report briefly:
-   - Group N complete
-   - Tests written / passing
-   - Concept files created or updated
-   - Next group queued
-3. Proceed immediately to the next group (back to 4a).
-
-**L (Lead-in-the-Loop)**
 1. Report:
    - Group N complete
    - Tests written / passing
@@ -182,10 +247,6 @@ After the group is complete:
    > - ✅ Say "commit" and I'll create a descriptive commit, or commit yourself
    > - ➡️ Say "continue" to proceed to the next group
 3. Wait for explicit instruction. Do not advance until the user says to continue.
-
-**H (Hybrid)**
-- Before the checkpoint group: behave as A (auto-commit, brief report, proceed).
-- At and after the checkpoint group: behave as L (report, review gate, wait).
 
 #### After all groups complete
 

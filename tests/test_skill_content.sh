@@ -150,6 +150,37 @@ for skill in "${TACTICAL_SKILLS[@]}"; do
   fi
 done
 
+# --- step3: orchestrated execution via executor subagents ---
+
+echo ""
+echo "step3 orchestrated execution:"
+
+STEP3_MD="$PLUGIN_DIR/skills/step3-implement-tasks/SKILL.md"
+
+if grep -q 'executor subagent' "$STEP3_MD" 2>/dev/null; then
+  pass "step3 delegates group execution to executor subagents"
+else
+  fail "step3 missing executor subagent delegation"
+fi
+
+if grep -q 'the orchestrator commits after verifying' "$STEP3_MD" 2>/dev/null; then
+  pass "step3 executors never commit — orchestrator verifies then commits"
+else
+  fail "step3 missing orchestrator verify-then-commit rule"
+fi
+
+if grep -q 'Reconcile before you code' "$STEP3_MD" 2>/dev/null; then
+  pass "step3 executor prompt reconciles stale plans against reality"
+else
+  fail "step3 executor prompt missing stale-plan reconcile instruction"
+fi
+
+if grep -q 'Parallel dispatch' "$STEP3_MD" 2>/dev/null; then
+  pass "step3 allows parallel dispatch of independent groups"
+else
+  fail "step3 missing parallel dispatch of independent groups"
+fi
+
 # --- Summary ---
 
 echo ""
