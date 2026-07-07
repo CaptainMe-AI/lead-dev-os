@@ -143,6 +143,8 @@ Assess the feature size based on everything gathered:
 - **Medium** — Multiple components, some data model changes, moderate integration
 - **Large** — Cross-cutting concerns, significant data model changes, many integration points, multiple user flows
 
+Record the estimate in the spec header — the `> Size:` line in `spec.md` — with a one-line rationale. `/lead-dev-os:step3-implement-tasks` reads it to recommend an execution mode.
+
 Tell the user:
 - "Requirements saved to `lead-dev-os/specs/YYYY-MM-DD-<spec-name>/planning/requirements.md`"
 - "Specification saved to `lead-dev-os/specs/YYYY-MM-DD-<spec-name>/spec.md`"
