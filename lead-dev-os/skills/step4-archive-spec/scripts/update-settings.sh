@@ -2,9 +2,13 @@
 #
 # update-settings.sh — Add a deny rule for archived specs to .claude/settings.json
 #
+# The rule is added under permissions.deny (the only location Claude Code
+# reads deny rules from). Also migrates the rule out of a legacy top-level
+# "deny" array if a previous version of this script put it there.
+#
 # Usage: bash update-settings.sh [project-root]
 #
-# Idempotent: skips if the rule already exists.
+# Idempotent: skips if the rule already exists under permissions.deny.
 
 set -euo pipefail
 
@@ -27,29 +31,41 @@ fi
 
 # Case 1: settings.json doesn't exist — create it
 if [ ! -f "$SETTINGS_FILE" ]; then
-  jq -n --arg rule "$DENY_RULE" '{"deny": [$rule]}' > "$SETTINGS_FILE"
+  jq -n --arg rule "$DENY_RULE" '{"permissions": {"deny": [$rule]}}' > "$SETTINGS_FILE"
   echo "Created ${SETTINGS_FILE} with deny rule: ${DENY_RULE}"
   exit 0
 fi
 
-# Case 2: settings.json exists — check for deny rule
 EXISTING=$(cat "$SETTINGS_FILE")
 
-# Check if rule already exists
+# Migration: a previous version of this script wrote the rule to a top-level
+# "deny" array, which Claude Code ignores. Remove our rule from there (leave
+# any other top-level entries untouched — they aren't ours).
+MIGRATED=false
 if echo "$EXISTING" | jq -e --arg rule "$DENY_RULE" '.deny // [] | index($rule) != null' &>/dev/null; then
-  echo "Deny rule already exists in ${SETTINGS_FILE} — skipping."
+  EXISTING=$(echo "$EXISTING" | jq --arg rule "$DENY_RULE" '.deny -= [$rule] | if .deny == [] then del(.deny) else . end')
+  MIGRATED=true
+fi
+
+# Check if rule already exists under permissions.deny
+if echo "$EXISTING" | jq -e --arg rule "$DENY_RULE" '.permissions.deny // [] | index($rule) != null' &>/dev/null; then
+  if [ "$MIGRATED" = true ]; then
+    echo "$EXISTING" > "${SETTINGS_FILE}.tmp"
+    mv "${SETTINGS_FILE}.tmp" "$SETTINGS_FILE"
+    echo "Removed legacy top-level deny rule; rule already exists under permissions.deny in ${SETTINGS_FILE}."
+  else
+    echo "Deny rule already exists in ${SETTINGS_FILE} — skipping."
+  fi
   exit 0
 fi
 
-# Case 3: deny array exists but rule is missing — append
-if echo "$EXISTING" | jq -e '.deny' &>/dev/null; then
-  echo "$EXISTING" | jq --arg rule "$DENY_RULE" '.deny += [$rule]' > "${SETTINGS_FILE}.tmp"
-  mv "${SETTINGS_FILE}.tmp" "$SETTINGS_FILE"
-  echo "Added deny rule to existing array: ${DENY_RULE}"
-  exit 0
-fi
-
-# Case 4: no deny array — add one
-echo "$EXISTING" | jq --arg rule "$DENY_RULE" '. + {"deny": [$rule]}' > "${SETTINGS_FILE}.tmp"
+# Add the rule under permissions.deny, creating the objects as needed and
+# preserving every other key.
+echo "$EXISTING" | jq --arg rule "$DENY_RULE" '.permissions.deny = ((.permissions.deny // []) + [$rule])' > "${SETTINGS_FILE}.tmp"
 mv "${SETTINGS_FILE}.tmp" "$SETTINGS_FILE"
-echo "Added deny array with rule: ${DENY_RULE}"
+
+if [ "$MIGRATED" = true ]; then
+  echo "Migrated legacy top-level deny rule to permissions.deny: ${DENY_RULE}"
+else
+  echo "Added deny rule to permissions.deny: ${DENY_RULE}"
+fi

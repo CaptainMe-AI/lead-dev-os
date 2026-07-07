@@ -39,7 +39,7 @@ Run the bundled settings script to add a deny rule that blocks agent access to a
 bash <skill-path>/scripts/update-settings.sh "$(pwd)"
 ```
 
-This adds `"Read(/lead-dev-os/specs-archived/**)"` to the deny array in `.claude/settings.json`. The script is idempotent — it skips if the rule already exists.
+This adds `"Read(/lead-dev-os/specs-archived/**)"` under `permissions.deny` in `.claude/settings.json` (the only location Claude Code reads deny rules from). The script is idempotent — it skips if the rule already exists, and migrates the rule out of a legacy top-level `deny` array if an older version of this script put it there.
 
 Report the script output to the user.
 
