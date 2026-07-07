@@ -109,7 +109,7 @@ For each remaining area, do a quick peek at package/config files to identify the
 
 **2b. Dispatch focused subagents per area, in parallel.**
 
-For each significant top-level area, dispatch a codebase-analysis subagent via the Task tool. **Launch them all in a single message so they execute in parallel** — do not dispatch serially.
+For each significant top-level area, dispatch a codebase-analysis subagent via the Agent tool. **Launch them all in a single message so they execute in parallel** — do not dispatch serially.
 
 Use this prompt template (fill in the area path and project root):
 
@@ -144,7 +144,7 @@ Also answer: what questions would an AI agent need answered before making
 changes here?
 ```
 
-**Subagent type:** prefer `Explore` (purpose-built for codebase exploration, read-only, bounded token usage). If `codebase-analyzer` is available it's an even better fit for deep per-area analysis. Fall back to `general-purpose` if neither is available.
+**Subagent type:** use `Explore` (built into Claude Code — purpose-built for codebase exploration, read-only, bounded token usage), falling back to `general-purpose` if unavailable. If the target project defines its own analysis agent (e.g. a `codebase-analyzer` under `.claude/agents/`), that's an even better fit for deep per-area analysis — but never assume one exists.
 
 Collect the reports. If any report is thin or obviously shallow (e.g. a `src/` with dozens of files summarized in one line), re-dispatch with a narrower prompt targeting the specific gap.
 
