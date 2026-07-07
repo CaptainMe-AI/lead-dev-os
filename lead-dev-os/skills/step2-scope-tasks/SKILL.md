@@ -30,10 +30,20 @@ Every task group MUST also stand on its own as a **complete user story** — a n
 
 5. **Read the relevant concept and standard files** identified from the README — understand domain knowledge, established patterns, and project conventions that apply to this feature.
 
-6. **Analyze the existing codebase:**
-   - Identify files and modules that will be modified
-   - Identify patterns to follow for consistency
-   - Note any shared utilities or helpers to leverage
+6. **Analyze the existing codebase — via research subagents, not in this conversation.** A broad codebase scan in the main context crowds out the spec and concept files you just loaded. Dispatch 1–3 read-only research subagents (prefer the `Explore` agent type; fall back to `general-purpose`) in a single parallel batch. Split by area when the feature spans several (e.g. one for backend, one for frontend). Give each a bounded prompt of this shape:
+
+   ```
+   In the project at <project-root>, research what <feature summary from
+   spec.md> will touch in <area>. Report under 400 words:
+   - Files/modules that will need modification, with paths
+   - Existing patterns to follow for consistency (name the exemplar files)
+   - Shared utilities, helpers, or components to reuse instead of rebuilding
+   - Anything that will constrain the task breakdown (migrations,
+     feature flags, cross-cutting concerns)
+   Do not propose a design — just report what exists.
+   ```
+
+   Use the returned reports to ground the task groups. Do not scan the repository yourself beyond the files the reports and concept files point at.
 
 ### Phase 2: Create Task Groups
 
