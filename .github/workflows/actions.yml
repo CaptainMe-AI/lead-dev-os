@@ -21,3 +21,6 @@ jobs:
 
       - name: Test update settings script
         run: ./tests/test_update_settings.sh
+
+      - name: Test setup script
+        run: ./tests/test_setup_script.sh
