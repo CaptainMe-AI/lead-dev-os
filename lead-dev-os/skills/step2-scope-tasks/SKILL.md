@@ -52,7 +52,7 @@ For each task group (except the final Testing group), follow a **test-first appr
 - The final subtask is ALWAYS ensuring those tests pass
 - Tests should cover only critical behaviors, not exhaustive scenarios
 
-The **final task group is always "Test Review & Gap Analysis"**. This group reviews all tests from previous groups, identifies critical gaps, and adds up to 10 additional strategic tests. It does NOT run the entire application test suite — only feature-specific tests.
+The **final task group is always "Test Review & Gap Analysis"**. This group reviews all tests from previous groups, identifies critical gaps, and adds up to 10 additional strategic tests. Its last subtask is the workflow's **single full-test-suite backstop run** — the only point where the entire suite runs, to catch regressions the feature introduced elsewhere. New failures caused by the feature get fixed; pre-existing failures get reported, not fixed.
 
 ### Phase 3: Generate Tasks Document
 
@@ -128,7 +128,7 @@ If a relevant concept or standard file does NOT yet exist, the directive should 
 - The **"Update after completing"** section MUST specify which concept files to update or create when new patterns are established
 - Groups must have explicit **dependency ordering**
 - Context directives reference **general guidance, not code** — concept files describe approaches, conventions, and decision rationale, never code snippets
-- The **final group is always "Test Review & Gap Analysis"** — reviews previous tests, fills critical gaps (up to 10 additional tests), runs only feature-specific tests
+- The **final group is always "Test Review & Gap Analysis"** — reviews previous tests, fills critical gaps (up to 10 additional tests), runs feature-specific tests, then runs the full test suite ONCE as a final backstop (fix new failures, report pre-existing ones)
 - Include an **Execution Order** section at the end listing the recommended implementation sequence
 - Include an **Overview** section at the top with total task count
 

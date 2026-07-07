@@ -188,16 +188,19 @@ As a [product owner / the team], I want confidence that the whole feature works 
     - Focus on integration points and end-to-end workflows
     - Do NOT write comprehensive coverage for all scenarios
     - Skip edge cases, performance tests, and accessibility tests unless business-critical
-  - [ ] 4.4 Run feature-specific tests only
-    - Run ONLY tests related to this spec's feature
-    - Do NOT run the entire application test suite
+  - [ ] 4.4 Run feature-specific tests
+    - Run tests related to this spec's feature (from N.1 subtasks and 4.3)
     - Verify critical workflows pass
+  - [ ] 4.5 Run the full test suite once as a final backstop
+    - This is the ONLY full-suite run in the workflow — it catches regressions this feature introduced elsewhere in the app
+    - Fix any NEW failures caused by this feature
+    - Report pre-existing failures without fixing them (out of scope for this spec)
 
 **Acceptance Criteria:**
 - All feature-specific tests pass
 - Critical user workflows for this feature are covered
 - No more than 10 additional tests added when filling gaps
-- Testing focused exclusively on this spec's feature requirements
+- The full-suite backstop run introduces no new failures (pre-existing failures are reported, not fixed)
 
 ## Execution Order
 

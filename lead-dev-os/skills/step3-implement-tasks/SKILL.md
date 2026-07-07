@@ -251,6 +251,8 @@ After the group is complete (this gate applies to the direct path — L mode, an
 #### After all groups complete
 
 Regardless of mode:
+- **Run the full test suite once** (if the final task group's backstop subtask didn't already). This is the only full-suite run in the workflow. Triage failures: fix NEW failures this feature caused; report pre-existing failures without fixing them.
+- **Verify at runtime.** Tests passing is not the same as the feature working — exercise the feature's primary user flow in the running app where feasible (start the app, hit the endpoint, click through the UI) and confirm the observable behavior matches the spec's acceptance criteria. If runtime verification isn't feasible, say so explicitly rather than skipping silently.
 - Confirm every "Acceptance Criteria" block in `tasks.md` is satisfied.
 - List concept files created or updated during execution.
 - Summarize what was built.

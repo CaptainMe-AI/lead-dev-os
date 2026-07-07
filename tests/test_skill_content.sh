@@ -181,6 +181,31 @@ else
   fail "step3 missing parallel dispatch of independent groups"
 fi
 
+# --- Full-suite backstop gate ---
+
+echo ""
+echo "Full-suite backstop gate:"
+
+STEP2_TEMPLATE="$PLUGIN_DIR/skills/step2-scope-tasks/template.md"
+
+if grep -q 'Run the full test suite once as a final backstop' "$STEP2_TEMPLATE" 2>/dev/null; then
+  pass "step2 template final group includes full-suite backstop subtask"
+else
+  fail "step2 template missing full-suite backstop subtask"
+fi
+
+if grep -q 'Run the full test suite once' "$STEP3_MD" 2>/dev/null; then
+  pass "step3 after-all-groups includes full-suite run"
+else
+  fail "step3 missing full-suite run after all groups"
+fi
+
+if grep -q 'Verify at runtime' "$STEP3_MD" 2>/dev/null; then
+  pass "step3 includes runtime verification of the feature"
+else
+  fail "step3 missing runtime verification step"
+fi
+
 # --- Summary ---
 
 echo ""
