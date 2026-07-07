@@ -6,6 +6,7 @@
 
 ## Overview
 Total Tasks: 20
+Grouping strategy: Layers — the profile data model is the hard part; the UI is a thin page over it
 
 ## Context Management
 

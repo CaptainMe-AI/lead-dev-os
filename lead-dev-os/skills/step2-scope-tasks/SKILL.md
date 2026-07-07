@@ -11,7 +11,7 @@ Break a specification into ordered task groups with explicit context-awareness d
 
 ## Instructions
 
-You are a senior engineer breaking down a spec into implementable task groups. Each group should be an atomic focused unit of work organized by layer (database, API, frontend, etc.) with hierarchical numbered subtasks. Every task group MUST include explicit directives to read and update context files.
+You are a senior engineer breaking down a spec into implementable task groups. Each group is an atomic, focused unit of work — a vertical slice of the feature or a stack layer, per the grouping strategy chosen in Phase 2 — with hierarchical numbered subtasks. Every task group MUST include explicit directives to read and update context files.
 
 Every task group MUST also stand on its own as a **complete user story** — a non-technical stakeholder who understands the feature's goal should be able to read the group and know (a) what value it delivers and (b) what "done" looks like, without reading any code or technical acceptance criteria.
 
@@ -37,13 +37,16 @@ Every task group MUST also stand on its own as a **complete user story** — a n
 
 ### Phase 2: Create Task Groups
 
-Organize tasks into **sequential groups by layer**. Each group builds on the previous one.
+**Choose a grouping strategy first**, and record the choice with a one-line rationale in the Overview section of `tasks.md`:
 
-Common layer ordering (adapt based on the feature):
-1. **Database Layer** — Schema, models, migrations
-2. **API Layer** — Endpoints, controllers, services
-3. **Frontend Components** — Components, pages, styling
-4. **Testing** — Test review & gap analysis (always last)
+- **Vertical slices (preferred).** Each group is a thin end-to-end increment — data + logic + UI for one user-visible capability. Choose this whenever the feature decomposes into independently verifiable increments. Two payoffs: every group is demoable at a review gate, and slice groups with no mutual dependency and disjoint file sets can be executed in parallel by `/lead-dev-os:step3-implement-tasks`. Example slices for a profile feature:
+  1. **View profile** — read path end-to-end (model, endpoint, page)
+  2. **Edit profile** — write path end-to-end (validations, update endpoint, form)
+  3. **Avatar upload** — upload flow end-to-end
+  4. **Testing** — test review & gap analysis (always last)
+- **Layers.** Groups follow the stack: Database → API → Frontend → Testing. Choose this when the data model is the hard part, the feature lives in a single layer, or slices would all contend for the same few files. Trade-off: layer groups form a strict dependency chain — they always execute sequentially, and nothing is user-demoable until the top layer lands.
+
+Whichever strategy you choose, keep each group's `Dependencies:` list minimal and honest — over-declared dependencies serialize execution for no reason.
 
 Each task group uses **hierarchical numbered subtasks**. The parent task (N.0) is the group's completion goal. Subtasks (N.1, N.2, ...) are the steps to achieve it.
 
@@ -113,7 +116,7 @@ If a relevant concept or standard file does NOT yet exist, the directive should 
 
 ### Rules for Task Groups
 
-- Organize groups under **layer sections** (### headings) with task groups as #### headings
+- Organize groups under **theme sections** (### headings — a slice name or a layer name, per the chosen strategy) with task groups as #### headings
 - Use **hierarchical numbered subtasks** (N.0 parent, N.1, N.2, ... children)
 - Subtask N.1 is always **writing 2-8 focused tests** — test only critical behaviors, not exhaustive scenarios
 - The final subtask in each group is always **ensuring those specific tests pass** — never run the full test suite
@@ -121,6 +124,7 @@ If a relevant concept or standard file does NOT yet exist, the directive should 
 - Each task group MUST have a **1-2 sentence description** immediately after the title — describe WHAT will be delivered, not HOW
 - Each task group MUST include a **User Story** and a **Done when (plain language)** block immediately after the description (before "Read before starting"):
   - The **User Story** uses the form *"As a [persona], I want [outcome] so that [benefit]."* It must be written for a non-technical reader and framed around end-user value — even for backend layers (database, API, services), express the value the layer ultimately enables for a person, not the technical artifact
+  - Exception: a pure enabling group (infrastructure or plumbing with no user-visible outcome of its own) MAY instead declare `**User Story:** Enables Group N's story by [one line]` — don't fabricate a persona for plumbing. Vertical-slice groups always get a full story
   - **Done when (plain language)** is a short bulleted list of observable, jargon-free outcomes a non-technical stakeholder could confirm. It is the human-readable counterpart to the technical Acceptance Criteria, not a duplicate of it (no test counts, file names, or framework terms)
 - Each task should be **completable in one focused session**
 - Tasks must reference **specific files** to create or modify where possible
@@ -137,7 +141,7 @@ If a relevant concept or standard file does NOT yet exist, the directive should 
 Display the following message to the user:
 
 ```
-The tasks list has created at `lead-dev-os/specs/YYYY-MM-DD-<spec-name>/tasks.md`.
+The tasks list has been created at `lead-dev-os/specs/YYYY-MM-DD-<spec-name>/tasks.md`.
 
 Review it closely to make sure it all looks good.
 

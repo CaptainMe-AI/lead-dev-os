@@ -6,6 +6,7 @@
 
 ## Overview
 Total Tasks: [count]
+Grouping strategy: [Vertical slices | Layers] — [one-line rationale]
 
 [brief summary of the task]
 
@@ -28,7 +29,7 @@ Update relevant concepts in `agents-context/README.md` if applicable:
 
 ## Task List
 
-### [Layer Name — e.g., Database Layer]
+### [Group Theme — e.g., "View profile" slice, or Database Layer]
 
 #### Task Group 1: [Group Name — e.g., Data Models and Migrations]
 
@@ -52,7 +53,7 @@ As a [persona], I want [outcome in plain language] so that [benefit]. [For backe
 
 **Dependencies:** None
 
-- [ ] 1.0 Complete [layer name]
+- [ ] 1.0 Complete [group theme]
   - [ ] 1.1 Write 2-8 focused tests for [subject] functionality
     - Limit to 2-8 highly focused tests maximum
     - Test only critical behaviors (e.g., primary validation, key association, core method)
@@ -71,7 +72,7 @@ As a [persona], I want [outcome in plain language] so that [benefit]. [For backe
 - [Criterion specific to this group]
 - [Criterion specific to this group]
 
-### [Layer Name — e.g., API Layer]
+### [Group Theme — e.g., "Edit profile" slice, or API Layer]
 
 #### Task Group 2: [Group Name — e.g., API Endpoints]
 
@@ -94,7 +95,7 @@ As a [persona], I want [outcome in plain language] so that [benefit]. [For backe
 
 **Dependencies:** Task Group 1
 
-- [ ] 2.0 Complete [layer name]
+- [ ] 2.0 Complete [group theme]
   - [ ] 2.1 Write 2-8 focused tests for [subject]
     - Limit to 2-8 highly focused tests maximum
     - Test only critical actions (e.g., primary CRUD operation, auth check, key error case)
@@ -112,7 +113,7 @@ As a [persona], I want [outcome in plain language] so that [benefit]. [For backe
 - [Criterion specific to this group]
 - [Criterion specific to this group]
 
-### [Layer Name — e.g., Frontend Components]
+### [Group Theme — e.g., "Avatar upload" slice, or Frontend Components]
 
 #### Task Group 3: [Group Name — e.g., UI Design]
 
@@ -134,7 +135,7 @@ As a [persona], I want [outcome in plain language] so that [benefit].
 
 **Dependencies:** Task Group 2
 
-- [ ] 3.0 Complete [layer name]
+- [ ] 3.0 Complete [group theme]
   - [ ] 3.1 Write 2-8 focused tests for [subject]
     - Limit to 2-8 highly focused tests maximum
     - Test only critical component behaviors (e.g., primary user interaction, key form submission, main rendering case)
@@ -205,7 +206,7 @@ As a [product owner / the team], I want confidence that the whole feature works 
 ## Execution Order
 
 Recommended implementation sequence:
-1. [Layer Name] (Task Group 1)
-2. [Layer Name] (Task Group 2)
-3. [Layer Name] (Task Group 3)
+1. [Group Theme] (Task Group 1)
+2. [Group Theme] (Task Group 2)
+3. [Group Theme] (Task Group 3)
 4. Test Review & Gap Analysis (Task Group 4)
