@@ -27,7 +27,9 @@ You are a senior engineer implementing a feature from a scoped task breakdown. W
 
 ### Phase 2: Select Execution Mode
 
-Present the three modes and ask which to use.
+Read the `> Size:` line from `spec.md` (written by `/lead-dev-os:step1-write-spec`) and derive a recommendation: **Small → A**, **Medium → H**, **Large → L**. If the line is absent, make your own quick size assessment from `tasks.md` (group count, integration points) and say so.
+
+Present the three modes with your recommendation first, and ask which to use — the user decides.
 
 | Mode | Behavior | Best for |
 |------|----------|----------|

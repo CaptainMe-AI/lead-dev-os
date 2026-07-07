@@ -95,6 +95,7 @@
 > Spec ID: 2026-02-25-user-profile
 > Status: Draft
 > Date: 2026-02-25
+> Size: Medium — multiple components and an avatar upload flow, but no cross-cutting concerns
 
 ## Goal
 

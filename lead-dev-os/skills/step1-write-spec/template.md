@@ -94,6 +94,7 @@
 > Spec ID: YYYY-MM-DD-<spec-name>
 > Status: Draft
 > Date: YYYY-MM-DD
+> Size: [Small | Medium | Large] — [one-line rationale]
 
 ## Goal
 
