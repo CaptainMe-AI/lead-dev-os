@@ -166,7 +166,12 @@ README_DEST="agents-context/README.md"
 if [[ -f "$README_DEST" && "$OVERWRITE" == false ]]; then
   SKIPPED_FILES+=("agents-context/README.md (already exists)")
 else
-  # Use bash parameter expansion for safe replacement (handles &, \, etc.)
+  # Use bash parameter expansion for safe replacement (handles &, \, etc.).
+  # bash 5.2 enables patsub_replacement by default, which expands & in the
+  # replacement to the matched pattern and would mangle names like "A & B";
+  # disable it. Quoting the replacement instead is not portable: bash 3.2
+  # (macOS default) keeps the inner quotes literally.
+  shopt -u patsub_replacement 2>/dev/null || true
   while IFS= read -r line || [[ -n "$line" ]]; do
     printf '%s\n' "${line//\{Project Name\}/$PROJECT_NAME}"
   done < "${TEMPLATES_DIR}/readme.md" > "$README_DEST"
