@@ -60,8 +60,8 @@ See [Installation]({{ site.baseurl }}/installation) for full details.
 | Phase | Skill | What it does |
 |-------|---------|--------------|
 | Write | `/lead-dev-os:step1-write-spec` | Interactive Q&A + formalize into spec with numbered requirements (FR-###) |
-| Scope | `/lead-dev-os:step2-scope-tasks` | Break into task groups with context directives |
-| Implement | `/lead-dev-os:step3-implement-tasks` | Context-aware execution of task groups |
+| Scope | `/lead-dev-os:step2-scope-tasks` | Break into task groups (vertical slices or layers) with context directives |
+| Implement | `/lead-dev-os:step3-implement-tasks` | Orchestrated execution — executor subagents per group, full-suite backstop |
 | Archive | `/lead-dev-os:step4-archive-spec` | Archive completed spec and block agent access |
 | Utility | `/lead-dev-os:create-pr` | Open a GitHub PR for the current branch with a WHAT-focused description and emoji-prefixed title |
 

@@ -33,15 +33,15 @@ Interactive Q&A session to gather requirements, then formalizes into a structure
 
 ### Step 2: Scope (`/lead-dev-os:step2-scope-tasks`)
 
-Breaks the spec into task groups with explicit context directives. Each task group declares which files from `agents-context/` to load before executing, and reads as a complete user story — a plain-language goal and "done when" definition that a non-technical stakeholder can understand and verify. Produces `tasks.md` with atomic, implementable work items.
+Breaks the spec into task groups with explicit context directives. Groups follow an explicit strategy recorded in `tasks.md`: **vertical slices** (preferred — each group a thin end-to-end increment that's demoable on its own and parallelizable during implementation) or **layers** (Database → API → Frontend, when the data model is the hard part). Each task group declares which files from `agents-context/` to load before executing, and reads as a complete user story — a plain-language goal and "done when" definition that a non-technical stakeholder can understand and verify. Produces `tasks.md` with atomic, implementable work items.
 
 ### Step 3: Implement (`/lead-dev-os:step3-implement-tasks`)
 
-Context-aware execution of task groups. The agent loads only the context it needs for each task group, implements the code, and runs tests. See [Implementation]({{ site.baseurl }}/implementation) for the three execution modes.
+Context-aware execution of task groups. In autonomous modes each group runs in a fresh executor subagent while the main conversation orchestrates, verifies, and commits; independent groups can run in parallel. Execution ends with a full-test-suite backstop and a runtime check of the feature's primary flow. See [Implementation]({{ site.baseurl }}/implementation) for the three execution modes.
 
 ### Step 4: Archive (`/lead-dev-os:step4-archive-spec`)
 
-After implementation is complete, archive the spec to keep the workspace clean. Moves the spec folder from `lead-dev-os/specs/` to `lead-dev-os/specs-archived/` and adds a deny rule to `.claude/settings.json` so the agent won't accidentally load stale specs in future sessions.
+After implementation is complete, archive the spec to keep the workspace clean. Moves the spec folder from `lead-dev-os/specs/` to `lead-dev-os/specs-archived/` and adds a rule under `permissions.deny` in `.claude/settings.json` so the agent won't accidentally load stale specs in future sessions.
 
 ---
 

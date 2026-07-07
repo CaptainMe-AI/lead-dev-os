@@ -16,11 +16,14 @@ Three execution modes control how much human oversight the AI receives during im
 
 ## Mode A: Autonomous
 
-All tasks execute sequentially with no human intervention. The agent loads context, implements each task, runs tests, and auto-commits after each one.
+All task groups are pre-planned in parallel (one planner subagent per group produces `plans/group-N.md`), you approve the batch, then execution runs with no human intervention. The main conversation acts as an **orchestrator**: each group is executed by a fresh executor subagent with a clean context, and the orchestrator verifies the group's tests itself, reviews the diff, and commits — one atomic commit per group. Independent groups (no dependency between them, disjoint file operations) may execute in parallel.
 
 ```
-T1 → T2 → T3 → T4 → T5 → DONE
-         (auto-commit after each task)
+        plan G1..G4 (parallel) → approve batch
+G1 ⇒ executor → verify → commit
+G2 ⇒ executor → verify → commit     (G2 ∥ G3 if independent)
+G3 ⇒ executor → verify → commit
+G4 ⇒ executor → verify → commit → DONE
 ```
 
 **Best for:** Small features, well-understood domains, no unknowns in the spec. The spec and task definitions are clear enough that the agent can ship without review.
@@ -29,10 +32,10 @@ T1 → T2 → T3 → T4 → T5 → DONE
 
 ## Mode L: Lead-in-the-Loop
 
-The agent implements one task, then pauses and waits for the lead developer to review before continuing. This creates a feedback loop at every task boundary.
+The agent plans and implements one task group in the main conversation (using Claude Code's native plan mode per group), then pauses and waits for the lead developer to review before continuing. This creates a feedback loop at every group boundary — and keeps the work visible, which is why L mode does not delegate to subagents.
 
 ```
-T1 → [REVIEW] → T2 → [REVIEW] → T3 → [REVIEW] → T4
+G1 → [REVIEW] → G2 → [REVIEW] → G3 → [REVIEW] → G4
          ↑                ↑                ↑
       lead reviews     lead reviews     lead reviews
 ```
@@ -51,10 +54,10 @@ At each review gate, the lead can:
 
 ## Mode H: Hybrid
 
-Implementation starts in autonomous mode and switches to lead-in-the-loop at a defined checkpoint. The lead specifies which task group triggers the handoff.
+Implementation starts in autonomous mode (orchestrator + executor subagents, as in Mode A) and switches to lead-in-the-loop at a defined checkpoint. The lead specifies which task group triggers the handoff.
 
 ```
-T1 → T2 → T3 ── STOP ── T4 → [REVIEW] → T5 → [REVIEW] → T6
+G1 → G2 → G3 ── STOP ── G4 → [REVIEW] → G5 → [REVIEW] → G6
 |← autonomous →|        |←────── lead-in-the-loop ──────→|
 ```
 
@@ -74,10 +77,15 @@ The autonomous portion handles scaffolding, boilerplate, or well-defined setup t
 | Prototype / spike / throwaway | **Autonomous** |
 | Production feature with stakeholder scrutiny | **Lead-in-the-Loop** |
 
-When you run `/lead-dev-os:step3-implement-tasks`, the skill prompts you to select a mode (A / L / H) after loading the spec context. If you choose Hybrid, it also asks which task group number to use as the checkpoint.
+When you run `/lead-dev-os:step3-implement-tasks`, the skill reads the `> Size:` estimate from `spec.md` (written by step 1) and recommends a mode — Small→A, Medium→H, Large→L — then prompts you to select (A / L / H). You always decide. If you choose Hybrid, it also asks which task group number to use as the checkpoint.
 
 ---
 
 ## After Implementation
 
-Once all task groups are complete and the feature is shipped, run `/lead-dev-os:step4-archive-spec` to archive the completed spec. This moves it to `lead-dev-os/specs-archived/` and blocks agent access so stale specs don't get loaded in future sessions.
+Once all task groups are complete, the skill closes with two gates before suggesting archive:
+
+- **Full-suite backstop** — the entire test suite runs once (the only full-suite run in the workflow; per-group runs stay feature-scoped for fast feedback). New failures caused by the feature get fixed; pre-existing failures get reported, not fixed.
+- **Runtime verification** — the agent exercises the feature's primary user flow in the running app where feasible, because tests passing is not the same as the feature working.
+
+Then run `/lead-dev-os:step4-archive-spec` to archive the completed spec. This moves it to `lead-dev-os/specs-archived/` and adds a rule under `permissions.deny` in `.claude/settings.json` so stale specs don't get loaded in future sessions.
