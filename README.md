@@ -14,7 +14,23 @@ The context of the project is stored under `agents-context/` directory, it is do
 Think about it as a lead developer's main tool for guiding a team of AI agents.
 A Lead Developer's primary responsibility is to ensure their team of engineers consistently moves in the right direction, making strategic decisions that benefit the entire project. By closely reviewing each engineer's progress before a feature is completed, the lead developer can identify potential issues early, address them proactively, and guarantee that the final product meets the highest standards of quality and reliability.
 
-## Key Principles & Concepts
+## <img src="https://cdn.simpleicons.org/claude" height="24" alt="Claude Code"> Claude Code Installation
+
+`lead-dev-os` is a **Claude Code plugin**, distributed via the `captainme-ai` plugin marketplace. Inside Claude Code, run:
+
+```
+/plugin marketplace add CaptainMe-AI/lead-dev-os
+/plugin install lead-dev-os@captainme-ai
+
+# Configure your project
+/lead-dev-os:configure-project
+```
+
+The `/lead-dev-os:configure-project` skill will interactively set up your project — creating `agents-context/` (with AGENTS.md, README.md, standards, and guides), `lead-dev-os/specs/`, and updating your `CLAUDE.md`.
+
+To pick up new releases later, run `/plugin marketplace update captainme-ai`. See the [Installation Guide](https://captainme-ai.github.io/lead-dev-os/installation) for full details, including installing for development with `--plugin-dir`.
+
+## 💡 Key Principles & Concepts
 
 ### Spec-Driven Development
 - Spec is the contract, code follows
@@ -43,25 +59,7 @@ Full documentation is available at [captainme-ai.github.io/lead-dev-os](https://
 - [Implementation](https://captainme-ai.github.io/lead-dev-os/implementation) — Autonomous, lead-in-the-loop, and hybrid execution modes
 - [Contributing](https://captainme-ai.github.io/lead-dev-os/contributing) — Testing and how to contribute
 
-## 📦 Installation
-
-`lead-dev-os` is a **Claude Code plugin**, distributed via the `captainme-ai` plugin marketplace.
-
-### Install from the marketplace (recommended)
-
-Inside Claude Code, run:
-
-```
-/plugin marketplace add CaptainMe-AI/lead-dev-os
-/plugin install lead-dev-os@captainme-ai
-
-# Configure your project
-/lead-dev-os:configure-project
-```
-
-To pick up new releases later, run `/plugin marketplace update captainme-ai`.
-
-### Install for development
+## 🛠️ Install for development
 
 ```bash
 # Clone the repo (one-time)
@@ -73,10 +71,6 @@ claude --plugin-dir ~/lead-dev-os/lead-dev-os
 # Configure your project
 /lead-dev-os:configure-project
 ```
-
-The `/lead-dev-os:configure-project` skill will interactively set up your project — creating `agents-context/` (with AGENTS.md, README.md, standards, and guides), `lead-dev-os/specs/`, and updating your `CLAUDE.md`.
-
-See the [Installation Guide](https://captainme-ai.github.io/lead-dev-os/installation) for full details.
 
 ## 🚀 Usage
 
