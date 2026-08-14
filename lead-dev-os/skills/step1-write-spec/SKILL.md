@@ -47,7 +47,7 @@ Before asking questions, silently research available project context to inform y
 
 3. **Concept-driven reusability scan** — The concept files you read describe existing patterns, conventions, and architectural decisions — and they reference source file paths. Use these to identify reusable code without blindly searching the entire codebase. Note any relevant concepts and the source paths they reference.
 
-4. **If the scan must go beyond what the README indexes** (sparse concepts, or the feature touches undocumented territory), dispatch a read-only `Explore` subagent (fall back to `general-purpose`) with a bounded prompt — "find existing patterns, components, or modules related to [feature domain]; report paths and one-line descriptions, under 300 words" — instead of scanning the codebase in this conversation. Requirements gathering should keep the main context for the user's answers, not file dumps.
+4. **If the scan must go beyond what the README indexes** (sparse concepts, or the feature touches undocumented territory), dispatch read-only `Explore` subagents (fall back to `general-purpose`) instead of scanning the codebase in this conversation — 1 for a single-domain feature, up to 3 in a single parallel batch when the feature spans areas (e.g. one for backend, one for frontend). Give each a bounded prompt: "find existing patterns, components, or modules related to [feature domain / area]; report paths and one-line descriptions, under 300 words". Requirements gathering should keep the main context for the user's answers, not file dumps.
 
 Use this context to ask smarter, more targeted questions in the next phase. Do NOT ask the user about things already documented in these files.
 
