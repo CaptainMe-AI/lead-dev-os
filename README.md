@@ -8,7 +8,7 @@
 [![Docs](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://captainme-ai.github.io/lead-dev-os/)
 
 
-`lead-dev-os` is a spec & context-aware SDD (Spec-Driven Development) framework for Claude Code development on large projects. It provides structured skills for product planning, spec writing, task scoping, and context-aware implementation.
+`lead-dev-os` is a spec & context-aware SDD (Spec-Driven Development) framework for Claude Code development on small and large projects. It provides structured skills for product planning, spec writing, task scoping, and context-aware implementation.
 The context of the project is stored under `agents-context/` directory, it is domain specific and an agent is provided only the context it needs to perform its task.
 
 Think about it as a lead developer's main tool for guiding a team of AI agents.
@@ -45,9 +45,23 @@ Full documentation is available at [captainme-ai.github.io/lead-dev-os](https://
 
 ## 📦 Installation
 
-`lead-dev-os` is a **Claude Code plugin**.
+`lead-dev-os` is a **Claude Code plugin**, distributed via the `captainme-ai` plugin marketplace.
 
-> **Note:** Official Claude Plugin Marketplace support is a work in progress. For now, install by cloning the repository.
+### Install from the marketplace (recommended)
+
+Inside Claude Code, run:
+
+```
+/plugin marketplace add CaptainMe-AI/lead-dev-os
+/plugin install lead-dev-os@captainme-ai
+
+# Configure your project
+/lead-dev-os:configure-project
+```
+
+To pick up new releases later, run `/plugin marketplace update captainme-ai`.
+
+### Install for development
 
 ```bash
 # Clone the repo (one-time)

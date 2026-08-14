@@ -40,12 +40,12 @@ Organization follows the [PARA method](https://www.buildingasecondbrain.com/) ad
 
 ## Quick Start
 
-```bash
-# Clone lead-dev-os (one-time)
-git clone https://github.com/CaptainMe-AI/lead-dev-os.git ~/lead-dev-os
+Inside Claude Code, run:
 
-# Start Claude Code with the plugin
-claude --plugin-dir ~/lead-dev-os/lead-dev-os
+```
+# Add the marketplace and install the plugin (one-time)
+/plugin marketplace add CaptainMe-AI/lead-dev-os
+/plugin install lead-dev-os@captainme-ai
 
 # Configure your project
 /lead-dev-os:configure-project

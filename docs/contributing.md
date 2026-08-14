@@ -57,7 +57,7 @@ CI (`.github/workflows/actions.yml`) runs all suites on every push.
 
 | Suite | File | What it tests |
 |-------|------|---------------|
-| Plugin structure | `tests/test_plugin_structure.sh` | plugin.json valid, all 9 skill dirs exist, flat layout, executable scripts |
+| Plugin structure | `tests/test_plugin_structure.sh` | plugin.json valid, marketplace.json at repo root points at the plugin, all 9 skill dirs exist, flat layout, executable scripts |
 | Skill content | `tests/test_skill_content.sh` | No placeholders, cross-refs namespaced, valid frontmatter, planning content placement, orchestrated execution and full-suite gate present |
 | Content bundle | `tests/test_content_bundle.sh` | All global standards present, CLAUDE.md namespaced, README updated |
 | Update settings | `tests/test_update_settings.sh` | update-settings.sh writes the archive deny rule under `permissions.deny`, migrates the legacy top-level rule, idempotent |

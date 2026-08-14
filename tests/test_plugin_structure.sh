@@ -3,6 +3,7 @@
 #
 # Verifies:
 # - plugin.json exists and is valid JSON
+# - marketplace.json exists at repo root, is valid JSON, and points at the plugin
 # - All 9 skill directories exist with SKILL.md
 # - configure-project skill has bundled standards
 
@@ -51,6 +52,59 @@ if command -v python3 &>/dev/null; then
     pass "plugin has version ($version)"
   else
     fail "plugin missing version"
+  fi
+else
+  echo "  (skipped JSON validation — python3 not found)"
+fi
+
+# --- marketplace.json ---
+
+echo ""
+echo "marketplace.json:"
+
+MARKETPLACE_JSON="$REPO_ROOT/.claude-plugin/marketplace.json"
+
+if [ -f "$MARKETPLACE_JSON" ]; then
+  pass "marketplace.json exists at repo root"
+else
+  fail "marketplace.json missing at repo root (.claude-plugin/marketplace.json)"
+fi
+
+if [ ! -f "$PLUGIN_DIR/.claude-plugin/marketplace.json" ]; then
+  pass "no marketplace.json inside plugin dir"
+else
+  fail "marketplace.json found inside plugin dir (would shadow plugin.json)"
+fi
+
+if command -v python3 &>/dev/null && [ -f "$MARKETPLACE_JSON" ]; then
+  if python3 -c "import json; json.load(open('$MARKETPLACE_JSON'))" 2>/dev/null; then
+    pass "marketplace.json is valid JSON"
+  else
+    fail "marketplace.json is invalid JSON"
+  fi
+
+  mp_name=$(python3 -c "import json; print(json.load(open('$MARKETPLACE_JSON'))['name'])" 2>/dev/null)
+  if [ "$mp_name" = "captainme-ai" ]; then
+    pass "marketplace name is 'captainme-ai'"
+  else
+    fail "marketplace name is '$mp_name', expected 'captainme-ai'"
+  fi
+
+  plugin_source=$(python3 -c "
+import json
+mp = json.load(open('$MARKETPLACE_JSON'))
+entry = next((p for p in mp['plugins'] if p['name'] == 'lead-dev-os'), None)
+print(entry['source'] if entry else '')" 2>/dev/null)
+  if [ "$plugin_source" = "./lead-dev-os" ]; then
+    pass "plugin entry 'lead-dev-os' has source './lead-dev-os'"
+  else
+    fail "plugin entry 'lead-dev-os' source is '$plugin_source', expected './lead-dev-os'"
+  fi
+
+  if [ -d "$REPO_ROOT/lead-dev-os" ] && [ -f "$REPO_ROOT/lead-dev-os/.claude-plugin/plugin.json" ]; then
+    pass "plugin source path resolves to a plugin directory"
+  else
+    fail "plugin source path './lead-dev-os' does not contain a plugin"
   fi
 else
   echo "  (skipped JSON validation — python3 not found)"

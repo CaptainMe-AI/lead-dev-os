@@ -26,19 +26,28 @@ This project follows the [Claude Code plugin structure](https://code.claude.com/
 
 - **Manifest**: `lead-dev-os/.claude-plugin/plugin.json` — defines plugin metadata (`name`, `version`, `description`, `author`, etc.). The `name` field (`lead-dev-os`) is the namespace prefix for all skills.
 - **Skills**: `lead-dev-os/skills/` — flat directory of skill folders, each containing a `SKILL.md` entrypoint. Skills may include supporting files (templates, examples, scripts) alongside `SKILL.md`. Claude Code auto-discovers skills from this directory.
-- Only `plugin.json` goes inside `.claude-plugin/`. All other directories (`skills/`, etc.) are at the plugin root level.
+- **Marketplace**: `.claude-plugin/marketplace.json` at the **repository root** — the `captainme-ai` marketplace catalog listing the plugin with a relative-path source (`"./lead-dev-os"`). This must live at the repo root (not inside the plugin) so `/plugin marketplace add CaptainMe-AI/lead-dev-os` finds it. See [Plugin marketplaces](https://code.claude.com/docs/en/plugin-marketplaces.md).
+- Inside the plugin, only `plugin.json` goes in `lead-dev-os/.claude-plugin/`. All other directories (`skills/`, etc.) are at the plugin root level. Never put `marketplace.json` there — it would make Claude Code treat the plugin directory as a marketplace.
 
-Users load the plugin during development with:
+Users install the plugin from the marketplace:
+```
+/plugin marketplace add CaptainMe-AI/lead-dev-os
+/plugin install lead-dev-os@captainme-ai
+```
+
+Or load it during development with:
 ```bash
 claude --plugin-dir ./lead-dev-os
 ```
 
-Or install it from a marketplace for persistent use across sessions. See [Discover and install plugins](https://code.claude.com/docs/en/discover-plugins.md).
+Note: users only receive updates when the `version` in `plugin.json` changes — bump it on every release. See [Discover and install plugins](https://code.claude.com/docs/en/discover-plugins.md).
 
 ## Repository Structure
 
 ```
 lead-dev-os/                                   # Repository root
+├── .claude-plugin/
+│   └── marketplace.json                       # Marketplace catalog (name: captainme-ai)
 ├── lead-dev-os/                               # THE PLUGIN (this is what gets distributed)
 │   ├── .claude-plugin/
 │   │   └── plugin.json                        # Plugin manifest (name, version, author, etc.)

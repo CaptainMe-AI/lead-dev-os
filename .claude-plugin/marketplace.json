@@ -1,0 +1,27 @@
+{
+  "name": "captainme-ai",
+  "owner": {
+    "name": "CaptainMe-AI",
+    "url": "https://github.com/CaptainMe-AI"
+  },
+  "metadata": {
+    "description": "CaptainMe-AI plugins for Claude Code — spec & context-driven development tools"
+  },
+  "plugins": [
+    {
+      "name": "lead-dev-os",
+      "source": "./lead-dev-os",
+      "description": "Spec & context-driven framework for Claude Code development. Structured skills for product planning, spec writing, task scoping, and context-aware implementation.",
+      "version": "1.0.0",
+      "author": {
+        "name": "CaptainMe-AI",
+        "url": "https://github.com/CaptainMe-AI"
+      },
+      "license": "MIT",
+      "homepage": "https://captainme-ai.github.io/lead-dev-os/",
+      "repository": "https://github.com/CaptainMe-AI/lead-dev-os",
+      "keywords": ["spec-driven", "context-aware", "planning", "implementation", "workflow"],
+      "category": "workflow"
+    }
+  ]
+}

@@ -11,11 +11,20 @@ nav_order: 2
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI installed
 - A git repository for your target project
 
-## Install as a Claude Code Plugin
+## Install from the plugin marketplace (recommended)
 
-> **Note:** Official Claude Plugin Marketplace support is a work in progress. For now, install by cloning the repository.
+`lead-dev-os` is distributed via the `captainme-ai` plugin marketplace. Inside Claude Code, run:
 
-Clone this repo somewhere on your machine, then start Claude Code with the plugin:
+```
+/plugin marketplace add CaptainMe-AI/lead-dev-os
+/plugin install lead-dev-os@captainme-ai
+```
+
+The plugin then stays available across all your Claude Code sessions. To pick up new releases later, run `/plugin marketplace update captainme-ai`.
+
+## Install for development
+
+To work on the plugin itself (or try unreleased changes), clone this repo and start Claude Code with the plugin loaded from disk:
 
 ```bash
 # Clone lead-dev-os (one-time)
@@ -115,7 +124,13 @@ All skills are accessed via the `/lead-dev-os:` namespace:
 
 ## Updating
 
-When lead-dev-os releases updates, pull the latest and restart Claude Code with the plugin:
+If you installed from the marketplace, refresh the catalog and Claude Code picks up the new release:
+
+```
+/plugin marketplace update captainme-ai
+```
+
+If you installed for development with `--plugin-dir`, pull the latest and restart Claude Code with the plugin:
 
 ```bash
 cd ~/lead-dev-os
