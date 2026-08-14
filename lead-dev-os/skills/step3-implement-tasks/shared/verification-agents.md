@@ -32,7 +32,9 @@ standards:
 - Quality — dead code, leftover debug output, TODO stubs presented as done,
   swallowed errors?
 - Context updates — were the "Update after completing" concept files
-  actually updated, and agents-context/README.md kept in sync?
+  actually updated and agents-context/README.md kept in sync? (If this
+  group ran in a parallel wave, the updates are proposed in
+  <spec-path>/plans/group-<N>-updates.md instead — check that file.)
 
 Do not report style nitpicks that no loaded standards file backs.
 

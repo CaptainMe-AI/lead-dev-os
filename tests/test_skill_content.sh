@@ -262,6 +262,18 @@ else
   fail "step3 does not reference Execution Waves"
 fi
 
+if grep -q 'Parallel-wave addendum' "$STEP3_DIR/steps/execute-orchestrated.md" 2>/dev/null; then
+  pass "step3 parallel-wave executors get the shared-file addendum"
+else
+  fail "step3 missing parallel-wave addendum"
+fi
+
+if grep -rq 'group-<N>-updates.md' "$STEP3_DIR" 2>/dev/null; then
+  pass "step3 parallel-wave bookkeeping goes through group-N-updates.md"
+else
+  fail "step3 missing group-N-updates.md bookkeeping mechanism"
+fi
+
 # --- Full-suite backstop gate ---
 
 echo ""

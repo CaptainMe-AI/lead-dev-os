@@ -6,7 +6,7 @@ The main conversation acts as an orchestrator: each group is executed by a fresh
 
 Work through the approved execution schedule wave by wave:
 
-1. **Parallel dispatch — one executor subagent per group in the current wave**, all in a single tool-call batch (`subagent_type: "general-purpose"`), using the prompt template below. Each executor starts with a fresh context and reads everything it needs from disk — never assume it inherits knowledge from this conversation. Dispatch a wave only when every group it depends on has been committed. If anything since planning has cast doubt on a wave's independence (a plan amended mid-run, drift reported by an earlier executor), re-check the two wave conditions — no dependency, disjoint file sets — and serialize when in doubt.
+1. **Parallel dispatch — one executor subagent per group in the current wave**, all in a single tool-call batch (`subagent_type: "general-purpose"`), using the prompt template below. When the wave holds 2+ groups, append the **parallel-wave addendum** (below the prompt template) to each executor's prompt — the plans' "File operations" lists are disjoint, but `tasks.md` and `agents-context/` are shared by every group, so concurrent executors must not write them. Each executor starts with a fresh context and reads everything it needs from disk — never assume it inherits knowledge from this conversation. Dispatch a wave only when every group it depends on has been committed. If anything since planning has cast doubt on a wave's independence (a plan amended mid-run, drift reported by an earlier executor), re-check the two wave conditions — no dependency, disjoint file sets — and serialize when in doubt.
 
 2. **Verify — trust but verify.** When an executor returns, run the group's verification command from `plans/group-<N>.md` yourself. Do not take the executor's report at face value.
 
@@ -14,7 +14,7 @@ Work through the approved execution schedule wave by wave:
 
 4. **Review the diff** briefly yourself for scope creep, deleted tests, or weakened assertions — the reviewer checks this too, but the orchestrator owns the commit.
 
-5. **Commit.** Executors never commit — the orchestrator commits after verifying. When groups ran in parallel, stage each group's files separately (use the plan's "File operations" list) so each group still gets its own atomic commit. Commit message: what the group shipped (not how), referencing the spec folder name. Don't sweep up unrelated changes — if the user has uncommitted edits outside this group's scope, ask before staging anything.
+5. **Commit.** Executors never commit — the orchestrator commits after verifying. When groups ran in parallel: first apply the group's `plans/group-<N>-updates.md` yourself — check off its completed tasks in `tasks.md`, create/update the proposed concept files, and keep `agents-context/README.md` in sync — then stage the plan's "File operations" list **plus** those bookkeeping changes, so each group still gets its own atomic commit that includes its checkboxes and context updates. Commit message: what the group shipped (not how), referencing the spec folder name. Don't sweep up unrelated changes — if the user has uncommitted edits outside this group's scope, ask before staging anything.
 
 6. **Report and continue:**
    - Group N complete
@@ -70,4 +70,26 @@ Final report (structured):
 - Concept files created or updated
 - Plan drift found and how the plan was amended (if any)
 - Blockers or open questions (if any)
+```
+
+## Parallel-wave addendum
+
+Append to the executor prompt only when the wave holds 2+ groups:
+
+```
+Parallel-wave addendum — this group runs concurrently with other groups
+in the same working tree:
+
+- Do NOT modify tasks.md or any file under agents-context/ — they are
+  shared with the other groups' executors, and concurrent writes clobber
+  each other. This overrides steps 5 and 6 above.
+- Instead, write <spec-path>/plans/group-<N>-updates.md with two sections:
+  1. Completed tasks — the task numbers from Group N to check off in
+     tasks.md
+  2. Context updates — each concept file to create or update, with its
+     full proposed content, plus the agents-context/README.md entries to
+     add or refresh (index entry, Load-When Cheatsheet, cross-references)
+
+The orchestrator applies this file and commits it together with your
+group's changes.
 ```
