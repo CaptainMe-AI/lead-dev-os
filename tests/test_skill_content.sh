@@ -165,6 +165,7 @@ echo ""
 echo "step3 orchestrated execution:"
 
 STEP3_MD="$PLUGIN_DIR/skills/step3-implement-tasks/SKILL.md"
+STEP3_DIR="$PLUGIN_DIR/skills/step3-implement-tasks"
 
 if grep -q 'executor subagent' "$STEP3_MD" 2>/dev/null; then
   pass "step3 delegates group execution to executor subagents"
@@ -178,16 +179,87 @@ else
   fail "step3 missing orchestrator verify-then-commit rule"
 fi
 
-if grep -q 'Reconcile before you code' "$STEP3_MD" 2>/dev/null; then
+if grep -rq 'Reconcile before you code' "$STEP3_DIR" 2>/dev/null; then
   pass "step3 executor prompt reconciles stale plans against reality"
 else
   fail "step3 executor prompt missing stale-plan reconcile instruction"
 fi
 
-if grep -q 'Parallel dispatch' "$STEP3_MD" 2>/dev/null; then
+if grep -rq 'Parallel dispatch' "$STEP3_DIR" 2>/dev/null; then
   pass "step3 allows parallel dispatch of independent groups"
 else
   fail "step3 missing parallel dispatch of independent groups"
+fi
+
+# --- step3: structured shape (orchestrator + steps/ + shared/) ---
+
+echo ""
+echo "step3 structured shape:"
+
+for step_file in load-context select-mode pre-plan execute-orchestrated execute-direct finalize; do
+  if [ -f "$STEP3_DIR/steps/$step_file.md" ]; then
+    pass "step3 steps/$step_file.md exists"
+  else
+    fail "step3 steps/$step_file.md missing"
+  fi
+done
+
+if [ -f "$STEP3_DIR/template.md" ]; then
+  pass "step3 template.md (plans/group-N.md format) exists"
+else
+  fail "step3 template.md missing"
+fi
+
+# --- step3: verification agents ---
+
+echo ""
+echo "step3 verification agents:"
+
+if grep -rq 'implementation-reviewer' "$STEP3_DIR" 2>/dev/null; then
+  pass "step3 has an implementation-reviewer agent"
+else
+  fail "step3 missing implementation-reviewer agent"
+fi
+
+if grep -rq 'test-verifier' "$STEP3_DIR" 2>/dev/null; then
+  pass "step3 has a test-verifier agent"
+else
+  fail "step3 missing test-verifier agent"
+fi
+
+if grep -rq 'adversarial-thinker' "$STEP3_DIR" 2>/dev/null; then
+  pass "step3 has an adversarial-thinker agent"
+else
+  fail "step3 missing adversarial-thinker agent"
+fi
+
+if grep -rq 'READ-ONLY' "$STEP3_DIR/shared/verification-agents.md" 2>/dev/null; then
+  pass "step3 verification agents are read-only"
+else
+  fail "step3 verification agents missing read-only constraint"
+fi
+
+if grep -rq 'Limit: 2 rounds' "$STEP3_DIR/shared/verification-agents.md" 2>/dev/null; then
+  pass "step3 verification fix cycle is bounded"
+else
+  fail "step3 verification fix cycle missing bound"
+fi
+
+# --- Parallel execution waves ---
+
+echo ""
+echo "Parallel execution waves:"
+
+if grep -q 'Execution Waves' "$PLUGIN_DIR/skills/step2-scope-tasks/template.md" 2>/dev/null; then
+  pass "step2 template includes Execution Waves subsection"
+else
+  fail "step2 template missing Execution Waves subsection"
+fi
+
+if grep -rq 'Execution Waves' "$STEP3_DIR" 2>/dev/null; then
+  pass "step3 consumes step2's Execution Waves"
+else
+  fail "step3 does not reference Execution Waves"
 fi
 
 # --- Full-suite backstop gate ---
@@ -203,13 +275,13 @@ else
   fail "step2 template missing full-suite backstop subtask"
 fi
 
-if grep -q 'Run the full test suite once' "$STEP3_MD" 2>/dev/null; then
+if grep -rq 'Run the full test suite once' "$STEP3_DIR" 2>/dev/null; then
   pass "step3 after-all-groups includes full-suite run"
 else
   fail "step3 missing full-suite run after all groups"
 fi
 
-if grep -q 'Verify at runtime' "$STEP3_MD" 2>/dev/null; then
+if grep -rq 'Verify at runtime' "$STEP3_DIR" 2>/dev/null; then
   pass "step3 includes runtime verification of the feature"
 else
   fail "step3 missing runtime verification step"
