@@ -16,6 +16,8 @@ You are a senior engineer breaking down a spec into implementable task groups. E
 
 Every task group MUST also stand on its own as a **complete user story** — a non-technical stakeholder who understands the feature's goal should be able to read the group and know (a) what value it delivers and (b) what "done" looks like, without reading any code or technical acceptance criteria.
 
+This skill does not write code or implementation plans — it produces `tasks.md` only; execution and per-group planning belong to `/lead-dev-os:step3-implement-tasks`.
+
 ### Phase 1: Load Context
 
 1. **Find the spec folder.** Look for the most recent `lead-dev-os/specs/YYYY-MM-DD-*/` folder, or ask the user which spec to work from.
@@ -38,6 +40,8 @@ Every task group MUST also stand on its own as a **complete user story** — a n
    - Shared utilities, helpers, or components to reuse instead of rebuilding
    - Anything that will constrain the task breakdown (migrations,
      feature flags, cross-cutting concerns)
+   - Contention hot spots: files that several parts of the feature will
+     all need to touch (these force sequential work)
    Do not propose a design — just report what exists.
    ```
 
@@ -54,7 +58,7 @@ Every task group MUST also stand on its own as a **complete user story** — a n
   4. **Testing** — test review & gap analysis (always last)
 - **Layers.** Groups follow the stack: Database → API → Frontend → Testing. Choose this when the data model is the hard part, the feature lives in a single layer, or slices would all contend for the same few files. Trade-off: layer groups form a strict dependency chain — they always execute sequentially, and nothing is user-demoable until the top layer lands.
 
-Whichever strategy you choose, keep each group's `Dependencies:` list minimal and honest — over-declared dependencies serialize execution for no reason.
+Whichever strategy you choose, keep each group's `Dependencies:` list minimal and honest — over-declared dependencies serialize execution for no reason. Use the research reports' contention hot spots when carving groups: if two candidate slices would both rewrite the same few files, either merge them or declare the dependency, rather than pretending they're parallel.
 
 Each task group uses **hierarchical numbered subtasks**. The parent task (N.0) is the group's completion goal. Subtasks (N.1, N.2, ...) are the steps to achieve it.
 
@@ -141,10 +145,12 @@ If a relevant concept or standard file does NOT yet exist, the directive should 
 - Groups must have explicit **dependency ordering**
 - Context directives reference **general guidance, not code** — concept files describe approaches, conventions, and decision rationale, never code snippets
 - The **final group is always "Test Review & Gap Analysis"** — reviews previous tests, fills critical gaps (up to 10 additional tests), runs feature-specific tests, then runs the full test suite ONCE as a final backstop (fix new failures, report pre-existing ones)
-- Include an **Execution Order** section at the end listing the recommended implementation sequence
+- Include an **Execution Order** section at the end listing the recommended implementation sequence, with an **Execution Waves** subsection: waves of groups that can run in parallel during `/lead-dev-os:step3-implement-tasks`. Groups share a wave only when they have no dependency on each other (direct or transitive) AND their expected file sets are disjoint (per the research reports and contention hot spots). When every group depends on the previous one (e.g. layers), say so — one group per wave is an honest answer
 - Include an **Overview** section at the top with total task count
 
-### Phase 4: Review & Save
+### Phase 4: Self-check, Review & Save
+
+Before presenting the result, verify `tasks.md` against the Rules for Task Groups above — every group has description, User Story, Done-when block, context directives, honest Dependencies, test-first subtasks, and Acceptance Criteria; the final group is Test Review & Gap Analysis; Overview records the grouping strategy; Execution Order includes the Execution Waves subsection. Fix any gap before showing the file.
 
 Display the following message to the user:
 

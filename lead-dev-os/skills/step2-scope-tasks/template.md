@@ -213,3 +213,13 @@ Recommended implementation sequence:
 2. [Group Theme] (Task Group 2)
 3. [Group Theme] (Task Group 3)
 4. Test Review & Gap Analysis (Task Group 4)
+
+### Execution Waves
+
+Groups in the same wave have no mutual dependencies and disjoint expected file sets — `/lead-dev-os:step3-implement-tasks` may run them in parallel after validating against the actual plans:
+
+- Wave 1: Task Group 1
+- Wave 2: Task Group 2, Task Group 3 — [why they're independent, e.g. "no shared files: Group 2 touches API only, Group 3 touches UI only"]
+- Wave 3: Task Group 4 (Test Review & Gap Analysis — always last, always alone)
+
+[If groups form a strict chain (e.g. layers strategy), list one group per wave and say so.]
