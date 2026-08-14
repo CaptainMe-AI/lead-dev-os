@@ -35,7 +35,7 @@ Shared procedures used by more than one step:
 - **Executor subagents never commit** — the orchestrator commits after verifying each group's work. When groups ran in parallel, stage each group's files separately so each group still gets its own atomic commit.
 - **Never delete tests, weaken assertions, skip migrations, or use `--no-verify`** to get to green — in your own work or by accepting it from a subagent. Surface the failure instead.
 - **Bounded retries everywhere.** Test-failure fixes: 2 attempts. Verification fix cycles: 2 rounds. After the limit, stop and report — the user would rather debug a stuck group with you than inherit silently disabled tests.
-- **Check off tasks in `tasks.md` as each completes**, not in a batch at the end. This protects progress if the session is interrupted.
+- **Check off tasks in `tasks.md` as each completes**, not in a batch at the end. This protects progress if the session is interrupted. Exception: executors running in a parallel wave never write `tasks.md` (or `agents-context/`) — they report completions via `plans/group-N-updates.md` and the orchestrator checks the boxes at commit time, so concurrent groups can't clobber each other's bookkeeping.
 
 ## Error handling
 
