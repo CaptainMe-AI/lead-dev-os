@@ -242,3 +242,14 @@ Recommended implementation sequence:
 2. File Upload Layer (Task Group 2)
 3. Frontend Components (Task Group 3)
 4. Test Review & Gap Analysis (Task Group 4)
+
+### Execution Waves
+
+Groups in the same wave have no mutual dependencies and disjoint expected file sets — `/lead-dev-os:step3-implement-tasks` may run them in parallel after validating against the actual plans:
+
+- Wave 1: Task Group 1
+- Wave 2: Task Group 2 — depends on Group 1's model changes
+- Wave 3: Task Group 3 — depends on Group 2's upload endpoint (avatar UI)
+- Wave 4: Task Group 4 (Test Review & Gap Analysis — always last, always alone)
+
+The groups form a strict dependency chain, so each wave holds a single group — no parallel execution is available for this feature.
