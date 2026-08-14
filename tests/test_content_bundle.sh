@@ -215,9 +215,9 @@ fi
 echo ""
 echo "step3 README sync requirement:"
 
-STEP3_MD="$REPO_ROOT/lead-dev-os/skills/step3-implement-tasks/SKILL.md"
+STEP3_DIR="$REPO_ROOT/lead-dev-os/skills/step3-implement-tasks"
 
-if grep -q 'Keep.*agents-context/README.md.*in sync' "$STEP3_MD" 2>/dev/null; then
+if grep -rq 'Keep.*agents-context/README.md.*in sync' "$STEP3_DIR" 2>/dev/null; then
   pass "step3 requires keeping README.md in sync"
 else
   fail "step3 missing README.md sync requirement"
