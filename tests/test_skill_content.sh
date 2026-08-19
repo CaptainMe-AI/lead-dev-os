@@ -191,6 +191,73 @@ else
   fail "step3 missing parallel dispatch of independent groups"
 fi
 
+# --- step3: the per-group commit gate (parallel waves must still commit atomically) ---
+
+echo ""
+echo "step3 per-group commit gate:"
+
+ORCH_MD="$STEP3_DIR/steps/execute-orchestrated.md"
+
+if grep -q 'not complete until it is committed' "$STEP3_MD" 2>/dev/null; then
+  pass "step3 hard rule: a group is not complete until committed"
+else
+  fail "step3 missing 'not complete until committed' hard rule"
+fi
+
+if grep -q 'never dispatch the next wave while the current wave' "$STEP3_MD" 2>/dev/null; then
+  pass "step3 hard rule: no new wave while the current wave is uncommitted"
+else
+  fail "step3 missing uncommitted-wave dispatch bar"
+fi
+
+if grep -q 'commit invariant' "$ORCH_MD" 2>/dev/null; then
+  pass "step3 orchestrated execution states the commit invariant up front"
+else
+  fail "step3 orchestrated execution missing the commit invariant section"
+fi
+
+if grep -q 'must be empty before a wave is dispatched' "$ORCH_MD" 2>/dev/null; then
+  pass "step3 requires a clean git baseline before each wave"
+else
+  fail "step3 missing clean-baseline precondition for waves"
+fi
+
+if grep -q 'git add -A`, `git add .`, or `git commit -a`' "$ORCH_MD" 2>/dev/null; then
+  pass "step3 forbids tree-wide staging in a parallel wave"
+else
+  fail "step3 missing prohibition on tree-wide staging in parallel waves"
+fi
+
+if grep -q 'git diff --cached --name-only' "$ORCH_MD" 2>/dev/null; then
+  pass "step3 verifies the staged set before committing a group"
+else
+  fail "step3 missing staged-set verification before commit"
+fi
+
+if grep -q 'committed as' "$ORCH_MD" 2>/dev/null; then
+  pass "step3 group report carries a commit receipt"
+else
+  fail "step3 group report missing commit receipt"
+fi
+
+if grep -q 'Files changed' "$ORCH_MD" 2>/dev/null; then
+  pass "step3 executors report an exhaustive changed-file manifest"
+else
+  fail "step3 missing exhaustive changed-file manifest for staging"
+fi
+
+if grep -q 'Close the wave' "$ORCH_MD" 2>/dev/null; then
+  pass "step3 closes each wave with a dirty-tree check"
+else
+  fail "step3 missing wave-close dirty-tree check"
+fi
+
+if grep -q 'Confirm every group is committed' "$STEP3_DIR/steps/finalize.md" 2>/dev/null; then
+  pass "step3 finalize verifies every group landed a commit"
+else
+  fail "step3 finalize missing commit-completeness check"
+fi
+
 # --- step3: structured shape (orchestrator + steps/ + shared/) ---
 
 echo ""

@@ -20,6 +20,8 @@ Three execution modes control how much human oversight the AI receives during im
 
 All task groups are pre-planned in parallel (one planner subagent per group produces `plans/group-N.md`), the adversarial-thinker challenges the plan batch, and an execution schedule of parallel **waves** is derived — groups share a wave only when they have no dependency on each other and disjoint file sets. You approve the batch and schedule, then execution runs with no human intervention. The main conversation acts as an **orchestrator**: each group is executed by a fresh executor subagent with a clean context; the orchestrator re-runs the group's tests itself, dispatches the implementation-reviewer + test-verifier pair in parallel, drives a bounded fix cycle on blocking findings (max 2 rounds, then it stops and asks you), and commits — one atomic commit per group.
 
+Committing is a gate, not a formality: a group is not complete until its commit exists, and the next wave is not dispatched while the current wave's work is uncommitted. Each wave starts from a clean working tree so every dirty path afterwards is attributable to a group in that wave; in a parallel wave the orchestrator stages each group's paths explicitly from the manifest its executor reported, never the whole tree, so concurrent groups still land as separate atomic commits.
+
 ```
         plan G1..G4 (parallel) → adversarial challenge → approve batch + waves
 Wave 1  G1 ⇒ executor → verify pair → commit

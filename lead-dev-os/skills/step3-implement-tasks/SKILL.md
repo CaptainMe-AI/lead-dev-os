@@ -32,7 +32,8 @@ Shared procedures used by more than one step:
 
 ## Hard rules (all modes, all steps)
 
-- **Executor subagents never commit** — the orchestrator commits after verifying each group's work. When groups ran in parallel, stage each group's files separately so each group still gets its own atomic commit.
+- **A task group is not complete until it is committed.** In orchestrated execution the orchestrator commits each group the moment it passes verification — never batched at the end of a wave or the end of the run, and never handed back to the user to do. An uncommitted tree at the end of an A-mode run is a failed run.
+- **Executor subagents never commit or stage** — the orchestrator commits after verifying each group's work. When groups ran in parallel, stage each group's files explicitly (never `git add -A`, `git add .`, or `git commit -a`) so each group still gets its own atomic commit, and never dispatch the next wave while the current wave's work is uncommitted.
 - **Never delete tests, weaken assertions, skip migrations, or use `--no-verify`** to get to green — in your own work or by accepting it from a subagent. Surface the failure instead.
 - **Bounded retries everywhere.** Test-failure fixes: 2 attempts. Verification fix cycles: 2 rounds. After the limit, stop and report — the user would rather debug a stuck group with you than inherit silently disabled tests.
 - **Check off tasks in `tasks.md` as each completes**, not in a batch at the end. This protects progress if the session is interrupted. Exception: executors running in a parallel wave never write `tasks.md` (or `agents-context/`) — they report completions via `plans/group-N-updates.md` and the orchestrator checks the boxes at commit time, so concurrent groups can't clobber each other's bookkeeping.
