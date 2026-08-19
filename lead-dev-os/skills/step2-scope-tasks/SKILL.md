@@ -42,6 +42,13 @@ This skill does not write code or implementation plans — it produces `tasks.md
      feature flags, cross-cutting concerns)
    - Contention hot spots: files that several parts of the feature will
      all need to touch (these force sequential work)
+   - Shared test surface: pre-existing test files that assert
+     project-wide or cross-surface invariants — site-wide sweeps,
+     snapshot files, shared fixtures and test-utils — naming each one
+     and what it asserts. Say which of them this feature's changes will
+     invalidate. These are the most common cause of false parallelism:
+     every group writes its own new tests, but they all end up repairing
+     assertions in the same few shared suites.
    Do not propose a design — just report what exists.
    ```
 
@@ -59,6 +66,14 @@ This skill does not write code or implementation plans — it produces `tasks.md
 - **Layers.** Groups follow the stack: Database → API → Frontend → Testing. Choose this when the data model is the hard part, the feature lives in a single layer, or slices would all contend for the same few files. Trade-off: layer groups form a strict dependency chain — they always execute sequentially, and nothing is user-demoable until the top layer lands.
 
 Whichever strategy you choose, keep each group's `Dependencies:` list minimal and honest — over-declared dependencies serialize execution for no reason. Use the research reports' contention hot spots when carving groups: if two candidate slices would both rewrite the same few files, either merge them or declare the dependency, rather than pretending they're parallel.
+
+**Carve against the test surface, not just the source surface.** Slices usually are disjoint in source and still collide in tests, because each one invalidates assertions in the same project-wide suite. A wave declared parallel on source files alone gets serialized later by `/lead-dev-os:step3-implement-tasks`, which validates disjointness against the real plans — so the contention has to be resolved here, while the groups are still being carved. New tests never contend (each group writes its own new test file); contention comes entirely from **repairing stale assertions in pre-existing shared suites**. For each shared suite the research reports flagged, pick a resolution in this order:
+
+1. **Split the suite** along the boundaries the groups already have (per-surface files), so each group owns a file outright. Best outcome — do this whenever the suite's sections separate cleanly. Make the split its own subtask in the earliest group that touches it.
+2. **Give the suite a single owner group.** Every assertion repair in that file belongs to the owner; any other group that needs one declares a dependency on the owner and lands in a later wave.
+3. **Serialize the contending groups** into different waves. Honest, but the most expensive — use it when neither of the above fits.
+
+Record the outcome as a **file-ownership rule** in the Overview: which groups exclusively own which shared source files, shared test suites, fixtures, and test-utils. Groups then treat files they don't own as read-only. Files under `agents-context/` are exempt — they never contend, because parallel executors don't write them at all (`/lead-dev-os:step3-implement-tasks` applies each group's proposed context edits itself at commit time).
 
 Each task group uses **hierarchical numbered subtasks**. The parent task (N.0) is the group's completion goal. Subtasks (N.1, N.2, ...) are the steps to achieve it.
 
@@ -145,12 +160,12 @@ If a relevant concept or standard file does NOT yet exist, the directive should 
 - Groups must have explicit **dependency ordering**
 - Context directives reference **general guidance, not code** — concept files describe approaches, conventions, and decision rationale, never code snippets
 - The **final group is always "Test Review & Gap Analysis"** — reviews previous tests, fills critical gaps (up to 10 additional tests), runs feature-specific tests, then runs the full test suite ONCE as a final backstop (fix new failures, report pre-existing ones)
-- Include an **Execution Order** section at the end listing the recommended implementation sequence, with an **Execution Waves** subsection: waves of groups that can run in parallel during `/lead-dev-os:step3-implement-tasks`. Groups share a wave only when they have no dependency on each other (direct or transitive) AND their expected file sets are disjoint (per the research reports and contention hot spots). When every group depends on the previous one (e.g. layers), say so — one group per wave is an honest answer
-- Include an **Overview** section at the top with total task count
+- Include an **Execution Order** section at the end listing the recommended implementation sequence, with an **Execution Waves** subsection: waves of groups that can run in parallel during `/lead-dev-os:step3-implement-tasks`. Groups share a wave only when they have no dependency on each other (direct or transitive) AND their expected file sets are disjoint (per the research reports and contention hot spots). **File sets include test files** — new test files, pre-existing shared suites the group will repair, fixtures, and test-utils — not just source files; a wave justified on source files alone is the standard way a parallel schedule collapses at execution time. Files under `agents-context/` don't count toward disjointness. State the per-wave justification in terms of both surfaces, and cite the file-ownership rule for any shared file involved. When every group depends on the previous one (e.g. layers), say so — one group per wave is an honest answer
+- Include an **Overview** section at the top with total task count, the grouping strategy and its rationale, and — when any shared source file, test suite, fixture, or test-util is touched by more than one group — a **file-ownership rule** naming the single owning group for each
 
 ### Phase 4: Self-check, Review & Save
 
-Before presenting the result, verify `tasks.md` against the Rules for Task Groups above — every group has description, User Story, Done-when block, context directives, honest Dependencies, test-first subtasks, and Acceptance Criteria; the final group is Test Review & Gap Analysis; Overview records the grouping strategy; Execution Order includes the Execution Waves subsection. Fix any gap before showing the file.
+Before presenting the result, verify `tasks.md` against the Rules for Task Groups above — every group has description, User Story, Done-when block, context directives, honest Dependencies, test-first subtasks, and Acceptance Criteria; the final group is Test Review & Gap Analysis; Overview records the grouping strategy; Execution Order includes the Execution Waves subsection, and every wave holding 2+ groups is justified across both the source and the test surface. Fix any gap before showing the file.
 
 Display the following message to the user:
 
