@@ -55,7 +55,7 @@ Atomic-commit policy:
 
 - **Default: one commit per task group.** The commit message describes what the group shipped (not how) and references the spec folder name.
 - **Optional sub-commits:** if a group has natural sub-units (e.g. a "primitives" sub-task that lands cleanly on its own, then "integration" on top), commit each sub-unit separately. Use judgment — if you can't summarize a sub-commit in one clean line, it isn't ready as its own commit.
-- **Don't sweep up unrelated changes.** If the user has uncommitted edits in files outside this group's scope, ask before staging anything.
+- **Don't sweep up unrelated changes.** Stage this group's paths, not the whole tree. If the user has pre-existing uncommitted edits in files outside this group's scope, ask what to do with them — but that question never postpones this group's commit: stage the group's own paths and commit them regardless.
 
 In **L** mode you may skip the auto-commit and let the user commit manually after the review gate.
 
