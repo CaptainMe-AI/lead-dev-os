@@ -258,6 +258,61 @@ else
   fail "step3 finalize missing commit-completeness check"
 fi
 
+# --- wave scheduling must account for the test surface, not just source files ---
+
+echo ""
+echo "Wave scheduling across the test surface:"
+
+STEP2_DIR="$PLUGIN_DIR/skills/step2-scope-tasks"
+
+if grep -q 'Shared test surface' "$STEP2_DIR/SKILL.md" 2>/dev/null; then
+  pass "step2 research asks for the shared/cross-cutting test surface"
+else
+  fail "step2 research prompt missing shared test surface"
+fi
+
+if grep -q 'Carve against the test surface' "$STEP2_DIR/SKILL.md" 2>/dev/null; then
+  pass "step2 carves groups against the test surface too"
+else
+  fail "step2 missing test-surface carving guidance"
+fi
+
+if grep -q 'file-ownership rule' "$STEP2_DIR/SKILL.md" 2>/dev/null; then
+  pass "step2 records a file-ownership rule for shared files"
+else
+  fail "step2 missing file-ownership rule"
+fi
+
+if grep -q 'File-ownership rule' "$STEP2_DIR/template.md" 2>/dev/null; then
+  pass "step2 template carries the file-ownership rule block"
+else
+  fail "step2 template missing file-ownership rule block"
+fi
+
+if grep -q 'File sets include test files' "$STEP2_DIR/SKILL.md" 2>/dev/null; then
+  pass "step2 wave rule counts test files toward disjointness"
+else
+  fail "step2 wave rule ignores test files"
+fi
+
+if grep -q 'Do not serialize a wave over a shared concept file' "$STEP3_DIR/steps/pre-plan.md" 2>/dev/null; then
+  pass "step3 does not serialize waves over orchestrator-applied context files"
+else
+  fail "step3 still counts agents-context/ toward wave disjointness"
+fi
+
+if grep -q 'ANCHORED EDITS' "$ORCH_MD" 2>/dev/null; then
+  pass "step3 parallel context updates compose instead of overwriting"
+else
+  fail "step3 parallel context updates risk whole-file overwrite"
+fi
+
+if grep -q 'name the file, the groups, and why it forced a split' "$STEP3_DIR/steps/pre-plan.md" 2>/dev/null; then
+  pass "step3 explains every serialization in the schedule"
+else
+  fail "step3 serializations go unexplained"
+fi
+
 # --- step3: structured shape (orchestrator + steps/ + shared/) ---
 
 echo ""

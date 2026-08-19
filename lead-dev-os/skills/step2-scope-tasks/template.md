@@ -10,6 +10,8 @@ Grouping strategy: [Vertical slices | Layers] — [one-line rationale]
 
 [brief summary of the task]
 
+**File-ownership rule (keeps waves parallel-safe):** [Include only when a shared file is touched by more than one group. Name the single owning group for each shared source file, test suite, fixture, and test-util — e.g. "`lib/shared-cta.ts` and `components/Nav.tsx` belong to Group 1 only. The site-wide `invariants.test.ts` suite belongs to Group 4 only; other groups that need an assertion changed there depend on Group 4 rather than editing it." Groups treat files they don't own as read-only. Omit this block entirely when nothing is shared.]
+
 ## Context Management
 
 ### Before Starting Each Task Group
@@ -216,10 +218,11 @@ Recommended implementation sequence:
 
 ### Execution Waves
 
-Groups in the same wave have no mutual dependencies and disjoint expected file sets — `/lead-dev-os:step3-implement-tasks` may run them in parallel after validating against the actual plans:
+Groups in the same wave have no mutual dependencies and disjoint expected file sets — `/lead-dev-os:step3-implement-tasks` may run them in parallel after validating against the actual plans. File sets cover the test surface as well as the source surface: new test files, pre-existing shared suites the group will repair, fixtures, and test-utils. Files under `agents-context/` are exempt — parallel executors never write them.
 
 - Wave 1: Task Group 1
-- Wave 2: Task Group 2, Task Group 3 — [why they're independent, e.g. "no shared files: Group 2 touches API only, Group 3 touches UI only"]
+- Wave 2: Task Group 2, Task Group 3 — [why they're independent on BOTH surfaces, e.g. "source: Group 2 touches API only, Group 3 touches UI only. Tests: each owns its own new suite; neither repairs a shared suite — `[shared-suite]` is owned by Group N per the file-ownership rule"]
 - Wave 3: Task Group 4 (Test Review & Gap Analysis — always last, always alone)
 
 [If groups form a strict chain (e.g. layers strategy), list one group per wave and say so.]
+[If a shared test suite forced two otherwise-independent groups into different waves, name the suite and say why it wasn't split or assigned an owner.]

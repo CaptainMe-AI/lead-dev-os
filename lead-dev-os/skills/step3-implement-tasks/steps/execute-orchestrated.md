@@ -171,9 +171,15 @@ in the same working tree:
   sections:
   1. Completed tasks — the task numbers from Group N to check off in
      tasks.md
-  2. Context updates — each concept file to create or update, with its
-     full proposed content, plus the agents-context/README.md entries to
-     add or refresh (index entry, Load-When Cheatsheet, cross-references)
+  2. Context updates — each concept file to create (with its full
+     proposed content) or update, plus the agents-context/README.md
+     entries to add or refresh (index entry, Load-When Cheatsheet,
+     cross-references). For a file that already exists, give
+     ANCHORED EDITS — the surrounding text to insert after, replace,
+     or delete — never a full-file rewrite. Another group may be
+     proposing edits to the same file; anchored edits compose when the
+     orchestrator applies them one commit after another, and a full-file
+     rewrite silently discards whatever landed first.
   3. Files changed — the same exhaustive path list as your final report,
      one repo-relative path per line. This is what the orchestrator
      stages; anything missing from it will not be committed. Include

@@ -47,9 +47,16 @@ Triage its findings per that file's guidance: amend plan files directly for clea
 Group the incomplete task groups into **waves**. Two or more groups may share a wave only when BOTH hold:
 
 - **(a) No dependency** between them, directly or transitively, per the `Dependencies:` headers.
-- **(b) Disjoint file sets** per the plans' "File operations" sections — no file appears in two plans in the same wave.
+- **(b) Disjoint file sets** per the plans' "File operations" sections — no file appears in two plans in the same wave. Two exclusions, both because parallel executors never write these files: `tasks.md` and everything under `agents-context/`. The orchestrator applies each group's checkboxes and context edits itself at commit time, from `plans/group-N-updates.md`, so they cannot clobber each other. **Do not serialize a wave over a shared concept file** — that is a conflict this workflow has already solved, and counting it costs real parallelism. Everything else counts, including test files: a shared test suite two groups both need to repair is a genuine collision.
 
-Start from the Execution Waves subsection in `tasks.md` if present, then validate it against the actual plans — condition (b) can only be confirmed now that plans exist. If the adversarial-thinker flagged a hidden dependency or file contention, respect the flag. When in doubt, serialize — a serialized group is cheaper than a merge conflict.
+Start from the Execution Waves subsection in `tasks.md` if present, then validate it against the actual plans — condition (b) can only be confirmed now that plans exist. If the adversarial-thinker flagged a hidden dependency or file contention, respect the flag.
+
+When a wave fails only on condition (b), try to fix the contention before serializing:
+
+- If `tasks.md` carries a **file-ownership rule** naming a single owner for the contended file, amend the non-owner's plan to drop the edit (declaring a dependency on the owner if it genuinely needs it) rather than splitting the wave.
+- If the contended file is a shared test suite whose assertions separate cleanly along group boundaries, amending one plan to own the whole file is usually enough.
+
+Serialize when neither works — a serialized group is cheaper than a merge conflict. Whichever way it resolves, say so in the schedule: name the file, the groups, and why it forced a split. Serialization that isn't explained reads as a dependency and gets copied forward into the next spec.
 
 ## 5. Report and wait for "go"
 
